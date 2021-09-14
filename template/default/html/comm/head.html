@@ -15,11 +15,38 @@
 	<script src="{pboot:sitetplpath}/js/jquery-1.12.4.min.js" ></script>
 </head>
 <body>
-
+<style>
+	.navbar-nav .active .nav-link{
+		color: #3786FF !important;
+		font-weight: bold;
+		border-bottom: 3px solid #3786FF;
+	}
+	.navbar {
+		padding: 0 !important;
+	}
+	.navbar-nav{
+		height: 53px;
+	}
+	.navbar-nav li,.navbar-nav li a{
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
+	.login{
+		color: #3786FF !important;
+		margin: 0px 10px;
+	}
+	.regiset{
+		background: #3786FF !important;
+		color: #ffffff !important;
+		padding: 5px 10px;
+		border-radius: 3px;
+	}
+</style>
 <!-- 头部导航 -->
 <nav class="navbar navbar-light bg-light fixed-top navbar-expand-lg shadow-sm">
   <div class="container">
-	  	<a class="navbar-brand my-1" href="{pboot:sitepath}/">
+	  	<a class=" my-1" href="{pboot:sitepath}/">
 	      <img src="{pboot:sitelogo}" class="logo-sm-height"  height="50">
 	    </a>
 	    
@@ -43,19 +70,12 @@
 	     	 {pboot:if({pboot:islogin}==1)}
 				<a class="text-secondary" href="{pboot:ucenter}" >个人中心</a>
 		     {else}
-		     
+			  	{pboot:2if({pboot:loginstatus})}
+					<a class="text-secondary login" href="{pboot:login}" >登录</a>
+				{/pboot:2if}
 		     	{pboot:2if({pboot:registerstatus})}
-					<a class="text-secondary" href="{pboot:register}" >注册</a>
+					<a class="text-secondary regiset" href="{pboot:register}" >注册</a>
 				{/pboot:2if}
-				
-				{pboot:2if({pboot:registerstatus} && {pboot:loginstatus})}
-					/
-				{/pboot:2if}
-				
-				{pboot:2if({pboot:loginstatus})}
-					<a class="text-secondary" href="{pboot:login}" >登录</a>
-				{/pboot:2if}
-				
 		     {/pboot:if}
 	      </span>
 	      
@@ -64,5 +84,5 @@
 </nav>
 
 <!--占位导航栏-->
-<div style="height:71px;" class="head-sm-height"></div>
+<div style="height:57px;" class="head-sm-height"></div>
 

@@ -1,3 +1,165 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<title>{pboot:pagetitle}</title>
+	<meta name="keywords" content="{pboot:pagekeywords}">
+	<meta name="description" content="{pboot:pagedescription}">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,shrink-to-fit=no">
+	<link rel="stylesheet" href="{pboot:sitetplpath}/bootstrap/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="{pboot:sitetplpath}/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{pboot:sitetplpath}/css/aoyun.css?v=v1.3.5" >
+	<link rel="stylesheet" href="{pboot:sitetplpath}/swiper-4.3.5/css/swiper.min.css">
+	<link rel="stylesheet" href="{pboot:sitetplpath}/css/animate.css">
+	<link rel="shortcut icon" href="{pboot:sitepath}/favicon.ico" type="image/x-icon">
+	<script src="{pboot:sitetplpath}/js/jquery-1.12.4.min.js" ></script>
+</head>
+<body>
+<style>
+	.navbar-nav .active .nav-link{
+		color: #3786FF !important;
+		font-weight: bold;
+		border-bottom: 3px solid #3786FF;
+	}
+	.navbar {
+		padding: 0 !important;
+	}
+	.navbar-nav{
+		height: 53px;
+	}
+	.navbar-nav li,.navbar-nav li a{
+		height: 100%;
+		display: flex;
+		align-items: center;
+	}
+	.login{
+		color: #3786FF !important;
+		margin: 0px 10px;
+	}
+	.regiset{
+		background: #3786FF !important;
+		color: #ffffff !important;
+		padding: 5px 10px;
+		border-radius: 3px;
+	}
+</style>
+<!-- 头部导航 -->
+<nav class="navbar navbar-light bg-light fixed-top navbar-expand-lg shadow-sm">
+  <div class="container">
+	  	<a class=" my-1" href="{pboot:sitepath}/">
+	      <img src="{pboot:sitelogo}" class="logo-sm-height"  height="50">
+	    </a>
+	    
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+	    	<span class="navbar-toggler-icon"></span>
+	    </button>
+	    
+	    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+	        <ul class="navbar-nav">
+	       	  <li class="nav-item {pboot:if(0=='{sort:scode}')}active{/pboot:if}">
+				 <a class="nav-link" href="{pboot:sitepath}/" >首页</a>
+	          </li>
+	          {pboot:nav num=10 parent=0}
+	              <li class="nav-item {pboot:if('[nav:scode]'=='{sort:tcode}')}active{/pboot:if}">
+	                <a class="nav-link" href="[nav:link]">[nav:name]</a>
+	              </li>
+	          {/pboot:nav}
+	      </ul>
+	      
+	      <span class="navbar-text">
+	     	 {pboot:if({pboot:islogin}==1)}
+				<a class="text-secondary" href="{pboot:ucenter}" >个人中心</a>
+		     {else}
+			  	{pboot:2if({pboot:loginstatus})}
+					<a class="text-secondary login" href="{pboot:login}" >登录</a>
+				{/pboot:2if}
+		     	{pboot:2if({pboot:registerstatus})}
+					<a class="text-secondary regiset" href="{pboot:register}" >注册</a>
+				{/pboot:2if}
+		     {/pboot:if}
+	      </span>
+	      
+	    </div>
+    </div>
+</nav>
+
+<!--占位导航栏-->
+<div style="height:57px;" class="head-sm-height"></div>
+
+
+
+<!-- 头部大屏 -->
+<div class="jumbotron jumbotron-fluid mb-2" style="{pboot:if('{sort:pic}')}background:#e9ecef url({sort:pic}){else}background:#e9ecef url({pboot:sitepath}/static/upload/image/20180412/1523501459462835.jpg){/pboot:if};background-size:cover;no-repeat">
+  <div class="container text-light">
+    <h1 class="fs-18 fs-sm-26 wow fadeInDown">{sort:name}</h1>
+    <p class="fs-14  fs-sm-18 wow fadeInDown">{sort:subname}</p>
+  </div>
+</div>
+
+<div class="container pages">    
+
+  	 <!-- 当前位置 -->
+<div class="text-right position mb-3 d-none d-md-block">当前位置：{pboot:position separator='>'}</div>
+  	 
+  	 <!-- 分类导航 -->
+<div class="sonsort mt-4 mb-2">
+    {pboot:nav num=10 parent={sort:tcode}}
+    	{pboot:if([nav:i]==1)}
+            {pboot:2if('{sort:scode}'=='{sort:tcode}')}
+                <a href="{sort:toplink}" class="btn btn-info mb-2">全部 <span class="badge badge-light">{sort:toprows}</a>
+            {2else}
+                <a href="{sort:toplink}" class="btn btn-light mb-2">全部 <span class="badge btn-info">{sort:toprows}</a>
+            {/pboot:2if}
+        {/pboot:if}
+        
+        {pboot:if('[nav:scode]'=='{sort:scode}')}
+            <a href="[nav:link]" class="btn btn-info mb-2">[nav:name] <span class="badge badge-light">[nav:rows]</span></a>
+        {else}
+            <a href="[nav:link]" class="btn btn-light mb-2">[nav:name] <span class="badge btn-info">[nav:rows]</span></a>
+        {/pboot:if}
+    {/pboot:nav}
+</div>
+
+	 <!-- 列表内容 -->
+     <ul>
+        {pboot:list num=10 order=date}
+        	<li class="lh-3 border-bottom-dashed">
+                <i class="fa fa-gg"></i>
+                <a href="[list:link]">
+                	<span class="d-none d-md-inline">[list:title lencn=30]</span><!-- PC端 -->
+                	<span class="d-inline d-md-none">[list:title lencn=11]</span><!-- 移动端 -->
+                	{pboot:if([list:istop]==1)}
+                		<span class="badge badge-danger">置顶</span>
+                	{/pboot:if}
+                	{pboot:if([list:isrecommend]==1)}
+                		<span class="badge badge-warning">推荐</span>
+                	{/pboot:if}
+                	{pboot:if([list:isheadline]==1)}
+                		<span class="badge badge-info">头条</span>
+                	{/pboot:if}
+                	<span class="float-right">[list:date style=Y-m-d]</span>
+                </a>
+            </li>
+        {/pboot:list}
+    </ul>
+    
+	<!-- 分页 -->
+{pboot:if({page:rows}>0)}
+   <nav aria-label="page navigation" class="my-4">
+     <div class="pagination justify-content-center">
+     	<a class="page-item page-link" href="{page:index}">首页</a>
+     	<a class="page-item page-link" href="{page:pre}">上一页</a>
+      	{page:numbar}<!-- 数字条，小屏幕时自动隐藏-->
+      	<a class="page-item page-link" href="{page:next}">下一页</a>
+      	<a class="page-item page-link" href="{page:last}">尾页</a>
+     </div>
+   </nav>	
+{else}
+   	<div class="text-center my-5 text-secondary">未查询到任何数据！</div>
+{/pboot:if}
+ 	
+</div>
+
 <style>
     .copyright{
         background: #0B101D;
@@ -26,7 +188,7 @@
 <!--&lt;!&ndash;&lt;!&ndash;                </ul>&ndash;&gt;&ndash;&gt;-->
 <!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
 <!--&lt;!&ndash;&lt;!&ndash;            <div class="col-12 col-md-2 text-center d-none d-md-block">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;            	<p class="code">{pboot:qrcode string={pboot:httpurl}{URL}} </p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            	<p class="code">{pboot:qrcode string={pboot:httpurl}<?php echo URL;?>} </p>&ndash;&gt;&ndash;&gt;-->
 <!--&lt;!&ndash;&lt;!&ndash;                <p class="small">扫一扫 手机访问</p>&ndash;&gt;&ndash;&gt;-->
 <!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
 <!--&lt;!&ndash;        </div>&ndash;&gt;-->
@@ -150,3 +312,11 @@ function subform(obj){
 
 </body>
 </html>
+<?php return array (
+  0 => 'G:/github/platform/template/default/html/comm/head.html',
+  1 => 'G:/github/platform/template/default/html/comm/top.html',
+  2 => 'G:/github/platform/template/default/html/comm/position.html',
+  3 => 'G:/github/platform/template/default/html/comm/sortnav.html',
+  4 => 'G:/github/platform/template/default/html/comm/page.html',
+  5 => 'G:/github/platform/template/default/html/comm/foot.html',
+); ?>
