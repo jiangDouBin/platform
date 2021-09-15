@@ -78,6 +78,30 @@
 <!--    </div>-->
 <!--</div>-->
 
+<!-- 供求列表 -->
+<div class="bg-white py-5">
+    <div class="container pages">
+        <!-- 列表内容 -->
+        <div class="row">
+            {pboot:list num=10 order=date}
+            <div class="mb-4 col-12 col-sm-6 col-lg-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">标题大名称：标题名称几个字</h5>
+                        <p class="card-text">土地性质：后厨设施设备</p>
+                        <p class="card-text">商业占比：20%</p>
+                        <p class="card-text">容积率：90%</p>
+                        <p class="card-text">时间：2021-09-10 10:10</p>
+                        <a class="btn btn-info mt-2" href="[list:link]">查看详情</a>
+                    </div>
+                </div>
+            </div>
+            {/pboot:list}
+        </div>
+        {include file=comm/page.html}
+    </div>
+</div>
+
 <!-- 新闻动态 -->
 <div class="bg-white py-5">
     <div class="container">
