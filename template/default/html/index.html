@@ -79,20 +79,34 @@
 <!--</div>-->
 
 <!-- 供求列表 -->
-<div class="bg-white py-5">
-    <div class="container pages">
+<div class="bg-white">
+    <div class="container">
+        <div class="d-flex flex-row bd-highlight border rounded-sm mt-3">
+            <div class="p-2 bd-highlight border border-primary">
+                <a href="#">综合排序</a>
+            </div>
+            <div class="p-2 bd-highlight">
+                <a href="#">最热</a>
+            </div>
+            <div class="p-2 bd-highlight">
+                <a href="#">最新下载</a>
+            </div>
+        </div>
         <!-- 列表内容 -->
         <div class="row">
             {pboot:list num=10 order=date}
-            <div class="mb-4 col-12 col-sm-6 col-lg-4">
+            <div class="col-12 col-sm-6 col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">标题大名称：标题名称几个字</h5>
-                        <p class="card-text">土地性质：后厨设施设备</p>
-                        <p class="card-text">商业占比：20%</p>
-                        <p class="card-text">容积率：90%</p>
-                        <p class="card-text">时间：2021-09-10 10:10</p>
-                        <a class="btn btn-info mt-2" href="[list:link]">查看详情</a>
+                        <h5 class="mb-3 card-title text-truncate">标题大名称：标题名称几个字</h5>
+                        <div class="row">
+                            <div class="py-2 col-7 text-left text-truncate">土地性质：后厨设施设备</div>
+                            <div class="py-2 col-5 text-right text-truncate">商业占比：20%</div>
+                            <div class="py-2 col-7 text-left text-truncate">容积率：90%</div>
+                            <div class="py-2 col-5 text-right"></div>
+                            <div class="py-2 col-7 text-left text-truncate">时间：2021-09-10 10:10</div>
+                            <div class="col-5 text-right"><a class="btn btn-sm btn-outline-info" href="#">查看详情</a></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -101,33 +115,6 @@
         {include file=comm/page.html}
     </div>
 </div>
-
-<!-- 新闻动态 -->
-<div class="bg-white py-5">
-    <div class="container">
-      {pboot:sort scode=2}
-      	<div class="text-center fs-26 fs-sm-28 text-warning wow fadeInDown">[sort:name]</div>
-      	<div class="text-center fs-14 fs-sm-16 mb-5 text-secondary wow fadeInUp" data-wow-delay="1s">- [sort:subname] -</div>
-      {/pboot:sort}
-
-      <div class="row">
-      	{pboot:list scode=2 num=4 order=date}
-            <div class="col-12 col-lg-6 mb-3 wow fadeInUp" data-wow-delay="500ms">
-                <div class="media mb-3">
-                  <div class="media-body">
-                     <h5><a href="[list:link]" title="[list:title]">[list:title lencn=20]</a></h5>
-                     <p><a href="[list:link]" class="text-secondary lh-2">[list:content drophtml=1 dropblank=1 lencn=60] [list:date style=Y-m-d]</a></p>
-                  </div>
-                </div>
-            </div>
-        {/pboot:list}
-      </div>
-	  {pboot:sort scode=2}
-		<div class="text-center wow fadeInDown" data-wow-delay="1s"><h4><a href="[sort:link]" class="text-secondary fs-14 fs-sm-16">查看更多</a></h4></div>
-	  {/pboot:sort}
-    </div>
-</div>
-
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>        
