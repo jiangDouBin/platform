@@ -55,6 +55,7 @@ class ParserModel extends Model
     // 单个分类信息，不区分语言，兼容跨语言
     public function getSort($scode)
     {
+        // echo $scode;
         $field = array(
             'a.*',
             'c.name AS parentname',
@@ -88,6 +89,7 @@ class ParserModel extends Model
     // 多个分类信息，不区分语言，兼容跨语言
     public function getMultSort($scodes)
     {
+        // print_r($_GET['ext_ext_sort']);
         $field = array(
             'a.*',
             'c.name AS parentname',
@@ -469,6 +471,16 @@ class ParserModel extends Model
         if ($lg) {
             $where['a.acode'] = $lg;
         }
+
+        if(!empty($_GET['ext_ext_sort']) && $scode == 5) {
+            // echo $_GET['ext_ext_sort'];
+            if($_GET['ext_ext_sort'] == '最热') {
+                $order = 'a.visits DESC';
+            }else{
+                $order = 'a.date DESC';
+            }
+            
+        }
         
         // 筛选条件支持模糊匹配
         return parent::table('ay_content a')->field($fields)
@@ -533,7 +545,24 @@ class ParserModel extends Model
             ->join($join)
             ->decode()
             ->find();
+            
+        
         return $result;
+    }
+
+    public function getUploadList($id) {
+        // 添加下载列表
+        $fielded = array(
+            'id',
+            'name',
+            'created_time as time'
+        );
+            
+        $upload = parent::table('ay_content_upload')->field($fielded)
+                ->where("content_id=$id")
+                ->order('id DESC')
+                ->select();
+        return $upload;
     }
 
     // 单篇详情,不区分语言，兼容跨语言
@@ -585,6 +614,7 @@ class ParserModel extends Model
             ->decode()
             ->order('id DESC')
             ->find();
+        print_r($result);
         return $result;
     }
 

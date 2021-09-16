@@ -180,41 +180,46 @@
     
 </div>
 
-
-<div class="footer mt-3 pt-5 border-top text-secondary bg-light">
-	<div class="container">
-    	<div class="row pb-5">
-            <div class="col-12 col-md-5">
-            	<h5>{pboot:companyname}</h5>
-                <ul class="lh-2">
-                	<li>营业执照：{pboot:companyblicense}  </li>
-                    <li>备案号码：<a href="http://beian.miit.gov.cn/" target="_blank">{pboot:siteicp}</a> </li>
-                    <li>地址：{pboot:companyaddress} </li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-5">
-            	<div class="mt-4 d-block d-md-none"></div>
-                
-            	<h5>联系我们</h5>
-                <ul class="lh-2">
-                    <li>电话：{pboot:companyphone} </li>
-                    <li>邮箱：{pboot:companyemail} </li>
-                    <li>Q&nbsp;&nbsp;Q：{pboot:companyqq} </li>
-                </ul>
-            </div>
-            <div class="col-12 col-md-2 text-center d-none d-md-block">
-            	<p class="code">{pboot:qrcode string={pboot:httpurl}<?php echo URL;?>} </p>
-                <p class="small">扫一扫 手机访问</p>
-            </div>
-        </div>
-	</div>
+<style>
+    .copyright{
+        background: #0B101D;
+        color: #ffffff;
+    }
+</style>
+<div class="footer mt-3 border-top text-secondary bg-light">
+<!--	<div class="container">-->
+<!--&lt;!&ndash;    	<div class="row pb-5">&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <div class="col-12 col-md-5">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            	<h5>{pboot:companyname}</h5>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <ul class="lh-2">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                	<li>营业执照：{pboot:companyblicense}  </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <li>备案号码：<a href="http://beian.miit.gov.cn/" target="_blank">{pboot:siteicp}</a> </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <li>地址：{pboot:companyaddress} </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <div class="col-12 col-md-5">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            	<div class="mt-4 d-block d-md-none"></div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            	<h5>联系我们</h5>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <ul class="lh-2">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <li>电话：{pboot:companyphone} </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <li>邮箱：{pboot:companyemail} </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                    <li>Q&nbsp;&nbsp;Q：{pboot:companyqq} </li>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                </ul>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <div class="col-12 col-md-2 text-center d-none d-md-block">&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            	<p class="code">{pboot:qrcode string={pboot:httpurl}<?php echo URL;?>} </p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <p class="small">扫一扫 手机访问</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            </div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--	</div>-->
     <div class="copyright border-top lh-3 text-center  d-none d-md-block">
     	{pboot:sitecopyright}
     </div>
 </div>
 
 <!-- 占位 -->
-<div style="height:49px;" class="d-block d-sm-none"></div>
+<!--<div style="height:49px;" class="d-block d-sm-none"></div>-->
 
 <!-- 手机底部导航 -->
 <!--<div class="container-fluid bg-info fixed-bottom d-block d-sm-none">-->

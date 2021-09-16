@@ -133,6 +133,9 @@ class IndexController extends Controller
                                 if ($data->acode != get_lg() && Config::get('lgautosw') !== '0') {
                                     cookie('lg', $data->acode); // 调用内容语言与当前语言不一致时，自动切换语言
                                 }
+                                // $data =  json_decode($data); 
+                                // print_r($data);
+                                // $data =  json_encode($data);
                                 $this->getContent($data);
                             } else {
                                 _404('您访问的内容不存在，请核对后重试！');
@@ -162,6 +165,7 @@ class IndexController extends Controller
     // 首页
     private function getIndex()
     {
+//        print_r($_GET['ext_ext_sort']);
         $content = parent::parser($this->htmldir . 'index.html'); // 框架标签解析
         $content = $this->parser->parserBefore($content); // CMS公共标签前置解析
         $content = str_replace('{pboot:pagetitle}', $this->config('index_title') ?: '{pboot:sitetitle}-{pboot:sitesubtitle}', $content);
@@ -201,6 +205,7 @@ class IndexController extends Controller
                 $this->checkPageLevel($sort->gcode, $sort->gtype, $sort->gnote); // 检查栏目权限
                 $this->checkPageLevel($data->gcode, $data->gtype, $data->gnote); // 检查内容权限
                 $content = parent::parser($this->htmldir . $sort->contenttpl); // 框架标签解析
+                
                 $content = $this->parser->parserBefore($content); // CMS公共标签前置解析
                 $content = str_replace('{pboot:pagetitle}', $this->config('content_title') ?: '{content:title}-{sort:name}-{pboot:sitetitle}-{pboot:sitesubtitle}', $content);
                 $content = str_replace('{pboot:pagekeywords}', '{content:keywords}', $content);
@@ -208,8 +213,12 @@ class IndexController extends Controller
                 $content = $this->parser->parserPositionLabel($content, $sort->scode); // CMS当前位置标签解析
                 $content = $this->parser->parserSortLabel($content, $sort); // CMS分类信息标签解析
                 $content = $this->parser->parserCurrentContentLabel($content, $sort, $data); // CMS内容标签解析
+                // print_r($data);
+                $content = $this->parser->parserUploadLabel($content); // 下载列表
                 $content = $this->parser->parserCommentLabel($content); // 文章评论
+                
                 $content = $this->parser->parserAfter($content); // CMS公共标签后置解析
+                // print_r($content);
             } else {
                 error('请到后台设置分类栏目内容页模板！');
             }

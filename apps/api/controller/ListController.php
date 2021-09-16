@@ -106,10 +106,9 @@ class ListController extends Controller
                 $data[$key]->contentlink = Url::home($urlname . $url_break_char . $value->scode . '/' . $value->id, true);
             }
         }
-        
         // 输出数据
         if (request('page') <= PAGECOUNT) {
-            json(1, $data);
+            json(2, $data);
         } else {
             return json(0, '已经到底了！');
         }

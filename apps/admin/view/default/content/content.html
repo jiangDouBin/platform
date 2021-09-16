@@ -5,7 +5,7 @@
 	<div class="layui-tab layui-tab-brief" lay-filter="tab">
 	  <ul class="layui-tab-title">
 	    <li class="layui-this" lay-id="t1">{$model_name}内容</li>
-	    <li lay-id="t2">{$model_name}新增</li>
+	    <!-- <li lay-id="t2">{$model_name}新增</li> -->
 	  </ul>
 	  <div class="layui-tab-content">
 	  	   <div class="layui-tab-item layui-show">
@@ -13,10 +13,10 @@
 		  	   		<div class="layui-form-item nospace">
 		  	   			<div class="layui-input-inline">
 		  	   				{$pathinfo}
-					       <select name="scode">
+					       <!-- <select name="scode">
 	                          	<option value="">全部栏目</option>
                                 {$search_select}
-	                       </select>
+	                       </select> -->
 					    </div>
 	                     <div class="layui-input-inline">
 	                     	<input type="text" name="keyword"  value="{$get.keyword}"  placeholder="请输入搜索关键字" class="layui-input">
@@ -35,15 +35,15 @@
 		            <table class="layui-table">
 		            	<thead>
 		                    <tr>
-		                    	<th><input type="checkbox" class="checkbox" lay-ignore id="checkall" title="全选"></th>
+		                    	<!-- <th><input type="checkbox" class="checkbox" lay-ignore id="checkall" title="全选"></th> -->
 		                    	<th>ID</th>
-		                        <th>栏目</th>
+		                        <!-- <th>栏目</th> -->
 		                        <th>标题</th>
 		                        <th>发布时间</th>
-		                        <th>排序</th>
+		                        <!-- <th>排序</th> -->
 		                        <th>状态</th>
-		                        <th>置顶</th>
-		                        <th>推荐</th>
+		                        <!-- <th>置顶</th>
+		                        <th>推荐</th> -->
 		                        <th>访问量</th>
 		                        <th>操作</th>
 		                    </tr>
@@ -51,15 +51,15 @@
 		                <tbody>
 		                    {foreach $contents(key,value)}
 		                    <tr>
-		                    	<td>
+		                    	<!-- <td>
 		                    		<input type="checkbox" class="checkbox checkitem" lay-ignore name="list[]" {if($value->outlink)}disabled{/if} value="[value->id]">
 		                    		<input type="hidden" name="listall[]" value="[value->id]">
-		                    	</td>
+		                    	</td> -->
 		                    	<td>[value->id]</td>
-		                        <td title="[value->scode]">[value->sortname]</td>
+		                        <!-- <td title="[value->scode]">[value->sortname]</td> -->
 		                        <td title="[value->title]">
 		                        {fun=substr_both($value->title,0,15)}
-		                        {if($value->isheadline)}
+		                        <!-- {if($value->isheadline)}
 		                        	<span class="layui-badge layui-bg-blue">头</span>
 		                        {/if}
 		                        {if($value->ico)}
@@ -70,10 +70,10 @@
 		                        {/if}
 		                        {if($value->outlink)}
 	                            	<span class="layui-badge layui-bg-black">链</span>
-	                            {/if}
+	                            {/if} -->
 		                        </td>
 		                        <td>[value->date]</td>
-		                        <td class="table-input"><input type="text" lay-ignore class="layui-input" name="sorting[]" value="[value->sorting]"></td>
+		                        <!-- <td class="table-input"><input type="text" lay-ignore class="layui-input" name="sorting[]" value="[value->sorting]"></td> -->
 		                        <td>
 		                        {if($value->status)}
 			                        <a href="{url./admin/'.C.'/mod/id/'.$value->id.'/field/status/value/0}"><i class='fa fa-toggle-on' title="点击关闭"></i></a>
@@ -81,7 +81,7 @@
 			                        <a href="{url./admin/'.C.'/mod/id/'.$value->id.'/field/status/value/1}"><i class='fa fa-toggle-off' title="点击开启"></i></a>
 			                    {/if}
 			                    </td>
-			                    <td>
+			                    <!-- <td>
 		                        {if($value->istop)}
 			                        <a href="{url./admin/'.C.'/mod/id/'.$value->id.'/field/istop/value/0}"><i class='fa fa-toggle-on' title="点击关闭"></i></a>
 			                        {else}
@@ -94,7 +94,7 @@
 			                        {else}
 			                        <a href="{url./admin/'.C.'/mod/id/'.$value->id.'/field/isrecommend/value/1}"><i class='fa fa-toggle-off' title="点击开启"></i></a>
 			                    {/if}
-			                    </td>
+			                    </td> -->
 			                    <td>[value->visits]</td>
 		                        <td>
 		                         	{if(!$value->outlink)}
@@ -118,11 +118,11 @@
 			                        	{/php}
 	
 			                        	<input type="hidden" name="urls[[value->id]]" value="{php}echo $link{/php}">
-			                        	<a href="{php}echo $link{/php}" class="layui-btn layui-btn-xs layui-btn-primary"  target="_blank">查看</a>
+			                        	<!-- <a href="{php}echo $link{/php}" class="layui-btn layui-btn-xs layui-btn-primary"  target="_blank">查看</a> -->
 		                        	{/if}
 		                            {fun=get_btn_del($value->id)}
 		                            {if(check_level('mod'))}
-		                            	<a href="{url./admin/Content/mod/mcode/'.get('mcode').'/id/'.$value->id.'}{$btnqs}" class="layui-btn layui-btn-xs" >修改</a>
+		                            	<a href="{url./admin/Content/mod/mcode/'.get('mcode').'/id/'.$value->id.'}{$btnqs}" class="layui-btn layui-btn-xs" >查看</a>
 		                            {/if}
 		                        </td>
 		                    </tr>
@@ -144,32 +144,23 @@
 						</select>
 					</div>
 						
-			        <div class="layui-input-inline">
+			        <!-- <div class="layui-input-inline">
 				     	 <select name="scode">
 	                        	<option value="">请选择移动/复制到栏目</option>
 	                             {$search_select}
 	                     </select>
-                    </div>
+                    </div> -->
                     
                     <div class="layui-btn-group">
-	                    {if(check_level('mod'))}
+	                    <!-- {if(check_level('mod'))}
 	                    	<button type="submit" name="submit" value="copy" class="layui-btn layui-btn-sm">复制</button>
 	                    	<button type="submit" name="submit" value="move" class="layui-btn layui-btn-sm">移动</button>
-	                    {/if}
+	                    {/if} -->
 	                    
-	                    {if(check_level('del'))}
-				     		<button type="submit" name="submit" onclick="return setDelAction();" class="layui-btn layui-btn-sm">批量删除</button>
-				     	{/if}
-				     	
-				     	{if(check_level('mod'))}
-				     		<button type="submit" name="submit" value="sorting" class="layui-btn layui-btn-sm">保存排序</button>
-					     	{if([$baidu_zz_token])}
-					     		<button type="submit" name="submit" value="baiduzz" class="layui-btn layui-btn-sm">百度普通推送</button>
-					     	{/if}
-					     	{if([$baidu_ks_token])}
-					     		<button type="submit" name="submit" value="baiduks" class="layui-btn layui-btn-sm">百度快速推送</button>
-					     	{/if}
-				     	 {/if}
+	                    <!-- {if(check_level('del'))} -->
+				     		<!-- <button type="submit" name="submit" onclick="return setDelAction();" class="layui-btn layui-btn-sm">批量删除</button> -->
+				     	<!-- {/if} -->
+
 			     	 </div>
 			     	<script>
 			     		function setDelAction(){
@@ -530,11 +521,11 @@
 	  			<div class="layui-tab">
 					  <ul class="layui-tab-title">
 					    <li class="layui-this">基本内容</li>
-					    <li>高级内容</li>
+					    <!-- <li>高级内容</li> -->
 					  </ul>
 					  <div class="layui-tab-content">
 					    <div class="layui-tab-item layui-show">
-					    	<div class="layui-form-item">
+					    	<!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">内容栏目   <span class="layui-text-red">*</span></label>
 			                     <div class="layui-input-block">
 			                     	<select name="scode" lay-verify="required">
@@ -542,7 +533,7 @@
 			                        	{$sort_select}
 				                    </select>
 			                     </div>
-			                </div>
+			                </div> -->
 			                
 			                <div class="layui-form-item">
 			                     <label class="layui-form-label">内容标题   <span class="layui-text-red">*</span></label>
@@ -570,7 +561,7 @@
 				                </div>
 			                	{/if}
 			                	
-			                    {if($value->type==3)}<!-- 单选 -->
+			                    <!-- {if($value->type==3)}
 			                	<div class="layui-form-item">
 			                		<label class="layui-form-label">[value->description]</label>
 			                		<div class="layui-input-block">
@@ -589,7 +580,7 @@
 					                    </div>
 				                	</div>
 				                </div>
-			                	{/if}
+			                	{/if} -->
 			                	
 			                    {if($value->type==4)}<!-- 多选 -->
 			                	<div class="layui-form-item">
@@ -693,19 +684,19 @@
 			                	
 			                {/foreach}
 			                
-			                <div class="layui-form-item">
+			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">内容</label>
 			                     <div class="layui-input-block">
 			                     	<script type="text/plain" id="editor" name="content" style="width:100%;height:240px;">{fun=decode_string([$content->content])}</script>
 			                     </div>
-			                </div>
+			                </div> -->	
 			                
-			                <div class="layui-form-item">
+			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">tags</label>
 			                     <div class="layui-input-block">
 			                     	<input type="text" name="tags" placeholder="请输入文章tag，英文逗号隔开" value="{$content->tags}" class="layui-input">
 			                     </div>
-			                </div>
+			                </div> -->
 			                
 			                <div class="layui-form-item">
 			                     <label class="layui-form-label">作者</label>
@@ -713,15 +704,21 @@
 			                     	<input type="text" name="author" placeholder="请输入作者" value="{$content->author}" class="layui-input">
 			                     </div>
 			                </div>
-			                
 			                <div class="layui-form-item">
+												<label class="layui-form-label">状态</label>
+												<div class="layui-input-block">
+													<input type="radio" name="status" value="1" title="申通通过" {if([$content->status]==1)} checked{/if}>
+							 						<input type="radio" name="status" value="0" title="未审核" {if([$content->status]==0)} checked{/if}>
+												</div>
+									 </div>
+			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">来源</label>
 			                     <div class="layui-input-block">
 			                     	<input type="text" name="source" placeholder="请输入来源" value="{$content->source}" class="layui-input">
 			                     </div>
-			                </div>
+			                </div> -->
 			                
-			                <div class="layui-form-item">
+			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">缩略图</label>
 			                     <div class="layui-input-inline">
 			                     	<input type="text" name="ico" id="ico" value="{$content->ico}" placeholder="请上传缩略图"  class="layui-input">
@@ -730,9 +727,9 @@
 								 	 <i class="layui-icon">&#xe67c;</i>上传图片
 								 </button>
 								 <div id="ico_box" class="pic addedit">{if([$content->ico])}<dl><dt><img src="{SITE_DIR}{$content->ico}" data-url="{$content->ico}"></dt><dd>删除</dd></dl>{/if}</div>
-			                </div>
+			                </div> -->
 			                
-			                <div class="layui-form-item">
+			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">轮播多图</label>
 			                     <div class="layui-input-inline">
 			                     	<input type="text" name="pics" id="pics" value="{$content->pics}" placeholder="请上传轮播多图"  class="layui-input">
@@ -741,7 +738,7 @@
 								 	 <i class="layui-icon">&#xe67c;</i>上传多图
 								 </button>
 								 <div id="pics_box" class="pic addedit">
-								 	 <dl></dl> <!-- 规避空内容拖动bug -->
+								 	 <dl></dl> 
 									 {php}
 									    if([$content->pics]){
 		                					$pics=explode(',',[$content->pics]);
@@ -753,18 +750,18 @@
 	          							}
 	         						 {/php}
          						 </div>
-			                </div>
+			                </div> -->
 			                
-			                <div class="layui-form-item">
+			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">状态</label>
 			                     <div class="layui-input-block">
 									<input type="checkbox" name="istop" value="1" title="置顶" {if([$content->istop]==1)}checked{/if}>
 			                    	<input type="checkbox" name="isrecommend" value="1" title="推荐" {if([$content->isrecommend]==1)}checked{/if}>
 			                    	<input type="checkbox" name="isheadline" value="1" title="头条" {if([$content->isheadline]==1)}checked{/if}>
 			                     </div>
-			                </div>
+			                </div> -->
 			                
-			                 <div class="layui-form-item">
+			                 <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">浏览权限</label>
 			                     <div class="layui-input-block">
 									<select name="gid">
@@ -787,11 +784,11 @@
 			                     		<option value="5" {if([$content->gtype]==5)}selected="selected"{/if}>大于</option>
 									</select>
 			                     </div>
-			                </div> 
+			                </div>  -->
 			                
 					    </div>
 					    
-					    <div class="layui-tab-item ">
+					    <!-- <div class="layui-tab-item ">
 					    	<div class="layui-form-item">
 			                     <label class="layui-form-label">内容副栏目</label>
 			                     <div class="layui-input-block">
@@ -876,13 +873,13 @@
 									<input type="radio" name="status" value="0" title="隐藏" {if([$content->status]==0)} checked="checked"{/if}>
 			                     </div>
 			                </div>
-					    </div>
+					    </div> -->
 					  </div>
 					</div>
 					<div class="layui-form-item">
 						 <div class="layui-input-block">
-						    <button class="layui-btn" lay-submit>立即提交</button>
-						    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+						    <button class="layui-btn" lay-submit>修改</button>
+						    <!-- <button type="reset" class="layui-btn layui-btn-primary">重置</button> -->
 						    {fun=get_btn_back()}
 						 </div>
 					</div>

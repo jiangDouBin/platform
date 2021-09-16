@@ -414,6 +414,7 @@ class ContentController extends Controller
             $gtype = post('gtype', 'int') ?: 4;
             $gnote = post('gnote');
             
+            $scode = 5; // 默认所有的数据都归类于产品，产品所属id为5
             if (! $scode) {
                 alert_back('内容分类不能为空！');
             }
@@ -450,10 +451,10 @@ class ContentController extends Controller
                 'titlecolor' => $titlecolor,
                 'subtitle' => $subtitle,
                 'filename' => $filename,
-                'author' => $author,
+                // 'author' => $author,
                 'source' => $source,
                 'outlink' => $outlink,
-                'date' => $date,
+                // 'date' => $date,
                 'ico' => $ico,
                 'pics' => $pics,
                 'content' => $content,
@@ -508,8 +509,9 @@ class ContentController extends Controller
             if (! $result = $this->model->getContent($id)) {
                 error('编辑的内容已经不存在！', - 1);
             }
-            $this->assign('content', $result);
             
+            $this->assign('content', $result);
+            // $this->assign('upload',$uploadlist);
             if (! $mcode = get('mcode', 'var')) {
                 error('传递的模型编码参数有误，请核对后重试！');
             }

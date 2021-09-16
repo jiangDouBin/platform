@@ -770,7 +770,6 @@ class ParserController extends Controller
                 
                 // 读取一个或多个栏目数据
                 $data = $this->model->getMultSort(escape_string($scode));
-                
                 // 无数据直接跳过
                 if (! $data) {
                     $content = str_replace($matches[0][$i], '', $content);
@@ -837,7 +836,7 @@ class ParserController extends Controller
                     }
                     $key ++;
                     $out_html .= $one_html;
-                }
+                }               
                 // 执行替换
                 $content = str_replace($matches[0][$i], $out_html, $content);
             }
@@ -1163,7 +1162,7 @@ class ParserController extends Controller
                 } else {
                     continue;
                 }
-                
+                // echo $scode;
                 if ($scode == '*') {
                     $scode = '';
                 }
@@ -1376,7 +1375,7 @@ class ParserController extends Controller
                 } else {
                     $data = $this->model->getList($scode, $num, $order, $where1, $where2, $where3, $fuzzy, $start, $lfield);
                 }
-                
+
                 // 无数据直接替换
                 if (! $data) {
                     $content = str_replace($matches[0][$i], '', $content);
@@ -2264,29 +2263,26 @@ class ParserController extends Controller
         }
         return $content;
     }
-
-    // 解析文章评论
-    public function parserCommentLabel($content)
-    {
-        $pattern = '/\{pboot:comment(\s+[^}]+)?\}([\s\S]*?)\{\/pboot:comment\}/';
-        $pattern2 = '/\[comment:([\w]+)(\s+[^]]+)?\]/';
-        $pattern3 = '/\{pboot:commentsub(\s+[^}]+)?\}([\s\S]*?)\{\/pboot:commentsub\}/';
-        $pattern4 = '/\[commentsub:([\w]+)(\s+[^]]+)?\]/';
-        if (preg_match_all($pattern, $content, $matches)) {
+    // 解析下载列表
+    public function parserUploadLabel($content) {
+        
+        $pattern3 = '/\{pboot:uploadlist(\s+[^}]+)?\}([\s\S]*?)\{\/pboot:uploadlist\}/';
+        $pattern4 = '/\[uploadlist:([\w]+)(\s+[^]]+)?\]/';
+        
+        if (preg_match_all($pattern3, $content, $matches)) {
+           //  print_r($matches);
             $count = count($matches[0]);
+            
             for ($i = 0; $i < $count; $i ++) {
                 // 获取调节参数
                 $params = $this->parserParam($matches[1][$i]);
-                
+               
+                // print_r($matches[1]);
                 if (! self::checkLabelLevel($params)) {
                     $content = str_replace($matches[0][$i], '', $content);
                     continue;
                 }
                 
-                $num = $this->config('pagesize');
-                $page = true;
-                $order = 'a.id desc';
-                $start = 1;
                 
                 // 跳过未指定fcode的标签
                 if (! array_key_exists('contentid', $params)) {
@@ -2312,6 +2308,102 @@ class ParserController extends Controller
                             break;
                     }
                 }
+                
+                
+                // 读取数据
+                if (! $data = $this->model->getUploadList($contentid)) {
+                    $content = str_replace($matches[0][$i], '', $content);
+                    continue;
+                }
+                
+                
+               
+                $out_html = '';
+                
+                
+                foreach ($data as $value) { // 按查询数据条数循环
+                    $one_html = $matches[2][$i];
+                    // print_r($one_html);
+                    // print_r(preg_match_all($pattern4, $one_html, $matches3));
+                    // 解析子集
+                    $out_html_sub = '';
+                    $key_sub = 1;
+                    if (preg_match_all($pattern4, $one_html, $matches3)) {
+                       
+                        $count3 = count($matches3[0]);
+                        // print_r($count3);
+                        for ($k = 0; $k < $count3; $k ++) {// 循环替换数据
+                            $params_sub = $this->parserParam($matches3[2][$k]);
+                            $one_html_sub = $this->parserComment($matches3[1][$k], $matches3[0][$k], $one_html, $value, $params_sub, $key_sub);
+                            // print_r($one_html_sub);
+                        }
+                        $key_sub ++;
+                        $out_html_sub .= $one_html_sub;
+                        // print_r($out_html_sub);
+                        
+                    }
+                    // $one_html = str_replace($matches3[0][$k], $out_html_sub, $one_html);
+                    
+                    $out_html .= $out_html_sub;
+                    // print_r($out_html_sub);
+                    
+                }
+                print_r($out_html);
+                $content = str_replace($matches[0][$i], $out_html, $content);
+                // print_r($out_html);
+                
+            }
+        }
+        return $content;
+    }
+    // 解析文章评论
+    public function parserCommentLabel($content)
+    {
+        $pattern = '/\{pboot:comment(\s+[^}]+)?\}([\s\S]*?)\{\/pboot:comment\}/';
+        $pattern2 = '/\[comment:([\w]+)(\s+[^]]+)?\]/';
+        $pattern3 = '/\{pboot:commentsub(\s+[^}]+)?\}([\s\S]*?)\{\/pboot:commentsub\}/';
+        $pattern4 = '/\[commentsub:([\w]+)(\s+[^]]+)?\]/';
+        if (preg_match_all($pattern, $content, $matches)) {
+            $count = count($matches[0]);
+            // print_r($matches[0]);
+            for ($i = 0; $i < $count; $i ++) {
+                // 获取调节参数
+                $params = $this->parserParam($matches[1][$i]);
+                
+                if (! self::checkLabelLevel($params)) {
+                    $content = str_replace($matches[0][$i], '', $content);
+                    continue;
+                }
+                
+                $num = $this->config('pagesize');
+                $page = true;
+                $order = 'a.id desc';
+                $start = 1;
+                // 跳过未指定fcode的标签
+                if (! array_key_exists('contentid', $params)) {
+                    continue;
+                }
+                
+                foreach ($params as $key => $value) {
+                    switch ($key) {
+                        case 'num':
+                            $num = $value;
+                            break;
+                        case 'page':
+                            $page = $value;
+                            break;
+                        case 'start':
+                            $start = $value;
+                            break;
+                        case 'contentid':
+                            $contentid = $value;
+                            break;
+                        case 'order':
+                            $order = $value;
+                            break;
+                    }
+                }
+                // print_r($params);
                 
                 // 起始数校验
                 if (! is_numeric($start) || $start < 1) {
@@ -2366,6 +2458,7 @@ class ParserController extends Controller
                             foreach ($data_sub as $value_sub) { // 按子查询数据条数循环
                                 $one_html_sub = $matches3[2][$k];
                                 for ($m = 0; $m < $count4; $m ++) { // 循环替换数据
+                                    // print_r($matches4[2][$m]);
                                     $params_sub = $this->parserParam($matches4[2][$m]);
                                     $one_html_sub = $this->parserComment($matches4[1][$m], $matches4[0][$m], $one_html_sub, $value_sub, $params_sub, $key_sub);
                                 }

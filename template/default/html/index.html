@@ -23,43 +23,44 @@
 </div>
 
 <!--产品推荐-->
-<!--<div class="bg-white py-5">-->
-<!--    <div class="container">-->
-<!--    -->
+<div class="bg-white py-5">
+    <div class="container">
+
 <!--      {pboot:sort scode=5}-->
 <!--      	<div class="text-center fs-26 fs-sm-28 text-success wow fadeInDown">[sort:name]</div>-->
 <!--      	<div class="text-center fs-14 fs-sm-16 mb-4 text-secondary wow fadeInUp" data-wow-delay="1s">- [sort:subname] -</div>-->
 <!--      {/pboot:sort}-->
-<!--      -->
-<!--      <div class="row">-->
-<!--       {pboot:list scode=5 num=4 order=date}-->
-<!--        <div class="col-12 col-sm-6 col-lg-3 wow zoomIn" data-wow-delay="[list:i]00ms" data-wow-duration="1s">-->
-<!--              <div class="card">-->
-<!--                  <div class="card-img-150"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
-<!--                  <div class="card-body">-->
-<!--                    <h5 class="card-title"><a href="[list:link]">[list:title lencn=12]</a></h5>-->
-<!--                    <p class="card-text">-->
-<!--	                    {pboot:if([list:istop]==1)}-->
-<!--	                		<span class="badge badge-danger">置顶</span>-->
-<!--	                	{/pboot:if}-->
-<!--	                	{pboot:if([list:isrecommend]==1)}-->
-<!--	                		<span class="badge badge-warning">推荐</span>-->
-<!--	                	{/pboot:if}-->
-<!--	                	{pboot:if([list:isheadline]==1)}-->
-<!--	                		<span class="badge badge-info">头条</span>-->
-<!--	                	{/pboot:if}-->
-<!--	                	[list:content drophtml=1 dropblank=1 len=50]-->
-<!--                	</p>-->
-<!--                  </div>-->
-<!--               </div>-->
-<!--         </div>-->
-<!--        {/pboot:list}-->
-<!--      </div>-->
-<!--	  {pboot:sort scode=5}-->
-<!--			<div class="text-center mt-4 wow fadeInDown" data-wow-delay="1s"><h4><a href="[sort:link]" class="text-secondary fs-14 fs-sm-16">查看更多</a></h4></div>-->
-<!--	  {/pboot:sort}-->
-<!--    </div>-->
-<!--</div>-->
+    <div class="row">
+<!--        <div class="col-12 col-sm-2 col-md-1">颜色：</div>-->
+        <div class="col-12 col-sm-10 col-md-11">
+            {pboot:selectall field=ext_ext_sort text=综合排序  class='mb-3 btn btn-light' active='mb-3 btn btn-info'}
+            {pboot:select field=ext_ext_sort}
+            <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-info{else}btn-light{/pboot:if}">[select:value]</a>
+            {/pboot:select}
+        </div>
+    </div>
+      <div class="row">
+       {pboot:list scode=5 num=12 order='sorting desc,id desc'}
+        <div class="col-12 col-sm-6 col-lg-4 wow zoomIn" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
+              <div class="card">
+<!--                  <div class="card-img-10"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
+                  <div class="card-body">
+                    <h5 class="card-title">[list:title lencn=12]</h5>
+                    <p>土地性质：[list:type lencn=12]</p>
+                    <p>商业占比：[list:ext_bl lencn=12]</p>
+                    <p>容积率：[list:ext_rjl lencn=12]</p>
+                    <p>时间：[list:date]</p>
+                    <a href="[list:link]"><button>查看详情</button></a>
+                  </div>
+               </div>
+         </div>
+        {/pboot:list}
+      </div>
+	  {pboot:sort scode=5}
+			<div class="text-center mt-4 wow fadeInDown" data-wow-delay="1s"><h4><a href="[sort:link]" class="text-secondary fs-14 fs-sm-16">查看更多</a></h4></div>
+	  {/pboot:sort}
+    </div>
+</div>
 
 <!-- 关于我们 -->
 <!--<div class="bg-light py-5">-->
@@ -78,31 +79,34 @@
 <!--    </div>-->
 <!--</div>-->
 
-<!-- 新闻动态 -->
-<div class="bg-white py-5">
-    <div class="container">
-      {pboot:sort scode=2}
-      	<div class="text-center fs-26 fs-sm-28 text-warning wow fadeInDown">[sort:name]</div>
-      	<div class="text-center fs-14 fs-sm-16 mb-5 text-secondary wow fadeInUp" data-wow-delay="1s">- [sort:subname] -</div>
-      {/pboot:sort}
-
-      <div class="row">
-      	{pboot:list scode=2 num=4 order=date}
-            <div class="col-12 col-lg-6 mb-3 wow fadeInUp" data-wow-delay="500ms">
-                <div class="media mb-3">
-                  <div class="media-body">
-                     <h5><a href="[list:link]" title="[list:title]">[list:title lencn=20]</a></h5>
-                     <p><a href="[list:link]" class="text-secondary lh-2">[list:content drophtml=1 dropblank=1 lencn=60] [list:date style=Y-m-d]</a></p>
-                  </div>
-                </div>
-            </div>
-        {/pboot:list}
-      </div>
-	  {pboot:sort scode=2}
-		<div class="text-center wow fadeInDown" data-wow-delay="1s"><h4><a href="[sort:link]" class="text-secondary fs-14 fs-sm-16">查看更多</a></h4></div>
-	  {/pboot:sort}
-    </div>
-</div>
+<!-- 产品 -->
+<!--<div class="bg-white py-5">-->
+<!--    <div class="container">-->
+<!--&lt;!&ndash;      {pboot:sort scode=2}&ndash;&gt;-->
+<!--&lt;!&ndash;      	<div class="text-center fs-26 fs-sm-28 text-warning wow fadeInDown">[sort:name]</div>&ndash;&gt;-->
+<!--&lt;!&ndash;      	<div class="text-center fs-14 fs-sm-16 mb-5 text-secondary wow fadeInUp" data-wow-delay="1s">- [sort:subname] -</div>&ndash;&gt;-->
+<!--&lt;!&ndash;      {/pboot:sort}&ndash;&gt;-->
+<!--    <div class="sonsort mt-4 mb-2">-->
+<!--        <a href="" class="btn btn-info mb-2">全部 </a>-->
+<!--&lt;!&ndash;        <a href="" class="btn btn-light mb-2">全部 </a>&ndash;&gt;-->
+<!--    </div>-->
+<!--      <div class="row mt-4">-->
+<!--      	{pboot:list scode=2 num=6 order=date}-->
+<!--            <div class="col-12 col-lg-4 mb-3 wow fadeInUp" data-wow-delay="500ms">-->
+<!--                <div class="media mb-3">-->
+<!--                  <div class="media-body">-->
+<!--                     <h5><a href="[list:link]" title="[list:title]">[list:title lencn=20]</a></h5>-->
+<!--                     <p><a href="[list:link]" class="text-secondary lh-2">[list:content drophtml=1 dropblank=1 lencn=60] [list:date style=Y-m-d]</a></p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        {/pboot:list}-->
+<!--      </div>-->
+<!--	  {pboot:sort scode=2}-->
+<!--		<div class="text-center wow fadeInDown" data-wow-delay="1s"><h4><a href="[sort:link]" class="text-secondary fs-14 fs-sm-16">查看更多</a></h4></div>-->
+<!--	  {/pboot:sort}-->
+<!--    </div>-->
+<!--</div>-->
 
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
