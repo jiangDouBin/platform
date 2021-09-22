@@ -87,7 +87,12 @@
 <div style="height:57px;" class="head-sm-height"></div>
 
 
-
+<style>
+  .swiper-pagination-bullet{
+    width: 30px;
+    border-radius: 5px;
+  }
+</style>
 <!-- 幻灯片 -->
 <div class="swiper-container">
     <div class="swiper-wrapper">
