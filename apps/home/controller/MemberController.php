@@ -8,6 +8,7 @@
  */
 namespace app\home\controller;
 
+use app\home\model\OrderModel;
 use core\basic\Controller;
 use app\home\model\MemberModel;
 use core\basic\Url;
@@ -505,5 +506,93 @@ class MemberController extends Controller
     public function _empty()
     {
         _404('您访问的地址不存在，请核对再试！');
+    }
+
+    // 消费记录
+    public function orders(){
+        $orderModel = new OrderModel();
+        $content = parent::parser($this->htmldir . 'member/myorders.html');
+        $content = $this->parser->parserBefore($content); // CMS公共标签前置解析
+        $pagetitle = "消费记录"; // 页面标题
+        $content = str_replace('{pboot:pagetitle}', ($pagetitle . '-{pboot:sitetitle}-{pboot:sitesubtitle}'), $content);
+        $content = str_replace('{pboot:pagekeywords}', '', $content);
+        $content = str_replace('{pboot:pagedescription}', '', $content);
+        $pattern = '/\{pboot:list(\s+[^}]+)?\}([\s\S]*?)\{\/pboot:list\}/';
+        $pattern2 = '/\[list:([\w\+\-\*\/\%]+)(\s+[^]]+)?\]/';
+        if (preg_match_all($pattern, $content, $matches)) {
+            $count = count($matches[0]);
+            for ($i = 0; $i < $count; $i ++) {
+                // 获取调节参数
+                $params = $this->parserParam($matches[1][$i]);
+                $num = $this->config('pagesize'); // 未设置条数时使用默认15
+                $start = 1; // 起始条数，默认第一条开始
+
+                // 分离参数
+                foreach ($params as $key => $value) {
+                    switch ($key) {
+                        case 'num':
+                            $num = $value;
+                            break;
+                        case 'start':
+                            $start = $value;
+                            break;
+                    }
+                }
+
+                // 起始数校验
+                if (! is_numeric($start) || $start < 1) {
+                    $start = 1;
+                }
+                $data = $orderModel->getOrders($start, $num);
+                // 无数据直接替换
+                if (! $data) {
+                    $content = str_replace($matches[0][$i], '', $content);
+                    continue;
+                }
+                // 匹配到内部标签
+                if (preg_match_all($pattern2, $matches[2][$i], $matches2)) {
+                    $count2 = count($matches2[0]); // 循环内的内容标签数量
+                } else {
+                    $count2 = 0;
+                }
+
+                $out_html = '';
+                $pagenum = defined('PAGE') ? PAGE : 1;
+                $key = ($pagenum - 1) * $num + 1;
+                foreach ($data as $value) { // 按查询数据条数循环
+                    $one_html = $matches[2][$i];
+                    for ($j = 0; $j < $count2; $j ++) { // 循环替换数据
+                        $one_html = str_replace($matches2[0][$j], $value->{$matches2[1][$j]}, $one_html);
+                    }
+                    $key ++;
+                    $out_html .= $one_html;
+                }
+                $content = str_replace($matches[0][$i], $out_html, $content);
+            }
+        }
+        $content = $this->parser->parserAfter($content); // CMS公共标签后置解析
+        $this->cache($content, true);
+    }
+
+    // 解析调节参数
+    private function parserParam($string, $striptags = true)
+    {
+        if (! $string = trim($string))
+            return array();
+        $string = preg_replace('/\s+/', ' ', $string); // 多空格处理
+        if ($striptags) {
+            $string = strip_tags($string);
+        }
+        $param = array();
+        if (preg_match_all('/([\w]+)[\s]?=[\s]?([\'\"]([^\'\"]+)?[\'\"]|([^\s]+))/i', $string, $matches)) {
+            foreach ($matches[1] as $key => $value) {
+                if ($matches[3][$key]) {
+                    $param[$value] = $matches[3][$key];
+                } else {
+                    $param[$value] = $matches[4][$key];
+                }
+            }
+        }
+        return $param;
     }
 }

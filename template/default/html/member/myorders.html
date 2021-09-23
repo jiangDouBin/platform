@@ -1,0 +1,19 @@
+{include file=comm/head.html}
+<div class="container pages">    
+	 <!-- 列表内容 -->
+	 <div class="row">
+     {pboot:list num=10}
+     	<div class="mb-3 col-12 col-sm-6 col-lg-3">
+	      	<div class="card bg-light">
+			  <div class="card-header">消费ID：[list:id]</div>
+			  <div class="card-body">
+			    <p class="card-text">创建时间：[list:created_time]</p>
+			  </div>
+			   <div class="card-footer">付费时间：[list:payment_time]</div>
+			</div>
+		</div>
+     {/pboot:list}
+     </div>
+</div>
+
+{include file=comm/foot.html}
