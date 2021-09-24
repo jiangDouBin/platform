@@ -20,6 +20,9 @@
 	*{
 		font-size: 14px;
 	}
+	input::placeholder{
+		color: #BBBBBB;
+	}
 	.navbar-nav .active .nav-link{
 		color: #3786FF !important;
 		font-weight: bold;
@@ -69,9 +72,13 @@
 	border: 1px solid #F2F2F2;
 	cursor: pointer;
 }
-.userhover :active{
+.card:hover{
 	border: 1px solid #3786FF;
 	box-shadow: 0px 2px 6px 0px rgba(55, 134, 255, 0.25);
+}
+.card:hover .card-title6 {
+	background: #3786FF;
+	color: #ffffff;
 }
 .card-title6{
 	width: 82px;
@@ -81,7 +88,31 @@
 	line-height: 30px;
 	color: #8A8A8A;
 	border: 1px solid #F2F2F2;
+	border-radius: 4px;
 }
+.swiper-pagination-bullet{
+    width: 30px;
+    border-radius: 5px;
+  }
+	.btn-infoed{
+		border:1px solid #3786FF !important; 
+		color:#3786FF;
+	}
+	.borderb{
+		border-bottom: 1px solid #F3F3F3 !important;
+	}
+	.searchborder{
+		border-radius: 4px 0px 0px 4px;
+		border: 1px solid #3786FF !important;
+	}
+	.newbtn{
+		width: 56px;
+		height: 34px;
+		background: #3786FF;
+		border: 1px solid #3786FF !important;
+		border-radius: 0px 4px 4px 0px;
+		color: #ffffff;
+	}
 </style>
 <!-- 头部导航 -->
 <nav class="navbar navbar-light fixed-top navbar-expand-lg shadow-sm">

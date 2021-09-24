@@ -4,7 +4,89 @@
 
 <div class="container pages">
 	{include file=comm/position.html}
-    <div class="row">
+	<style>
+	body{
+		background-color: #F0F2F5;
+		color: #6F6F6F;
+	}
+	.infoDiv{
+		background-color: #ffffff;
+		border-top: 5px solid #3786FF;
+		border-radius: 5px;
+	}
+	.bgtxtdiv{
+		width: 100%;
+		background-color: #F5F9FF;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 20px 30px;
+		padding-bottom: 20px;
+	}
+	.bgtxtdivleft{
+		flex: 1;
+	}
+	.infoflexrow{
+		width: 80%;
+		margin-left: 10%;
+		margin-right: 10%;
+		padding-top: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+	.infoflexrow h2{
+		font-size: 20px;
+		/* font-family: PingFangSC-Regular, PingFang SC; */
+		font-weight: 400;
+		color: #1F1F1F;
+		line-height: 28px;
+	}
+	.infoflexrow .text-secondary{
+		width: 50%;
+	}
+	.bgtxtdivright{
+		margin-top: 20px;
+		width: 297px;
+		height: 166px;
+		background-color: #ffffff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	.bgtxtdivright p{
+		height: 48px;
+		line-height: 48px;
+		font-size: 16px;
+	}
+	.bgtxtdivright span{
+		flex: 1;
+		display: flex;
+		align-items: center;
+		font-size: 22px;
+		font-weight: bold;
+		color: #3786FF;
+	}
+	.bgtxtdivright button{
+		width: 218px;
+		height: 36px;
+		background: #3786FF;
+		border-radius: 4px;
+		color: #ffffff;
+		border: none;
+	}
+	.newtable{
+		background-color: #ffffff;
+		width: 100%;
+		border: 1px solid #DEDEDE;
+	}
+	.newtable tr th,.newtable tr td{
+		text-align: center;
+		height: 57px;
+	}
+	</style>
+    <div class="row infoDiv">
 			
        	<!-- <div class="col-12 col-lg-6 mb-5">
                 <div class="view">
@@ -41,28 +123,41 @@
                    </div>
                </div> 
            </div> -->
-            
-        	<div class="col-12 col-lg-6 mb-3 pr-3">
-            	<h2 class="border-bottom pb-2 fs-sm-28 fs-20">{content:title}</h2>
-                <div class="text-secondary my-3 border-bottom-dashed lh-3">
-                      	上架时间：{content:date}
-                </div>
-                <div class="text-secondary my-3 border-bottom-dashed lh-3">
-                      	浏览次数：{content:visits}
-                </div>
-                
-                <div class="text-secondary my-3 border-bottom-dashed lh-3">
-                      	土地性质：{content:ext_type}
-                </div>
-                
-                <div class="text-secondary my-3 border-bottom-dashed lh-3">
-                     	 商业占比：{content:ext_bl}
-                </div>
-								<div class="text-secondary my-3 border-bottom-dashed lh-3">
-											容积率：{content:ext_rjl}
-							</div>
-                 <div class="text-secondary my-3 border-bottom-dashed lh-3">
-                     	 产品价格：￥{content:ext_price}
+        	<div class=" mb-3 pr-3 bgtxtdiv">
+								<div class="bgtxtdivleft">
+									<img src="{pboot:sitetplpath}/images/1.png" style="margin-left: 32px;" />
+									<div class="infoflexrow">
+										<h2 class=" pb-2 fs-sm-28 fs-20">{content:title}</h2>
+									</div>
+									<div class="infoflexrow">
+											<div class="text-secondary ">
+														土地性质：{content:ext_type}
+											</div>
+											<div class="text-secondary ">
+														商业占比：{content:ext_bl}
+											</div>
+									</div>
+									<div class="infoflexrow">
+										<div class="text-secondary ">
+													容积率：{content:ext_rjl}
+										</div>
+										<div class="text-secondary ">
+											时间：{content:date}
+										</div>
+									</div>
+									
+									<!-- <div class="text-secondary my-3 border-bottom-dashed lh-3">
+													浏览次数：{content:visits}
+									</div> -->
+									
+									
+								
+								</div>
+            		
+                 <div class="text-secondary bgtxtdivright">
+									 <p>下载资源</p>
+                    <span>{content:ext_price}元</span>
+										<button>购买</button>
                 </div>
                 <!-- <div class="my-3 lh-3">
                 	{pboot:sort scode=11}
@@ -71,22 +166,28 @@
                 </div> -->
             </div>
       </div>
-      
-      <h5 class="border-bottom border-info pb-2 mb-2"><i class="fa fa-sliders" aria-hidden="true"></i> 下载附件</h5>
-			<table>
-				<tr>
-					<th>标题</th>
-					<th>时间</th>
-					<th>操作</th>
-				</tr>
-				{pboot:uploadlist contentid={content:id}}    
-  				<tr>
-						<td>[uploadlist:name]</td>
-						<td>[uploadlist:time]</td>
+      <div class="row" style="background-color: #ffffff; padding: 20px 30px;">
+				<h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 资源链接</h5>
+				<table class="newtable">
+					<tr>
+						<th>标题</th>
+						<th>上传时间</th>
+						<th>操作</th>
 					</tr>
-   			{/pboot:uploadlist}
-				
-			</table>
+					{pboot:uploadlist contentid={content:id}}    
+						<tr>
+							<td>[uploadlist:name]</td>
+							<td>[uploadlist:time]</td>
+							<td style="color: #3786FF;">
+								<img src="{pboot:sitetplpath}/images/icon10.png" />
+								下载资源
+							</td>
+						</tr>
+					 {/pboot:uploadlist}
+					
+				</table>
+			</div>
+      
       <!-- <div class="content">{content:content}</div> -->
       
       <!-- <div class="text-secondary lh-2">

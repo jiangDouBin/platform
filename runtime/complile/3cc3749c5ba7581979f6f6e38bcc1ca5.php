@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="{pboot:sitetplpath}/css/aoyun.css?v=v1.3.5" >
 	<link rel="stylesheet" href="{pboot:sitetplpath}/swiper-4.3.5/css/swiper.min.css">
 	<link rel="stylesheet" href="{pboot:sitetplpath}/css/animate.css">
+	<link rel="stylesheet" href="{pboot:sitetplpath}/css/common.css">
 	<link rel="shortcut icon" href="{pboot:sitepath}/favicon.ico" type="image/x-icon">
 	<script src="{pboot:sitetplpath}/js/jquery-1.12.4.min.js" ></script>
 </head>
@@ -23,6 +24,7 @@
 	}
 	.navbar {
 		padding: 0 !important;
+		background: #ffffff;
 	}
 	.navbar-nav{
 		height: 53px;
@@ -44,7 +46,7 @@
 	}
 </style>
 <!-- 头部导航 -->
-<nav class="navbar navbar-light bg-light fixed-top navbar-expand-lg shadow-sm">
+<nav class="navbar navbar-light fixed-top navbar-expand-lg shadow-sm">
   <div class="container">
 	  	<a class=" my-1" href="{pboot:sitepath}/">
 	      <img src="{pboot:sitelogo}" class="logo-sm-height"  height="50">

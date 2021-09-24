@@ -821,7 +821,7 @@
 			                     <div class="layui-input-block">
 			                     	<script type="text/plain" id="editor" name="content" style="width:100%;height:240px;"><?php echo decode_string($this->getVar('content')->content);?></script>
 			                     </div>
-			                </div> -->
+			                </div> -->	
 			                
 			                <!-- <div class="layui-form-item">
 			                     <label class="layui-form-label">tags</label>

@@ -30,23 +30,21 @@
 <!--      	<div class="text-center fs-26 fs-sm-28 text-success wow fadeInDown">[sort:name]</div>-->
 <!--      	<div class="text-center fs-14 fs-sm-16 mb-4 text-secondary wow fadeInUp" data-wow-delay="1s">- [sort:subname] -</div>-->
 <!--      {/pboot:sort}-->
-    <div class="row">
+    <div class="row borderb">
 <!--        <div class="col-12 col-sm-2 col-md-1">颜色：</div>-->
         <div class="col-12 col-sm-10 col-md-11">
-            {pboot:selectall field=ext_ext_sort text=综合排序  class='mb-3 btn btn-light' active='mb-3 btn btn-info'}
+            {pboot:selectall field=ext_ext_sort text=综合排序  class='mb-3 btn btn-lighted' active='mb-3 btn btn-infoed'}
             {pboot:select field=ext_ext_sort}
-            <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-info{else}btn-light{/pboot:if}">[select:value]</a>
+            <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-infoed{else}btn-lighted{/pboot:if}">[select:value]</a>
             {/pboot:select}
         </div>
     </div>
       <div class="row">
        {pboot:list scode=5 num=12 order='sorting desc,id desc'}
-        <div class="col-12 col-sm-6 col-lg-4 wow zoomIn" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
-              <div class="card userhover">
+        <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
+              <div class="card ">
 <!--                  <div class="card-img-10"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
                   <div class="card-body ">
-                    
-                    
                     <div class="flexrow">
                       <h5 class="card-title1">[list:title lencn=12]</h5>
                     </div>
