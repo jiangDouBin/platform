@@ -8,15 +8,15 @@
 namespace app\home\model;
 
 use core\basic\Model;
-use core\basic\Config;
 
-class OrderModel extends Model
+class TransactionModel extends Model
 {
-    // 获取消费记录
-    public function getOrders(){
+    // 获取交易记录
+    public function getTransactions($action){
         // 筛选条件支持模糊匹配
-        return parent::table('ay_orders a')->field(['a.*'])
+        return parent::table('ay_transactions a')->field(['a.*'])
             ->where("member_id='" . session('pboot_uid') . "'")
+            ->where('action='.$action)
             ->order('a.id DESC')
             ->page()
             ->select();

@@ -8,14 +8,13 @@
 namespace app\home\model;
 
 use core\basic\Model;
-use core\basic\Config;
 
-class OrderModel extends Model
+class CashOutModel extends Model
 {
-    // 获取消费记录
-    public function getOrders(){
+    // 获取体现记录
+    public function getCashouts(){
         // 筛选条件支持模糊匹配
-        return parent::table('ay_orders a')->field(['a.*'])
+        return parent::table('ay_cashouts a')->field(['a.*'])
             ->where("member_id='" . session('pboot_uid') . "'")
             ->order('a.id DESC')
             ->page()
