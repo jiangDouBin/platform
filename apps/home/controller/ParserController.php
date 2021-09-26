@@ -2348,7 +2348,7 @@ class ParserController extends Controller
                     // print_r($out_html_sub);
                     
                 }
-                print_r($out_html);
+                // print_r($out_html);
                 $content = str_replace($matches[0][$i], $out_html, $content);
                 // print_r($out_html);
                 

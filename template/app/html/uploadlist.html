@@ -1,4 +1,23 @@
 {include file=comm/head.html}
+<style>
+  .status{
+  width: 88px;
+  height: 40px;
+  background: url('{pboot:sitetplpath}/images/icon7.png') no-repeat center;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+}
+.successstatus{
+  background: url('{pboot:sitetplpath}/images/icon6.png') no-repeat center;
+}
+.errorstatus{
+  background: url('{pboot:sitetplpath}/images/icon5.png') no-repeat center;
+}
+</style>
 
 <div class="container pages">
 	 <!-- 分类筛选 -->
@@ -45,11 +64,11 @@
           </div>
 	<!-- 图文列表 -->
     <div class="row">
-        {pboot:list num=8 order=sorting}
+        {pboot:list scode=5 num=8 order=sorting}
         <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
           <div class="card ">
 <!--                  <div class="card-img-10"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
-              <div class="card-body ">
+              <div class="card-body " style="position: relative;">
                 <div class="flexrow">
                   <h5 class="card-title1">[list:title lencn=12]</h5>
                 </div>
@@ -63,6 +82,9 @@
                 <div class="flexrow">
                   <p class="card-title2">时间：[list:date]</p>
                   <a href="[list:link]" class="card-title6">查看详情</a>
+                </div>
+                <div class="status successstatus">
+                    审核中
                 </div>
               </div>
            </div>
