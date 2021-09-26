@@ -1,0 +1,239 @@
+{include file=comm/head.html}
+
+
+
+<div class="container pages">
+	{include file=comm/position.html}
+	<style>
+	body{
+		background-color: #F0F2F5;
+		color: #6F6F6F;
+        font-size: 14px;
+	}
+	.infoDiv{
+		background-color: #ffffff;
+		border-top: 5px solid #3786FF;
+		border-radius: 5px;
+	}
+	.bgtxtdiv{
+		width: 100%;
+		background-color: #F5F9FF;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin: 20px 30px 0px 30px;
+		padding-bottom: 20px;
+	}
+	.bgtxtdivleft{
+		flex: 1;
+	}
+	.infoflexrow{
+		width: 80%;
+		margin-left: 10%;
+		margin-right: 10%;
+		padding-top: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: space-evenly;
+	}
+	.infoflexrow h2{
+		font-size: 20px;
+		/* font-family: PingFangSC-Regular, PingFang SC; */
+		font-weight: 400;
+		color: #1F1F1F;
+		line-height: 28px;
+	}
+	.infoflexrow .text-secondary{
+		width: 33.333%;
+        display: flex;
+        height: 60px;
+        justify-content: center;
+        align-items: center;
+        border-right:1px solid #3786FF;
+	}
+    .infoflexrow .text-secondary:last-child{
+        border: none;
+    }
+	.bgtxtdivright{
+		margin-top: 20px;
+		width: 297px;
+		height: 166px;
+		background-color: #ffffff;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+	.bgtxtdivright p{
+		height: 48px;
+		line-height: 48px;
+		font-size: 16px;
+	}
+	.bgtxtdivright span{
+		flex: 1;
+		display: flex;
+		align-items: center;
+		font-size: 22px;
+		font-weight: bold;
+		color: #3786FF;
+	}
+	.bgtxtdivright button{
+		width: 218px;
+		height: 36px;
+		background: #3786FF;
+		border-radius: 4px;
+		color: #ffffff;
+		border: none;
+	}
+	.newtable{
+		background-color: #ffffff;
+		width: 100%;
+		border: 1px solid #DEDEDE;
+	}
+	.newtable tr th,.newtable tr td{
+		text-align: center;
+		height: 57px;
+	}
+    .tixiantxt{
+        width: 100%;
+		margin: 0px 30px;
+        height: 70px;
+        background: #F5F5F5;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+    .leftdiv{
+        flex: 1;
+        margin: 0px 20px;
+        display: flex;
+        align-items: center;
+    }
+    .btn{
+        width: 218px;
+        height: 36px;
+        background: #3786FF;
+        border-radius: 4px;
+        color: #ffffff;
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    .newtable tr:nth-child(2n){
+		background-color: #F5F5F5;
+	}
+	</style>
+    <div class="row infoDiv">
+        	<div class=" bgtxtdiv">
+                <div class="bgtxtdivleft">
+                    <img src="{pboot:sitetplpath}/images/1.png" style="margin-left: 32px;" />
+                    <div class="infoflexrow">
+                            <div class="text-secondary ">
+                                <img src="{pboot:sitetplpath}/images/icon13.png" style="margin-right: 32px;" />
+                                <span>总收益金额：3000</span>
+                            </div>
+                            <div class="text-secondary ">
+                                <img src="{pboot:sitetplpath}/images/icon3.png" style="margin-right: 32px;" />
+                                <span>总收益金额：3000</span>
+                            </div>
+                            <div class="text-secondary ">
+                                <img src="{pboot:sitetplpath}/images/icon11.png" style="margin-right: 32px;" />
+                                <span>总收益金额：3000</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tixiantxt">
+                <div class="leftdiv">
+                    <span style="color:#1F1F1F;">提现</span>
+                    <input type="text" style="flex: 1; margin: 0px 18px; color: #3786FF; text-indent: 2em; border: 1px solid #DADADA; height: 36px;"  />
+                    <span style="color: #3786FF;">元</span>
+                </div>
+                <button type="button" class="btn">提现</button>
+            </div>
+      </div>
+      <div class="row" style="background-color: #ffffff; padding: 20px 30px;">
+				<h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 提现记录</h5>
+				<table class="newtable">
+					<tr>
+						<th>提现金额</th>
+						<th>上传时间</th>
+						<th>状态</th>
+					</tr>
+                    <tr>
+                        <td>2</td>
+                        <td>3</td>
+                        <td style="color: #3786FF;">
+                            申请中
+                        </td>
+                    </tr>
+					<tr>
+                        <td>2</td>
+                        <td>3</td>
+                        <td style="color: #545454;">
+                            已到账
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>3</td>
+                        <td style="color: #DF2727;">
+                            提现异常
+                        </td>
+                    </tr>
+				</table>
+			</div>
+</div>
+
+<script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
+<script>
+var viewSwiper = new Swiper('.view .swiper-container', {
+	on:{
+		slideChangeTransitionStart: function() {
+		    updateNavPosition()
+	    }
+	}
+})
+
+$('.view .arrow-left,.preview .arrow-left').on('click', function(e) {
+	e.preventDefault()
+	if (viewSwiper.activeIndex == 0) {
+		viewSwiper.slideTo(viewSwiper.slides.length - 1, 1000);
+		return
+	}
+	viewSwiper.slidePrev()
+})
+$('.view .arrow-right,.preview .arrow-right').on('click', function(e) {
+	e.preventDefault()
+	if (viewSwiper.activeIndex == viewSwiper.slides.length - 1) {
+		viewSwiper.slideTo(0, 1000);
+		return
+	}
+	viewSwiper.slideNext()
+})
+
+var previewSwiper = new Swiper('.preview .swiper-container', {
+	//visibilityFullFit: true,
+	slidesPerView: 'auto',
+	allowTouchMove: false,
+	on:{
+		tap: function() {
+		    viewSwiper.slideTo(previewSwiper.clickedIndex)
+	  }
+	}
+})
+
+function updateNavPosition() {
+		$('.preview .active-nav').removeClass('active-nav')
+		var activeNav = $('.preview .swiper-slide').eq(viewSwiper.activeIndex).addClass('active-nav')
+		if (!activeNav.hasClass('swiper-slide-visible')) {
+			if (activeNav.index() > previewSwiper.activeIndex) {
+				var thumbsPerNav = Math.floor(previewSwiper.width / activeNav.width()) - 1
+				previewSwiper.slideTo(activeNav.index() - thumbsPerNav)
+			} else {
+				previewSwiper.slideTo(activeNav.index())
+			}
+		}
+	}
+</script>
+
+{include file=comm/foot.html}
