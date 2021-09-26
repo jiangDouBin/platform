@@ -1,0 +1,105 @@
+{include file=comm/head.html}
+
+
+
+<div class="container pages">
+	{include file=comm/position.html}
+	<style>
+	body{
+		background-color: #F0F2F5;
+		color: #6F6F6F;
+	}
+	.newtable{
+		background-color: #ffffff;
+		width: 100%;
+		/* border: 1px solid #DEDEDE; */
+	}
+	.newtable tr th,.newtable tr td{
+		text-align: center;
+		height: 57px;
+	}
+  .newtable tr:nth-child(2n){
+		background-color: #F5F5F5;
+	}
+	</style>
+      <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;">
+				<table class="newtable">
+					<tr>
+						<th>名称</th>
+						<th>金额</th>
+            <th>付费方式</th>
+						<th>付费时间</th>
+					</tr>
+						<tr>
+							<td>1</td>
+							<td>1</td>
+              <td>1</td>
+							<td>2</td>
+						</tr>
+				</table>
+			</div>
+      
+      <!-- <div class="content">{content:content}</div> -->
+      
+      <!-- <div class="text-secondary lh-2">
+			<p>上一篇：{content:precontent}</p>
+			<p>下一篇：{content:nextcontent}</p>
+      </div> -->
+</div>
+
+<!-- {include file=comm/comment.html} -->
+    
+
+<script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
+<script>
+var viewSwiper = new Swiper('.view .swiper-container', {
+	on:{
+		slideChangeTransitionStart: function() {
+		    updateNavPosition()
+	    }
+	}
+})
+
+$('.view .arrow-left,.preview .arrow-left').on('click', function(e) {
+	e.preventDefault()
+	if (viewSwiper.activeIndex == 0) {
+		viewSwiper.slideTo(viewSwiper.slides.length - 1, 1000);
+		return
+	}
+	viewSwiper.slidePrev()
+})
+$('.view .arrow-right,.preview .arrow-right').on('click', function(e) {
+	e.preventDefault()
+	if (viewSwiper.activeIndex == viewSwiper.slides.length - 1) {
+		viewSwiper.slideTo(0, 1000);
+		return
+	}
+	viewSwiper.slideNext()
+})
+
+var previewSwiper = new Swiper('.preview .swiper-container', {
+	//visibilityFullFit: true,
+	slidesPerView: 'auto',
+	allowTouchMove: false,
+	on:{
+		tap: function() {
+		    viewSwiper.slideTo(previewSwiper.clickedIndex)
+	  }
+	}
+})
+
+function updateNavPosition() {
+		$('.preview .active-nav').removeClass('active-nav')
+		var activeNav = $('.preview .swiper-slide').eq(viewSwiper.activeIndex).addClass('active-nav')
+		if (!activeNav.hasClass('swiper-slide-visible')) {
+			if (activeNav.index() > previewSwiper.activeIndex) {
+				var thumbsPerNav = Math.floor(previewSwiper.width / activeNav.width()) - 1
+				previewSwiper.slideTo(activeNav.index() - thumbsPerNav)
+			} else {
+				previewSwiper.slideTo(activeNav.index())
+			}
+		}
+	}
+</script>
+
+{include file=comm/foot.html}

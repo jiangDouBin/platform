@@ -37,7 +37,8 @@
                   <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-infoed{else}btn-lighted{/pboot:if}">[select:value]</a>
                   {/pboot:select} -->
               </div>
-              <div class="col-10 col-sm-2 col-md-4" style="color: #3786FF; text-align: right;"><span style="border: 1px solid #3786FF; padding: 2px 6px;">消费记录</span>
+              <div class="col-10 col-sm-2 col-md-4" style="color: #3786FF; text-align: right;">
+                <a href="/?mydownloadinfo/"><span style="border: 1px solid #3786FF; padding: 2px 6px; color: #3786FF;">消费记录</span></a>
                 <!-- <form class="form-inline justify-content-center" action="{pboot:scaction}"  method="get">
                   <div class="form-group  mb-2 ">
                     <input type="text" name="keyword" class="form-control searchborder" placeholder="搜索你想要的">
@@ -50,7 +51,7 @@
           </div>
 	<!-- 图文列表 -->
     <div class="row">
-        {pboot:list num=8 order=sorting}
+        {pboot:list scode=5 num=8 order=sorting}
         <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
           <div class="card ">
 <!--                  <div class="card-img-10"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
