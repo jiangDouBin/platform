@@ -9,7 +9,7 @@
 	}
 	.infoDiv{
 		background-color: #ffffff;
-		border-top: 5px solid #3786FF;
+		/* border-top: 5px solid #3786FF; */
 		border-radius: 5px;
 	}
 	.bgtxtdiv{
@@ -25,13 +25,13 @@
 		flex: 1;
 	}
 	.infoflexrow{
-		width: 80%;
-		margin-left: 10%;
-		margin-right: 10%;
-		padding-top: 10px;
+		width: 100%;
+		padding: 10px 20px;
 		display: flex;
 		align-items: center;
-		justify-content: space-evenly;
+		justify-content: space-between;
+		border-radius: 4px;
+		border: 1px solid #DEDEDE;
 	}
 	.infoflexrow h2{
 		font-size: 20px;
@@ -83,52 +83,49 @@
 		text-align: center;
 		height: 57px;
 	}
+	.txtbiaoti{
+		font-size: 20px;
+		font-weight: 400;
+		color: #1F1F1F;
+	}
+.titleh2{
+	font-size: 14px;
+	color: #545454;
+}
+.paytype{
+	width: 194px;
+	height: 74px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 4px;
+	border: 1px solid #DEDEDE;
+	margin-right: 16px;
+}
 	</style>
-    <div class="row infoDiv">
-			
-       
-        	<div class=" mb-3 pr-3 bgtxtdiv">
-								<div class="bgtxtdivleft">
-									<img src="{pboot:sitetplpath}/images/1.png" style="margin-left: 32px;" />
-									<div class="infoflexrow">
-										<h2 class=" pb-2 fs-sm-28 fs-20">{content:title}</h2>
-									</div>
-									<div class="infoflexrow">
-											<div class="text-secondary ">
-														土地性质：{content:ext_type}
-											</div>
-											<div class="text-secondary ">
-														商业占比：{content:ext_bl}
-											</div>
-									</div>
-									<div class="infoflexrow">
-										<div class="text-secondary ">
-													容积率：{content:ext_rjl}
-										</div>
-										<div class="text-secondary ">
-											时间：{content:date}
-										</div>
-									</div>
-									
-								
-								
-								</div>
-            		
-                 <div class="text-secondary bgtxtdivright">
-									 <p>下载资源</p>
-                    <span>{content:ext_price}元</span>
-										<button>购买</button>
-                </div>
-               
-            </div>
-      </div>
-      
-      
-      
-      </div>
-</div>
-    
-
+	<div class="container pages">
+    <div class="row infoDiv" style="padding: 26px 38px;">
+				<div class="infoflexrow">
+					<h3 class="txtbiaoti">标题名称：xxxxxx-admin</h3>
+					<span style="color: #777777;">支付金额：<span style="color: #3786FF;">2000.00</span>元</span>
+				</div>
+		</div>
+    <div class="row infoDiv" style="margin-top: 18px; padding: 26px 30px;">
+			<div class="infoflexrow" style="border: none; flex-direction: column;align-items: flex-start;">
+				<h3 class="titleh2">选择以下支付方式付款</h3>
+				<div style="border-top: 1px solid #DEDEDE; width: 100%; margin-top: 22px; display: flex; padding: 30px 10px;">
+					<div class="paytype">
+						<img src="{pboot:sitetplpath}/images/icon12.png" />
+						<span>支付宝</span>
+					</div>
+					<div class="paytype">
+						<img src="{pboot:sitetplpath}/images/icon9.png" />
+						<span>微信</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
 

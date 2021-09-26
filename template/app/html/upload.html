@@ -1,0 +1,121 @@
+{include file=comm/head.html}
+
+
+
+<div class="container pages">
+	{include file=comm/position.html}
+	<style>
+	body{
+		background-color: #F0F2F5;
+		color: #6F6F6F;
+	}
+	.newtable{
+		background-color: #ffffff;
+		width: 100%;
+		/* border: 1px solid #DEDEDE; */
+	}
+	.newtable tr th,.newtable tr td{
+		text-align: center;
+		height: 57px;
+	}
+  .newtable tr:nth-child(2n){
+		background-color: #F5F5F5;
+	}
+  .mgroup{
+    width: 90%;
+  }
+  .form-group{
+    display: flex;
+    height: 40px;
+    margin-top: 10px;
+  }
+  .formgrouprow label{
+    width: 82px;
+    height: 20px;
+    text-align: right;
+    margin-right: 10px;
+  }
+  .formgrouprow{
+    flex: 1;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0px 20px;
+  
+  }
+  .form-control{
+
+  }
+	</style>
+  <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-bottom: none;">
+    <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 上传</h5>
+    <form class="my-4 mgroup" onsubmit="return login(this);">
+      <div class="form-group">
+        <div class="formgrouprow">
+          <label >名称:</label>
+          <input type="text" name="username" required id="username" class="form-control" placeholder="请输入账号">
+        </div>
+        <div class="formgrouprow">
+          <label >账号:</label>
+          <input type="text" name="username" required id="username" class="form-control" placeholder="请输入账号">
+        </div>
+    </div>
+    </form>
+  </div>
+      <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-top: none;">
+        <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 附件列表</h5>
+				<table class="newtable">
+					<tr>
+						<th>名称</th>
+						<th>金额</th>
+            <th>付费方式</th>
+						<th>付费时间</th>
+					</tr>
+						<tr>
+							<td>1</td>
+							<td>1</td>
+              <td>1</td>
+							<td>2</td>
+						</tr>
+				</table>
+			</div>
+      
+</div>
+
+    
+
+<script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
+<script>
+  function login(obj){
+  var url='{pboot:login}';
+  var username=$(obj).find("#username").val();
+  var password=$(obj).find("#password").val();
+  var checkcode=$(obj).find("#checkcode").val();
+  
+  $.ajax({
+    type: 'POST',
+    url: url,
+    dataType: 'json',
+    data: {
+    	username: username,
+    	password: password,
+    	checkcode: checkcode
+    },
+    success: function (response, status) {
+      if(response.code){
+    	 alert("登录成功！");
+		 location.href=response.tourl; 
+      }else{
+    	  $('#codeimg').click();
+    	 alert(response.data);
+      }
+    },
+    error:function(xhr,status,error){
+      alert('返回数据异常！');
+    }
+  });
+  return false;
+}
+</script>
+{include file=comm/foot.html}
