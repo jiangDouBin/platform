@@ -338,5 +338,10 @@ function parserParam($string, $striptags = true)
     return $param;
 }
 
+// 自定义函数 求和
+function self_sum($x, $y)
+{
+    return $x + $y;
+}
 
 

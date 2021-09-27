@@ -8,14 +8,14 @@
  */
 namespace app\home\controller;
 
+use app\common\BasicController;
 use app\home\model\CashOutModel;
 use app\home\model\OrderModel;
 use app\home\model\TransactionModel;
-use core\basic\Controller;
 use app\home\model\MemberModel;
 use core\basic\Url;
 
-class MemberController extends Controller
+class MemberController extends BasicController
 {
 
     protected $parser;
@@ -537,10 +537,13 @@ class MemberController extends Controller
     //提现记录
     public function cashout(){
         $model = new CashOutModel();
-        $content = parent::parser($this->htmldir . 'member/mycashout.html');
-        $pagetitle = "提现记录"; // 页面标题
+        $this->pageTitle = "提现记录111"; // 页面标题
+        $this->pageKeywords = "提现记录222"; // 页面关键字
+        $this->pageDescription = "提现记录333"; // 页面说明
         $data = $model->getCashouts();
-        $content = parserList($content,$data,$pagetitle);
-        $this->cache($content, true);
+        $this->assign('super','songping');
+        $this->assign('cashouts',$data);
+        $this->assign('obj',[['name'=>'ss'],['name'=>'ww'],['name'=>'aa']]);
+        $this->displayFile('html/member/mycashout.html');
     }
 }
