@@ -546,4 +546,9 @@ class MemberController extends BasicController
         $this->assign('obj',[['name'=>'ss'],['name'=>'ww'],['name'=>'aa']]);
         $this->displayFile('html/member/mycashout.html');
     }
+
+    public function responseJson()
+    {
+        return json(200,'www','');
+    }
 }
