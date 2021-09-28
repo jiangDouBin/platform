@@ -1,0 +1,24 @@
+{include file=comm/head.html}
+<div class="container pages">    
+	 <!-- 列表内容 -->
+	 <div class="row">
+     	<div class="mb-3 col-12 col-sm-6 col-lg-3">
+			{foreach $cashouts(key,value,num)}
+				<div class="card bg-light">
+					<div class="card-header">提现ID：[value->id]</div>
+					<div class="card-body">
+						<p class="card-text">提现金额：[value->status]</p>
+						<p class="card-text">状态：[value->amount]</p>
+						<p class="card-text">单变量：{$super}</p>
+						{foreach $obj(key,value)}
+							<p class="card-text">数组元素[num]：[value['name']]</p>
+							<p class="card-text">自定义函数：{fun=self_sum($key,1)}</p>
+						{/foreach}
+					</div>
+				</div>
+			{/foreach}
+		</div>
+     </div>
+</div>
+
+{include file=comm/foot.html}

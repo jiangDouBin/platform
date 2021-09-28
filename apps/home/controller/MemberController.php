@@ -8,11 +8,14 @@
  */
 namespace app\home\controller;
 
-use core\basic\Controller;
+use app\common\BasicController;
+use app\home\model\CashOutModel;
+use app\home\model\OrderModel;
+use app\home\model\TransactionModel;
 use app\home\model\MemberModel;
 use core\basic\Url;
 
-class MemberController extends Controller
+class MemberController extends BasicController
 {
 
     protected $parser;
@@ -505,5 +508,42 @@ class MemberController extends Controller
     public function _empty()
     {
         _404('您访问的地址不存在，请核对再试！');
+    }
+
+    // 消费记录
+    public function orders(){
+        $orderModel = new OrderModel();
+        $content = parent::parser($this->htmldir . 'member/myorders.html');
+        $pagetitle = "消费记录"; // 页面标题
+        $data = $orderModel->getOrders();
+        foreach ($data as $key=>$order){
+            switch ($order->payment_type){
+                case 1:
+                    $order->payment_type = '余额';
+                    break;
+                case 2:
+                    $order->payment_type = '微信';
+                    break;
+                case 3:
+                    $order->payment_type = '支付宝';
+                    break;
+            }
+            $data[$key]=$order;
+        }
+        $content = parserList($content,$data,$pagetitle);
+        $this->cache($content, true);
+    }
+
+    //提现记录
+    public function cashout(){
+        $model = new CashOutModel();
+        $this->pageTitle = "提现记录111"; // 页面标题
+        $this->pageKeywords = "提现记录222"; // 页面关键字
+        $this->pageDescription = "提现记录333"; // 页面说明
+        $data = $model->getCashouts();
+        $this->assign('super','songping');
+        $this->assign('cashouts',$data);
+        $this->assign('obj',[['name'=>'ss'],['name'=>'ww'],['name'=>'aa']]);
+        $this->displayFile('html/member/mycashout.html');
     }
 }

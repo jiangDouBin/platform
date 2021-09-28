@@ -171,6 +171,12 @@ class IndexController extends Controller
         $content = str_replace('{pboot:pagetitle}', $this->config('index_title') ?: '{pboot:sitetitle}-{pboot:sitesubtitle}', $content);
         $content = $this->parser->parserPositionLabel($content, - 1, '首页', SITE_INDEX_DIR . '/'); // CMS当前位置标签解析
         $content = $this->parser->parserSpecialPageSortLabel($content, 0, '', SITE_INDEX_DIR . '/'); // 解析分类标签
+
+        // 首页信息列表
+        $sort = $this->model->getSort(9);
+        $content = $this->parser->parserSortLabel($content, $sort); // CMS分类信息标签解析
+        $content = $this->parser->parserListLabel($content, $sort->scode); // CMS分类列表标签解析
+
         $content = $this->parser->parserAfter($content); // CMS公共标签后置解析
         $this->cache($content, true);
     }
