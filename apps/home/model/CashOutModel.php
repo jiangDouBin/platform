@@ -11,7 +11,11 @@ use core\basic\Model;
 
 class CashOutModel extends Model
 {
-    // 获取体现记录
+    const STATUS_SQZ = 1;
+    const STATUS_YDZ = 2;
+    const STATUS_YC = 3;
+
+    // 获取提现记录
     public function getCashouts(){
         // 筛选条件支持模糊匹配
         return parent::table('ay_cashouts a')->field(['a.*'])
@@ -19,5 +23,14 @@ class CashOutModel extends Model
             ->order('a.id DESC')
             ->page()
             ->select();
+    }
+
+    // 已提现总额
+    public function getOutAmount(){
+        return parent::table('ay_cashouts a')
+            ->field(['a.*'])
+            ->where('member_id='.session('pboot_uid'))
+            ->where('status='.self::STATUS_YDZ)
+            ->sum(amount);
     }
 }

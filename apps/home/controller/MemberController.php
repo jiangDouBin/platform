@@ -14,6 +14,7 @@ use app\home\model\OrderModel;
 use app\home\model\TransactionModel;
 use app\home\model\MemberModel;
 use core\basic\Url;
+use mysql_xdevapi\Collection;
 
 class MemberController extends BasicController
 {
@@ -536,14 +537,30 @@ class MemberController extends BasicController
 
     //提现记录
     public function cashout(){
-        $model = new CashOutModel();
+        $transactionModel = new TransactionModel();
+        $incomeAmount = number_format($transactionModel->getIncomeAmount(TransactionModel::TYPE_INCOME), 2);
+        $lastOne = $transactionModel->getLastOne();
+        $member = $this->model->getUser();
+        if($lastOne)
+            $ktx_amount = $lastOne->current_balance > $member->balance ? $member->balance : $lastOne->current_balance;
+        else
+            $ktx_amount = $member->balance;
+
+        $cashOutModel = new CashOutModel();
+        $ytxAmount = number_format($cashOutModel->getOutAmount(),2);
+
         $this->pageTitle = "提现记录111"; // 页面标题
         $this->pageKeywords = "提现记录222"; // 页面关键字
         $this->pageDescription = "提现记录333"; // 页面说明
-        $data = $model->getCashouts();
-        $this->assign('super','songping');
+        $this->pageUrl = 'home/mycashout';
+        $this->pageBread = '我的收益';
+
+        $this->assign('income_amount',$incomeAmount);
+        $this->assign('ktx_amount',$ktx_amount);
+        $this->assign('ytx_amount',$ytxAmount);
+
+        $data = $cashOutModel->getCashouts();
         $this->assign('cashouts',$data);
-        $this->assign('obj',[['name'=>'ss'],['name'=>'ww'],['name'=>'aa']]);
         $this->displayFile('html/member/mycashout.html');
     }
 }

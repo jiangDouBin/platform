@@ -4,6 +4,6 @@ return array(
     
     'url_route' => array(
         // URL地址路由，如后台站点信息控制器：'admin/Site' => 'admin/content.Site',
-    
+        'home/mycashout' => 'home/Member/cashout',
     )
 );
