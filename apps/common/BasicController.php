@@ -34,8 +34,8 @@ class BasicController extends Controller
         $content = str_replace('{pboot:pagetitle}', ($this->pageTitle . '-{pboot:sitetitle}-{pboot:sitesubtitle}'), $content);
         $content = str_replace('{pboot:pagekeywords}', $this->pageKeywords, $content);
         $content = str_replace('{pboot:pagedescription}', $this->pageDescription, $content);
-        $content = $this->parser->parserPositionLabel($content, 0, $this->pageBread, Url::home($this->pageUrl)); // CMS当前位置标签解析
-        $content = $this->parser->parserSpecialPageSortLabel($content, - 4, $this->pageBread, Url::home($this->pageUrl)); // 解析分类标签
+        $content = $parser->parserPositionLabel($content, 0, $this->pageBread, Url::home($this->pageUrl)); // CMS当前位置标签解析
+        $content = $parser->parserSpecialPageSortLabel($content, - 4, $this->pageBread, Url::home($this->pageUrl)); // 解析分类标签
         $content = $parser->parserAfter($content); // CMS公共标签后置解析
         $content = $this->runtime($content);
         echo $this->gzip($content);

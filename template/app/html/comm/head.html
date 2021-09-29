@@ -132,7 +132,7 @@
 				 <a class="nav-link" href="{pboot:sitepath}/" >首页</a>
 	          </li>
 	          {pboot:nav num=10 parent=0}
-	              <li class="nav-item {pboot:if('[nav:scode]'=='{sort:tcode}')}active{/pboot:if}">
+	              <li class="nav-item {pboot:if('[nav:scode]'=='17' && '{sort:link}' == '/home/mycashout/')}active{/pboot:if} {pboot:if('[nav:scode]'=='{sort:tcode}')}active{/pboot:if}">
 	                <a class="nav-link" href="[nav:link]">[nav:name]</a>
 	              </li>
 	          {/pboot:nav}

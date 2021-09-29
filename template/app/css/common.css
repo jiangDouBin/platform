@@ -6,3 +6,42 @@ body{
     width: 100%;
     bottom: 0px;
 }
+.page {
+    clear: both;
+    margin: 10px 0;
+    text-align: center;
+}
+.page a:hover {
+    color:#009688;
+}
+.page-status{
+    border-radius: 2px 0 0 2px;
+}
+.page-last{
+    border-radius: 0 2px 2px 0;
+}
+.page-status,.page-index,.page-pre,.page-num,.page-next,.page-last{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    vertical-align: middle;
+    padding: 0 15px;
+    height: 28px;
+    line-height: 28px;
+    margin: 0 -1px 5px 0;
+    background-color: #fff;
+    color: #333;
+    font-size: 12px;
+    border: 1px solid #e2e2e2;
+}
+.page-num-current{
+    background-color: #009688;
+    height:30px;
+    line-height: 30px;
+    border-top:none;
+    border-bottom:none;
+    color:#fff;
+}
+a.page-num-current:hover{
+    color:#fff;
+}

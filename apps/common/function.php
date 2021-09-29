@@ -344,4 +344,12 @@ function self_sum($x, $y)
     return $x + $y;
 }
 
+function self_nav_active($scode, $link)
+{
+    return $scode.'-'.$link;
+    if( $scode == 17 && strstr('mycashout',$link))
+        return 'active';
+    return '';
+}
+
 

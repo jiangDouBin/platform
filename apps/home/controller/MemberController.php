@@ -14,7 +14,6 @@ use app\home\model\OrderModel;
 use app\home\model\TransactionModel;
 use app\home\model\MemberModel;
 use core\basic\Url;
-use mysql_xdevapi\Collection;
 
 class MemberController extends BasicController
 {
@@ -537,6 +536,10 @@ class MemberController extends BasicController
 
     //提现记录
     public function cashout(){
+        // 未登录时跳转到用户登录
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
         $transactionModel = new TransactionModel();
         $incomeAmount = number_format($transactionModel->getIncomeAmount(TransactionModel::TYPE_INCOME), 2);
         $lastOne = $transactionModel->getLastOne();
