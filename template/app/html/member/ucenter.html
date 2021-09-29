@@ -68,49 +68,54 @@
     <h5 class="newborder_bottom border-info pb-2 mb-2" >
 		<span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 个人中心 
 	</h5>
-    <form class="my-4 mgroup" onsubmit="return login(this);">
+    <form class="my-4 mgroup" action="{pboot:umodify}" method="post">
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>昵称:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="nickname" required id="nickname" class="form-control" value="{user:nickname}" >
         </div>
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>手机号:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="usermobile" required id="usermobile" class="form-control" value="{user:usermobile}" >
         </div>
       </div>
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>所在公司:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="company" required id="company" class="form-control" value="{user:company}" >
         </div>
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>真实姓名:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="realname" required id="realname" class="form-control" value="{user:realname}">
         </div>
       </div>
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>开卡行:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
-          <!-- <span style="color: #D41818;">(限额1000元)</span> -->
+          <input type="text" name="cardhome" required id="cardhome" class="form-control" value="{user:cardhome}">
         </div>
+        <div class="formgrouprow">
+          <label ><span style="color: #D41818;">*</span>银行卡号:</label>
+          <input type="text" name="cardnumber" required id="cardnumber" class="form-control"  value="{user:cardnumber}">
+        </div>
+      </div>
+      <div class="form-group">
+        
       </div>
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>微信账号:</label>
-		  <img src="{pboot:sitetplpath}/images/icon9.png" style="margin-right: 20px;" />
+		      <img src="{pboot:sitetplpath}/images/icon9.png" style="margin-right: 20px;" />
           <button type="button" class="btn">绑定</button>
         </div>
 		<div class="formgrouprow">
 			<label ><span style="color: #D41818;">*</span>支付宝账号:</label>
 			<img src="{pboot:sitetplpath}/images/icon12.png" style="margin-right: 20px;" />
-			<input type="text" name="username" required id="username" class="form-control" >
-			<!-- <button type="button" class="btn">绑定</button> -->
+			<input type="text" name="zfb" required id="zfb" class="form-control" value="{user:zfb}" >
 		  </div>
       </div>
 	  <div class="form-group" style="align-items: center;justify-content: center; margin-top: 140px;">
-		<button type="button" class="btn" style=" width: 260px;">保存</button>
+		<button class="btn" type="submit">保存</button>
       </div>
     </form>
   </div>
@@ -121,36 +126,6 @@
     
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
-<script>
-  function login(obj){
-  var url='{pboot:login}';
-  var username=$(obj).find("#username").val();
-  var password=$(obj).find("#password").val();
-  var checkcode=$(obj).find("#checkcode").val();
-  
-  $.ajax({
-    type: 'POST',
-    url: url,
-    dataType: 'json',
-    data: {
-    	username: username,
-    	password: password,
-    	checkcode: checkcode
-    },
-    success: function (response, status) {
-      if(response.code){
-    	 alert("登录成功！");
-		 location.href=response.tourl; 
-      }else{
-    	  $('#codeimg').click();
-    	 alert(response.data);
-      }
-    },
-    error:function(xhr,status,error){
-      alert('返回数据异常！');
-    }
-  });
-  return false;
-}
+
 </script>
 {include file=comm/foot.html}
