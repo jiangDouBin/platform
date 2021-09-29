@@ -366,7 +366,7 @@ class MemberController extends BasicController
             
             // 执行修改
             if ($this->model->modUser($data)) {
-                alert_location('修改成功！', Url::home('member/umodify'), 1);
+                alert_location('修改成功！', Url::home('member/ucenter'), 1);
             } else {
                 error('资料修改失败！', - 1);
             }
@@ -561,6 +561,6 @@ class MemberController extends BasicController
 
         $data = $cashOutModel->getCashouts();
         $this->assign('cashouts',$data);
-        $this->displayFile('html/member/mycashout.html');
+        $this->displayFile('html/mymoney.html');
     }
 }
