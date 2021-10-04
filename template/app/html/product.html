@@ -1,254 +1,270 @@
 {include file=comm/head.html}
 
 
-
 <div class="container pages">
-	{include file=comm/position.html}
-	<style>
-	body{
-		background-color: #F0F2F5;
-		color: #6F6F6F;
-	}
-	.infoDiv{
-		background-color: #ffffff;
-		border-top: 5px solid #3786FF;
-		border-radius: 5px;
-	}
-	.bgtxtdiv{
-		width: 100%;
-		background-color: #F5F9FF;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin: 20px 30px;
-		padding-bottom: 20px;
-	}
-	.bgtxtdivleft{
-		flex: 1;
-	}
-	.infoflexrow{
-		width: 80%;
-		margin-left: 10%;
-		margin-right: 10%;
-		padding-top: 10px;
-		display: flex;
-		align-items: center;
-		justify-content: space-evenly;
-	}
-	.infoflexrow h2{
-		font-size: 20px;
-		/* font-family: PingFangSC-Regular, PingFang SC; */
-		font-weight: 400;
-		color: #1F1F1F;
-		line-height: 28px;
-	}
-	.infoflexrow .text-secondary{
-		width: 50%;
-	}
-	.bgtxtdivright{
-		margin-top: 20px;
-		width: 297px;
-		height: 166px;
-		background-color: #ffffff;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-direction: column;
-	}
-	.bgtxtdivright p{
-		height: 48px;
-		line-height: 48px;
-		font-size: 16px;
-	}
-	.bgtxtdivright span{
-		flex: 1;
-		display: flex;
-		align-items: center;
-		font-size: 22px;
-		font-weight: bold;
-		color: #3786FF;
-	}
-	.bgtxtdivright button{
-		width: 218px;
-		height: 36px;
-		background: #3786FF;
-		border-radius: 4px;
-		color: #ffffff;
-		border: none;
-	}
-	.newtable{
-		background-color: #ffffff;
-		width: 100%;
-		border: 1px solid #DEDEDE;
-	}
-	.newtable tr th,.newtable tr td{
-		text-align: center;
-		height: 57px;
-	}
-	</style>
+    {include file=comm/position.html}
+    <style>
+        body {
+            background-color: #F0F2F5;
+            color: #6F6F6F;
+        }
+
+        .infoDiv {
+            background-color: #ffffff;
+            border-top: 5px solid #3786FF;
+            border-radius: 5px;
+        }
+
+        .bgtxtdiv {
+            width: 100%;
+            background-color: #F5F9FF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 30px;
+            padding-bottom: 20px;
+        }
+
+        .bgtxtdivleft {
+            flex: 1;
+        }
+
+        .infoflexrow {
+            width: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+        }
+
+        .infoflexrow h2 {
+            font-size: 20px;
+            /* font-family: PingFangSC-Regular, PingFang SC; */
+            font-weight: 400;
+            color: #1F1F1F;
+            line-height: 28px;
+        }
+
+        .infoflexrow .text-secondary {
+            width: 50%;
+        }
+
+        .bgtxtdivright {
+            margin-top: 20px;
+            width: 297px;
+            height: 166px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .bgtxtdivright p {
+            height: 48px;
+            line-height: 48px;
+            font-size: 16px;
+        }
+
+        .bgtxtdivright span {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+            color: #3786FF;
+        }
+
+        .bgtxtdivright button {
+            width: 218px;
+            height: 36px;
+            background: #3786FF;
+            border-radius: 4px;
+            color: #ffffff;
+            border: none;
+        }
+
+        .newtable {
+            background-color: #ffffff;
+            width: 100%;
+            border: 1px solid #DEDEDE;
+        }
+
+        .newtable tr th, .newtable tr td {
+            text-align: center;
+            height: 57px;
+        }
+    </style>
     <div class="row infoDiv">
-			
-       	<!-- <div class="col-12 col-lg-6 mb-5">
-                <div class="view">
-               	<a class="arrow-left" href="#"></a>
-				<a class="arrow-right" href="#"></a>
-                   <div class="swiper-container">
-                       <div class="swiper-wrapper" >
-                       	   <div class="swiper-slide">
-                               <img src="{content:ico}">
-                           </div>
-                           {pboot:pics num=10 id={content:id}}
+
+        <!-- <div class="col-12 col-lg-6 mb-5">
+             <div class="view">
+                <a class="arrow-left" href="#"></a>
+             <a class="arrow-right" href="#"></a>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper" >
                            <div class="swiper-slide">
-                               <img src="[pics:src]">
-                           </div>
-                           {/pboot:pics}
-                       </div>
-                   </div>
-               </div> -->
-               
-               <!-- <div class="preview mt-3">
-                   <a class="arrow-left" href="#"></a>
-                   <a class="arrow-right" href="#"></a>
-                   <div class="swiper-container" >
-                       <div class="swiper-wrapper">
-                       	<div class="swiper-slide active-nav swiper-slide-active">
-                               <img src="{content:ico}">
-                           </div>
-                           {pboot:pics num=10 id={content:id}}
-                           <div class="swiper-slide">
-                               <img src="[pics:src]">
-                           </div>
-                           {/pboot:pics}
-                       </div>
-                   </div>
-               </div> 
-           </div> -->
-        	<div class=" mb-3 pr-3 bgtxtdiv">
-								<div class="bgtxtdivleft">
-									<img src="{pboot:sitetplpath}/images/1.png" style="margin-left: 32px;" />
-									<div class="infoflexrow">
-										<h2 class=" pb-2 fs-sm-28 fs-20">{content:title}</h2>
-									</div>
-									<div class="infoflexrow">
-											<div class="text-secondary ">
-														土地性质：{content:ext_type}
-											</div>
-											<div class="text-secondary ">
-														商业占比：{content:ext_bl}
-											</div>
-									</div>
-									<div class="infoflexrow">
-										<div class="text-secondary ">
-													容积率：{content:ext_rjl}
-										</div>
-										<div class="text-secondary ">
-											时间：{content:date}
-										</div>
-									</div>
-									
-									<!-- <div class="text-secondary my-3 border-bottom-dashed lh-3">
-													浏览次数：{content:visits}
-									</div> -->
-									
-									
-								
-								</div>
-            		
-                 <div class="text-secondary bgtxtdivright">
-									 <p>下载资源</p>
-                    <span>{content:ext_price}元</span>
-										<button><a href="/?pay/">购买</a></button>
+                            <img src="{content:ico}">
+                        </div>
+                        {pboot:pics num=10 id={content:id}}
+                        <div class="swiper-slide">
+                            <img src="[pics:src]">
+                        </div>
+                        {/pboot:pics}
+                    </div>
                 </div>
-                <!-- <div class="my-3 lh-3">
-                	{pboot:sort scode=11}
-                     <a href="[sort:link]" class="btn btn-danger">马上咨询</a>
-                    {/pboot:sort}
-                </div> -->
+            </div> -->
+
+        <!-- <div class="preview mt-3">
+            <a class="arrow-left" href="#"></a>
+            <a class="arrow-right" href="#"></a>
+            <div class="swiper-container" >
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide active-nav swiper-slide-active">
+                        <img src="{content:ico}">
+                    </div>
+                    {pboot:pics num=10 id={content:id}}
+                    <div class="swiper-slide">
+                        <img src="[pics:src]">
+                    </div>
+                    {/pboot:pics}
+                </div>
             </div>
-      </div>
-      <div class="row" style="background-color: #ffffff; padding: 20px 30px;">
-				<h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 资源链接</h5>
-				<table class="newtable">
-					<tr>
-						<th>标题</th>
-						<th>上传时间</th>
-						<th>操作</th>
-					</tr>
-					{pboot:uploadlist contentid={content:id}}    
-						<tr>
-							<td>[uploadlist:name]</td>
-							<td>[uploadlist:time]</td>
-							<td style="color: #3786FF;">
-								<img src="{pboot:sitetplpath}/images/icon10.png" />
-								下载资源
-							</td>
-						</tr>
-					 {/pboot:uploadlist}
-					
-				</table>
-			</div>
-      
-      <!-- <div class="content">{content:content}</div> -->
-      
-      <!-- <div class="text-secondary lh-2">
-			<p>上一篇：{content:precontent}</p>
-			<p>下一篇：{content:nextcontent}</p>
-      </div> -->
+        </div>
+    </div> -->
+        <div class=" mb-3 pr-3 bgtxtdiv">
+            <div class="bgtxtdivleft">
+                <img src="{pboot:sitetplpath}/images/1.png" style="margin-left: 32px;"/>
+                <div class="infoflexrow">
+                    <h2 class=" pb-2 fs-sm-28 fs-20">{content:title}</h2>
+                </div>
+                <div class="infoflexrow">
+                    <div class="text-secondary ">
+                        土地性质：{content:ext_type}
+                    </div>
+                    <div class="text-secondary ">
+                        商业占比：{content:ext_bl}
+                    </div>
+                </div>
+                <div class="infoflexrow">
+                    <div class="text-secondary ">
+                        容积率：{content:ext_rjl}
+                    </div>
+                    <div class="text-secondary ">
+                        时间：{content:date}
+                    </div>
+                </div>
+
+                <!-- <div class="text-secondary my-3 border-bottom-dashed lh-3">
+                                浏览次数：{content:visits}
+                </div> -->
+
+
+            </div>
+
+            <div class="text-secondary bgtxtdivright">
+                <p>下载资源</p>
+                <span>{content:ext_price}元</span>
+				{pboot:if('{content:is_buy}')}
+                	<button><a href="/?pay/">购买</a></button>
+				{/pboot:if}
+            </div>
+            <!-- <div class="my-3 lh-3">
+                {pboot:sort scode=11}
+                 <a href="[sort:link]" class="btn btn-danger">马上咨询</a>
+                {/pboot:sort}
+            </div> -->
+        </div>
+    </div>
+    <div class="row" style="background-color: #ffffff; padding: 20px 30px;">
+        <h5 class="newborder_bottom border-info pb-2 mb-2">
+			<span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;">
+			</span>
+            资源链接
+		</h5>
+        <table class="newtable">
+            <tr>
+                <th>标题</th>
+                <th>上传时间</th>
+                <th>操作</th>
+            </tr>
+            {pboot:uploadlist contentid={content:id}}
+            <tr>
+                <td>[uploadlist:name]</td>
+                <td>[uploadlist:time]</td>
+                <td style="color: #3786FF;">
+                    <img src="{pboot:sitetplpath}/images/icon10.png"/>
+                    下载资源
+                </td>
+            </tr>
+            {/pboot:uploadlist}
+
+        </table>
+    </div>
+
+    <!-- <div class="content">{content:content}</div> -->
+
+    <!-- <div class="text-secondary lh-2">
+          <p>上一篇：{content:precontent}</p>
+          <p>下一篇：{content:nextcontent}</p>
+    </div> -->
 </div>
 
 <!-- {include file=comm/comment.html} -->
-    
+
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
-var viewSwiper = new Swiper('.view .swiper-container', {
-	on:{
-		slideChangeTransitionStart: function() {
-		    updateNavPosition()
-	    }
-	}
-})
+    var viewSwiper = new Swiper('.view .swiper-container', {
+        on: {
+            slideChangeTransitionStart: function () {
+                updateNavPosition()
+            }
+        }
+    })
 
-$('.view .arrow-left,.preview .arrow-left').on('click', function(e) {
-	e.preventDefault()
-	if (viewSwiper.activeIndex == 0) {
-		viewSwiper.slideTo(viewSwiper.slides.length - 1, 1000);
-		return
-	}
-	viewSwiper.slidePrev()
-})
-$('.view .arrow-right,.preview .arrow-right').on('click', function(e) {
-	e.preventDefault()
-	if (viewSwiper.activeIndex == viewSwiper.slides.length - 1) {
-		viewSwiper.slideTo(0, 1000);
-		return
-	}
-	viewSwiper.slideNext()
-})
+    $('.view .arrow-left,.preview .arrow-left').on('click', function (e) {
+        e.preventDefault()
+        if (viewSwiper.activeIndex == 0) {
+            viewSwiper.slideTo(viewSwiper.slides.length - 1, 1000);
+            return
+        }
+        viewSwiper.slidePrev()
+    })
+    $('.view .arrow-right,.preview .arrow-right').on('click', function (e) {
+        e.preventDefault()
+        if (viewSwiper.activeIndex == viewSwiper.slides.length - 1) {
+            viewSwiper.slideTo(0, 1000);
+            return
+        }
+        viewSwiper.slideNext()
+    })
 
-var previewSwiper = new Swiper('.preview .swiper-container', {
-	//visibilityFullFit: true,
-	slidesPerView: 'auto',
-	allowTouchMove: false,
-	on:{
-		tap: function() {
-		    viewSwiper.slideTo(previewSwiper.clickedIndex)
-	  }
-	}
-})
+    var previewSwiper = new Swiper('.preview .swiper-container', {
+        //visibilityFullFit: true,
+        slidesPerView: 'auto',
+        allowTouchMove: false,
+        on: {
+            tap: function () {
+                viewSwiper.slideTo(previewSwiper.clickedIndex)
+            }
+        }
+    })
 
-function updateNavPosition() {
-		$('.preview .active-nav').removeClass('active-nav')
-		var activeNav = $('.preview .swiper-slide').eq(viewSwiper.activeIndex).addClass('active-nav')
-		if (!activeNav.hasClass('swiper-slide-visible')) {
-			if (activeNav.index() > previewSwiper.activeIndex) {
-				var thumbsPerNav = Math.floor(previewSwiper.width / activeNav.width()) - 1
-				previewSwiper.slideTo(activeNav.index() - thumbsPerNav)
-			} else {
-				previewSwiper.slideTo(activeNav.index())
-			}
-		}
-	}
+    function updateNavPosition() {
+        $('.preview .active-nav').removeClass('active-nav')
+        var activeNav = $('.preview .swiper-slide').eq(viewSwiper.activeIndex).addClass('active-nav')
+        if (!activeNav.hasClass('swiper-slide-visible')) {
+            if (activeNav.index() > previewSwiper.activeIndex) {
+                var thumbsPerNav = Math.floor(previewSwiper.width / activeNav.width()) - 1
+                previewSwiper.slideTo(activeNav.index() - thumbsPerNav)
+            } else {
+                previewSwiper.slideTo(activeNav.index())
+            }
+        }
+    }
 </script>
 
 {include file=comm/foot.html}

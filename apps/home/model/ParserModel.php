@@ -545,7 +545,14 @@ class ParserModel extends Model
             ->join($join)
             ->decode()
             ->find();
-            
+
+        $orderStatus = parent::table('ay_orders')
+            ->where('member_id = '.session('pboot_uid'))
+            ->where('product_id = '.$id)
+            ->value('status');
+
+        //是否需要购买
+        $result->is_buy = !$orderStatus && $result->member_id != session('pboot_uid');
         
         return $result;
     }

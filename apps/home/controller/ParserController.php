@@ -2334,11 +2334,11 @@ class ParserController extends Controller
                         // print_r($count3);
                         for ($k = 0; $k < $count3; $k ++) {// 循环替换数据
                             $params_sub = $this->parserParam($matches3[2][$k]);
-                            $one_html_sub = $this->parserComment($matches3[1][$k], $matches3[0][$k], $one_html, $value, $params_sub, $key_sub);
+                            $one_html = $this->parserComment($matches3[1][$k], $matches3[0][$k], $one_html, $value, $params_sub, $key_sub);
                             // print_r($one_html_sub);
                         }
                         $key_sub ++;
-                        $out_html_sub .= $one_html_sub;
+                        $out_html_sub .= $one_html;
                         // print_r($out_html_sub);
                         
                     }
