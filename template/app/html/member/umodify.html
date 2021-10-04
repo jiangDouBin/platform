@@ -1,156 +1,141 @@
 {include file=comm/head.html}
 
 
-
 <div class="container pages">
-	{include file=comm/position.html}
-	<style>
-	body{
-		background-color: #F0F2F5;
-		color: #6F6F6F;
-	}
-	.newtable{
-		background-color: #ffffff;
-		width: 100%;
-		/* border: 1px solid #DEDEDE; */
-	}
-	.newtable tr th,.newtable tr td{
-		text-align: center;
-		height: 57px;
-	}
-  .newtable tr:nth-child(2n){
-		background-color: #F5F5F5;
-	}
-  .mgroup{
-    width: 90%;
-  }
-  .form-group{
-    display: flex;
-    margin-top: 20px;
-    /* margin-top: 10px; */
-    margin-bottom: 20px;
-  }
-  .formgrouprow label{
-    width: 82px;
-    height: 20px;
-    text-align: right;
-    margin-right: 20px;
-  }
-  .formgrouprow{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin: 0px 20px;
-    
-  }
-  .form-control{
-    background: #FBFBFB;
-    border: 1px solid #E6E6E6;
-    width: 320px;
-  }
-  .btn{
-    width: 73px;
-    height: 33px;
-    background: #3786FF;
-    border-radius: 4px;
-    color: #FFFFFF;
-  }
-  .overhi{
-    width: 73px;
-    height: 33px;
-    position: absolute;
-    left: 102px;
-    opacity: 0;
-  }
-	</style>
-  <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-bottom: none;">
-    <h5 class="newborder_bottom border-info pb-2 mb-2" >
-		<span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 个人中心 
-	</h5>
-    <form class="my-4 mgroup" onsubmit="return login(this);">
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>昵称:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
-        </div>
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>手机号:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>所在公司:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
-        </div>
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>真实姓名:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>开卡行:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
-          <!-- <span style="color: #D41818;">(限额1000元)</span> -->
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>微信账号:</label>
-		  <img src="{pboot:sitetplpath}/images/icon9.png" style="margin-right: 20px;" />
-          <button type="button" class="btn">绑定</button>
-        </div>
-		<div class="formgrouprow">
-			<label ><span style="color: #D41818;">*</span>支付宝账号:</label>
-			<img src="{pboot:sitetplpath}/images/icon12.png" style="margin-right: 20px;" />
-			<input type="text" name="username" required id="username" class="form-control" >
-			<!-- <button type="button" class="btn">绑定</button> -->
-		  </div>
-      </div>
-	  <div class="form-group" style="align-items: center;justify-content: center; margin-top: 140px;">
-		<button type="button" class="btn" style=" width: 260px;">保存</button>
-      </div>
-    </form>
-  </div>
-      
-      
+    {include file=comm/position.html}
+    <style>
+        body {
+            background-color: #F0F2F5;
+            color: #6F6F6F;
+        }
+
+        .newtable {
+            background-color: #ffffff;
+            width: 100%;
+            /* border: 1px solid #DEDEDE; */
+        }
+
+        .newtable tr th, .newtable tr td {
+            text-align: center;
+            height: 57px;
+        }
+
+        .newtable tr:nth-child(2n) {
+            background-color: #F5F5F5;
+        }
+
+        .mgroup {
+            width: 90%;
+        }
+
+        .form-group {
+            display: flex;
+            margin-top: 20px;
+            /* margin-top: 10px; */
+            margin-bottom: 20px;
+        }
+
+        .formgrouprow label {
+            width: 82px;
+            height: 20px;
+            text-align: right;
+            margin-right: 20px;
+        }
+
+        .formgrouprow {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 0px 20px;
+
+        }
+
+        .form-control {
+            background: #FBFBFB;
+            border: 1px solid #E6E6E6;
+            width: 320px;
+        }
+
+        .btn {
+            width: 73px;
+            height: 33px;
+            background: #3786FF;
+            border-radius: 4px;
+            color: #FFFFFF;
+        }
+
+        .overhi {
+            width: 73px;
+            height: 33px;
+            position: absolute;
+            left: 102px;
+            opacity: 0;
+        }
+    </style>
+    <div class="row"
+         style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-bottom: none;">
+        <h5 class="newborder_bottom border-info pb-2 mb-2">
+            <span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span>
+            个人中心
+        </h5>
+        <form class="my-4 mgroup" action="{pboot:umodify}" method="post">
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>昵称:</label>
+                    <input type="text" name="nickname" required id="nickname" class="form-control" value="{user:nickname}">
+                </div>
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>手机号:</label>
+                    <input type="text" name="usermobile" required id="usermobile" class="form-control" value="{user:usermobile}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>所在公司:</label>
+                    <input type="text" name="company" required id="company" class="form-control" value="{user:company}">
+                </div>
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>真实姓名:</label>
+                    <input type="text" name="realname" required id="realname" class="form-control" value="{user:realname}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>开卡行:</label>
+                    <input type="text" name="bank" required id="bank" class="form-control" value="{user:bank}">
+                    <!-- <span style="color: #D41818;">(限额1000元)</span> -->
+                </div>
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>银行卡号:</label>
+                    <input type="text" name="bank_card" required id="bank_card" class="form-control"
+                           value="{user:bank_card}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>微信账号:</label>
+                    <img src="{pboot:sitetplpath}/images/icon9.png" style="margin-right: 20px;"/>
+                    {pboot:if('{user:wxid}')}
+                        <button type="button" class="btn">已绑定</button>
+                    {else}
+                        <button type="button" class="btn">绑定</button>
+                    {/pboot:if}
+                </div>
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>支付宝账号:</label>
+                    <img src="{pboot:sitetplpath}/images/icon12.png" style="margin-right: 20px;"/>
+                    {pboot:if('{user:zfbid}')}
+                        <button type="button" class="btn">已绑定</button>
+                    {else}
+                        <button type="button" class="btn">绑定</button>
+                    {/pboot:if}
+                </div>
+            </div>
+            <div class="form-group" style="align-items: center;justify-content: center; margin-top: 140px;">
+                <button type="submit" class="btn" style=" width: 260px;">保存</button>
+            </div>
+        </form>
+    </div>
 </div>
-
-    
-
-<script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
-<script>
-  function login(obj){
-  var url='{pboot:login}';
-  var username=$(obj).find("#username").val();
-  var password=$(obj).find("#password").val();
-  var checkcode=$(obj).find("#checkcode").val();
-  
-  $.ajax({
-    type: 'POST',
-    url: url,
-    dataType: 'json',
-    data: {
-    	username: username,
-    	password: password,
-    	checkcode: checkcode
-    },
-    success: function (response, status) {
-      if(response.code){
-    	 alert("登录成功！");
-		 location.href=response.tourl; 
-      }else{
-    	  $('#codeimg').click();
-    	 alert(response.data);
-      }
-    },
-    error:function(xhr,status,error){
-      alert('返回数据异常！');
-    }
-  });
-  return false;
-}
-</script>
 {include file=comm/foot.html}

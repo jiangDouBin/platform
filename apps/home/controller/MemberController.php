@@ -262,7 +262,7 @@ class MemberController extends BasicController
         }
     }
 
-    // 用户中心
+    // 用户中心页面
     public function ucenter()
     {
         // 未登录时跳转到用户登录
@@ -280,7 +280,7 @@ class MemberController extends BasicController
         exit();
     }
 
-    // 用户修改
+    // 用户修改页面以及执行修改接口
     public function umodify()
     {
         // 未登录时跳转到用户登录
@@ -293,6 +293,12 @@ class MemberController extends BasicController
             $nickname = post('nickname');
             $useremail = post('useremail');
             $usermobile = post('usermobile');
+            $usercompany = post('company');
+            $userbank = post('bank');
+            $userbankcard = post('bank_card');
+            $userrealname = post('realname');
+            $userwxid = post('wxid');
+            $userzfbid = post('zfbid');
             $password = post('password');
             $rpassword = post('rpassword');
             $headpic = str_replace(SITE_DIR, '', post('headpic'));
@@ -314,13 +320,19 @@ class MemberController extends BasicController
                     alert_back('您输入的手机号码已被注册！');
                 }
             }
-            
+
             // 构建数据
             $data = array(
                 'nickname' => $nickname,
                 'useremail' => $useremail,
                 'usermobile' => $usermobile,
-                'headpic' => $headpic
+                'headpic' => $headpic,
+                'company' => $usercompany,
+                'bank' => $userbank,
+                'bank_card' => $userbankcard,
+                'realname' => $userrealname,
+                'wxid' => $userwxid,
+                'zfbid' => $userzfbid
             );
             
             // 密码修改
