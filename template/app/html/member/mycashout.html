@@ -94,7 +94,6 @@
 		}
 		.tixiantxt{
 			width: 100%;
-			margin: 0px 30px;
 			height: 70px;
 			background: #F5F5F5;
 			display: flex;
@@ -131,23 +130,26 @@
 					</div>
 					<div class="text-secondary ">
 						<img src="{pboot:sitetplpath}/images/icon3.png" style="margin-right: 32px;" />
-						<span>总收益金额：{$ktx_amount}</span>
+						<span>可提现金额：{$ktx_amount}</span>
 					</div>
 					<div class="text-secondary ">
 						<img src="{pboot:sitetplpath}/images/icon11.png" style="margin-right: 32px;" />
-						<span>总收益金额：{$ytx_amount}</span>
+						<span>已提现金额：{$ytx_amount}</span>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="tixiantxt">
-			<div class="leftdiv">
-				<span style="color:#1F1F1F;">提现</span>
-				<input type="text" style="flex: 1; margin: 0px 18px; color: #3786FF; text-indent: 2em; border: 1px solid #DADADA; height: 36px;"  />
-				<span style="color: #3786FF;">元</span>
+		<form action="/member/applyCashOut" method="post" style="width: 100%;margin: 0 30px;">
+			<div class="tixiantxt">
+				<div class="leftdiv">
+					<span style="color:#1F1F1F;">提现</span>
+					<input type="text" name="amount"
+						   style="flex: 1; margin: 0px 18px; color: #3786FF; text-indent: 2em; border: 1px solid #DADADA; height: 36px;"/>
+					<span style="color: #3786FF;">元</span>
+				</div>
+				<button type="submit" class="btn">提现</button>
 			</div>
-			<button type="button" class="btn">提现</button>
-		</div>
+		</form>
 	</div>
 	<div class="row" style="background-color: #ffffff; padding: 20px 30px;">
 		<h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 提现记录</h5>

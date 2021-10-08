@@ -11,6 +11,7 @@ use core\basic\Model;
 
 class CashOutModel extends Model
 {
+    public $table = 'ay_cashouts';
     const STATUS_SQZ = 1;
     const STATUS_YDZ = 2;
     const STATUS_YC = 3;
@@ -31,6 +32,15 @@ class CashOutModel extends Model
             ->field(['a.*'])
             ->where('member_id='.session('pboot_uid'))
             ->where('status='.self::STATUS_YDZ)
+            ->sum(amount);
+    }
+
+    // 申请中的提现总额
+    public function getApplyAmount(){
+        return parent::table('ay_cashouts a')
+            ->field(['a.*'])
+            ->where('member_id='.session('pboot_uid'))
+            ->where('status='.self::STATUS_SQZ)
             ->sum(amount);
     }
 }

@@ -9,10 +9,12 @@
 namespace app\home\controller;
 
 use app\common\BasicController;
+use app\common\ResponseCode;
 use app\home\model\CashOutModel;
 use app\home\model\OrderModel;
 use app\home\model\TransactionModel;
 use app\home\model\MemberModel;
+use core\basic\Model;
 use core\basic\Url;
 
 class MemberController extends BasicController
@@ -522,6 +524,27 @@ class MemberController extends BasicController
         _404('您访问的地址不存在，请核对再试！');
     }
 
+    // 获取用户钱包信息
+    private function getAmountInfo(){
+        $transactionModel = new TransactionModel();
+        $incomeAmount = number_format($transactionModel->getIncomeAmount(TransactionModel::TYPE_INCOME), 2);
+        $lastOne = $transactionModel->getLastOne();
+        $member = $this->model->getUser();
+
+        if($lastOne)
+            $ktx_amount = $lastOne->current_balance > $member->balance ? $member->balance : $lastOne->current_balance;
+        else
+            $ktx_amount = $member->balance;
+
+        $cashOutModel = new CashOutModel();
+        $sqzAmount = number_format($cashOutModel->getApplyAmount(),2); //申请中的提现总额
+        $ktx_amount = $ktx_amount - $sqzAmount;
+        $ktx_amount = $ktx_amount >= 0 ? $ktx_amount : 0;
+        $ytxAmount = number_format($cashOutModel->getOutAmount(),2);
+
+        return array($incomeAmount,$ktx_amount,$ytxAmount);
+    }
+
     // 消费记录
     public function orders(){
         $orderModel = new OrderModel();
@@ -552,21 +575,12 @@ class MemberController extends BasicController
         if (! session('pboot_uid')) {
             location(Url::home('member/login'));
         }
-        $transactionModel = new TransactionModel();
-        $incomeAmount = number_format($transactionModel->getIncomeAmount(TransactionModel::TYPE_INCOME), 2);
-        $lastOne = $transactionModel->getLastOne();
-        $member = $this->model->getUser();
-        if($lastOne)
-            $ktx_amount = $lastOne->current_balance > $member->balance ? $member->balance : $lastOne->current_balance;
-        else
-            $ktx_amount = $member->balance;
 
-        $cashOutModel = new CashOutModel();
-        $ytxAmount = number_format($cashOutModel->getOutAmount(),2);
+        list($incomeAmount,$ktx_amount,$ytxAmount) = $this->getAmountInfo();
 
-        $this->pageTitle = "提现记录111"; // 页面标题
-        $this->pageKeywords = "提现记录222"; // 页面关键字
-        $this->pageDescription = "提现记录333"; // 页面说明
+        $this->pageTitle = "提现记录"; // 页面标题
+        $this->pageKeywords = "提现记录"; // 页面关键字
+        $this->pageDescription = "提现记录"; // 页面说明
         $this->pageUrl = 'home/mycashout';
         $this->pageBread = '我的收益';
 
@@ -574,8 +588,36 @@ class MemberController extends BasicController
         $this->assign('ktx_amount',$ktx_amount);
         $this->assign('ytx_amount',$ytxAmount);
 
+        $cashOutModel = new CashOutModel();
         $data = $cashOutModel->getCashouts();
         $this->assign('cashouts',$data);
-        $this->displayFile('html/mymoney.html');
+        $this->displayFile('html/member/mycashout.html');
+    }
+
+    //申请提现
+    public function applyCashOut()
+    {
+        // 未登录时跳转到用户登录
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+
+        if ($_POST && session('pboot_uid')) {
+            list(,$ktx_amount,) = $this->getAmountInfo();
+
+            if( post('amount') > $ktx_amount)
+                error('可提现金额不足！', - 1);
+
+            $data['member_id'] = session('pboot_uid');
+            $data['amount'] = post('amount');
+            $data['created_time'] = get_datetime();
+
+            $model = new CashOutModel();
+            $result = $model->insert($data);
+
+            if($result)
+                alert_location('提现申请提交成功！', Url::home('member/cashout'), 1);
+        }
+        error('提现申请提交失败！', - 1);
     }
 }
