@@ -141,6 +141,7 @@
 	      <span class="navbar-text">
 	     	 {pboot:if({pboot:islogin}==1)}
 				<a class="text-secondary" href="{pboot:umodify}" >个人中心</a>
+				<a class="text-secondary" href="{pboot:logout}">退出登录</a>
 		     {else}
 			  	{pboot:2if({pboot:loginstatus})}
 					<a class="text-secondary login" href="{pboot:login}" >登录</a>

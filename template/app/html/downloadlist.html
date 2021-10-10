@@ -1,85 +1,52 @@
 {include file=comm/head.html}
 <style>
-  *{
+  * {
     font-size: 16px;
     color: #545454;
   }
 </style>
 <div class="container pages">
-	 <!-- 分类筛选 -->
-     <!-- <div  class="my-3">
-          <div class="row">
-           		<div class="col-12 col-sm-2 col-md-1">类型：</div>
-                <div class="col-12 col-sm-10 col-md-11">
-                   {pboot:selectall field=ext_type text=全部  class='mb-3 btn btn-light' active='mb-3 btn btn-info'}
-                   {pboot:select field=ext_type}
-                       <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-info{else}btn-light{/pboot:if}">[select:value]</a>  
-                   {/pboot:select}
-               </div>
-          </div>
-           
-          <div class="row">
-           		<div class="col-12 col-sm-2 col-md-1">颜色：</div>
-                <div class="col-12 col-sm-10 col-md-11">
-                   {pboot:selectall field=ext_color text=全部  class='mb-3 btn btn-light' active='mb-3 btn btn-info'}
-                   {pboot:select field=ext_color}
-                      <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-info{else}btn-light{/pboot:if}">[select:value]</a>  
-                   {/pboot:select}
-               </div>
-          </div>
-    </div> -->
-    <div class="row borderb" style="display: flex;">
-      <!--        <div class="col-12 col-sm-2 col-md-1">颜色：</div>-->
-              <div class="col-10 col-sm-2 col-md-8">
-                <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 我的下载</h5>
-                  <!-- {pboot:selectall field=ext_ext_sort text=综合排序  class='mb-3 btn btn-lighted' active='mb-3 btn btn-infoed'}
-                  {pboot:select field=ext_ext_sort}
-                  <a href= "[select:link]" class="mb-3 btn {pboot:if('[select:value]'=='[select:current]')}btn-infoed{else}btn-lighted{/pboot:if}">[select:value]</a>
-                  {/pboot:select} -->
-              </div>
-              <div class="col-10 col-sm-2 col-md-4" style="color: #3786FF; text-align: right;">
-                <a href="/?mydownloadinfo/"><span style="border: 1px solid #3786FF; padding: 2px 6px; color: #3786FF;">消费记录</span></a>
-                <!-- <form class="form-inline justify-content-center" action="{pboot:scaction}"  method="get">
-                  <div class="form-group  mb-2 ">
-                    <input type="text" name="keyword" class="form-control searchborder" placeholder="搜索你想要的">
-                  </div>
-                  <button type="submit" class=" newbtn btn-info mb-2">搜索</button>
-                </form> -->
-              </div>
-                <!-- 搜索-->
-            
-          </div>
-	<!-- 图文列表 -->
-    <div class="row">
-        {pboot:list scode=5 num=8 order=sorting}
-        <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
-          <div class="card ">
-<!--                  <div class="card-img-10"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
-              <div class="card-body ">
-                <div class="flexrow">
-                  <h5 class="card-title1">[list:title lencn=12]</h5>
-                </div>
-                <div class="flexrow">
-                  <p class="card-title2">土地性质：[list:type lencn=12]</p>
-                  <p class="card-title2">商业占比：[list:ext_bl lencn=12]</p>
-                </div>
-                <div class="flexrow">
-                  <p class="card-title2">容积率：[list:ext_rjl lencn=12]</p>
-                </div>
-                <div class="flexrow">
-                  <p class="card-title2">时间：[list:date]</p>
-                  <a href="[list:link]" class="card-title6">查看详情</a>
-                </div>
-              </div>
-           </div>
-     </div>
-        {/pboot:list}
+  <div class="row borderb" style="display: flex;">
+    <div class="col-10 col-sm-2 col-md-8">
+      <h5 class="newborder_bottom border-info pb-2 mb-2"><span
+          style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span>
+        我的下载</h5>
+    </div>
+    <div class="col-10 col-sm-2 col-md-4" style="color: #3786FF; text-align: right;">
+      <a href="/?mydownloadinfo/"><span
+          style="border: 1px solid #3786FF; padding: 2px 6px; color: #3786FF;">消费记录</span></a>
     </div>
 
- 	{include file=comm/page.html}
-    
-  
-    
+  </div>
+  {pboot:if({pboot:islogin}==1)}
+  <div class="row">
+    {pboot:list scode=5 num=8 order=sorting}
+    <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
+      <div class="card ">
+        <div class="card-body ">
+          <div class="flexrow">
+            <h5 class="card-title1">[list:title lencn=12]</h5>
+          </div>
+          <div class="flexrow">
+            <p class="card-title2">土地性质：[list:type lencn=12]</p>
+            <p class="card-title2">商业占比：[list:ext_bl lencn=12]</p>
+          </div>
+          <div class="flexrow">
+            <p class="card-title2">容积率：[list:ext_rjl lencn=12]</p>
+          </div>
+          <div class="flexrow">
+            <p class="card-title2">时间：[list:date]</p>
+            <a href="[list:link]" class="card-title6">查看详情</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {/pboot:list}
+  </div>
+  {else}
+	
+	{/pboot:if}
+  {include file=comm/page.html}
 </div>
 
 {include file=comm/foot.html}
