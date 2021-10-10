@@ -1,0 +1,71 @@
+{include file='common/head.html'}
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">订单详情</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <table class="layui-table table-two">
+
+                    <tr>
+                        <th width="100">产品名称</th>
+                        <td>{$order->title}</td>
+                    </tr>
+
+                    <tr>
+                        <th>用户名称</th>
+						<td title="{$order->nickname}">{$order->username}</td>
+                    </tr>
+
+                    <tr>
+                        <th>状态</th>
+                        <td>
+							{if([$order->status] == 0)}
+							<span>未支付</span>
+							{/if}
+							{if([$order->status] == 1)}
+							<span>已支付</span>
+							{/if}
+							{if([$order->status] == 2)}
+							<span>已取消</span>
+							{/if}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>金额</th>
+                        <td>{$order->amount}</td>
+                    </tr>
+
+                    <tr>
+                        <th>支付方式</th>
+                        <td>
+							{if([$order->payment_type] == 1)}
+							<span>余额</span>
+							{/if}
+							{if([$order->payment_type] == 2)}
+							<span>微信</span>
+							{/if}
+							{if([$order->payment_type] == 3)}
+							<span>支付宝</span>
+							{/if}
+						</td>
+                    </tr>
+
+                    <tr>
+                        <th>支付时间</th>
+                        <td>{$order->payment_time}</td>
+                    </tr>
+
+                    <tr>
+                        <th>创建时间</th>
+                        <td>{$order->created_time}</td>
+                    </tr>
+                </table>
+                {fun=get_btn_back()}
+            </div>
+        </div>
+    </div>
+</div>
+{include file='common/foot.html'}

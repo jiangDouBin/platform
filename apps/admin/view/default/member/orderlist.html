@@ -1,0 +1,121 @@
+{include file='common/head.html'}
+
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this" lay-id="t1">订单列表</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form action="{url./admin/MemberOrder/index}" method="get" class="layui-form">
+                    <div class="layui-form-item nospace">
+                        <div class="layui-input-inline">
+                            {$pathinfo}
+                            <select name="field" lay-verify="required">
+                                <option value="b.title" {if(get(
+                                'field')=='b.title')}selected="selected" {/if}>产品名称</option>
+                                <option value="c.username" {if(get(
+                                'field')=='c.username')}selected="selected" {/if} >会员账号</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" name="keyword" value="{$get.keyword}" placeholder="请输入搜索关键字"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn" lay-submit>搜索</button>
+                            <a class="layui-btn layui-btn-primary" href="{url./admin/MemberOrder/index}">清除搜索</a>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{url./admin/MemberComment/mod}" method="post" id="contentForm" name="contentForm"
+                      class="layui-form" onkeydown="if(event.keyCode==13) return false;">
+                    <input type="hidden" name="formcheck" value="{$formcheck}">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>
+<!--								<input type="checkbox" class="checkbox" lay-ignore id="checkall" title="全选">-->
+								序号
+							</th>
+                            <th>产品名称</th>
+                            <th>用户名称</th>
+                            <th>状态</th>
+                            <th>金额</th>
+                            <th>支付方式</th>
+                            <th>支付时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $orders(key,value)}
+                        <tr>
+                            <td>
+<!--                                <input type="checkbox" class="checkbox checkitem" lay-ignore name="list[]"-->
+<!--                                       value="[value->id]">-->
+<!--                                <input type="hidden" name="listall[]" value="[value->id]">-->
+                                [num]
+                            </td>
+                            <td>[value->title]</td>
+                            <td title="[value->nickname]">[value->username]</td>
+                            <td>
+                                {if($value->status == 0)}
+                                <span>未支付</span>
+                                {/if}
+                                {if($value->status == 1)}
+                                <span>已支付</span>
+                                {/if}
+                                {if($value->status == 2)}
+                                <span>已取消</span>
+                                {/if}
+                            </td>
+                            <td>[value->amount]</td>
+                            <td>
+                                {if($value->payment_type == 1)}
+                                <span>余额</span>
+                                {/if}
+                                {if($value->payment_type == 2)}
+                                <span>微信</span>
+                                {/if}
+                                {if($value->payment_type == 3)}
+                                <span>支付宝</span>
+                                {/if}
+                            </td>
+                            <td>[value->payment_time]</td>
+                            <td>
+                                <a href='{fun=url("/MemberOrder/view/id/$value->id")}'
+                                   class='layui-btn layui-btn-xs layui-btn-primary' title='详情'>详情</a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+
+                    <!--{if([$orders])}
+                    <div class="layui-btn-group">
+                        {if(check_level('del'))}
+                        <button type="submit" name="submit" onclick="return setDelAction();"
+                                class="layui-btn layui-btn-sm">删除
+                        </button>
+                        {/if}
+
+                        {if(check_level('mod'))}
+                        <button type="submit" name="submit" value="verify1" class="layui-btn layui-btn-sm">审核</button>
+                        <button type="submit" name="submit" value="verify0" class="layui-btn layui-btn-sm">禁用</button>
+                        {/if}
+                    </div>
+                    <script>
+                        function setDelAction() {
+                            document.contentForm.action = "{url./admin/MemberOrder/del}";
+                            return confirm("您确定要删除选中的评论么？");
+                        }
+                    </script>
+                    {/if}-->
+                </form>
+                <div class="page">{$pagebar}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file='common/foot.html'}
