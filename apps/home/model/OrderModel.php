@@ -21,4 +21,30 @@ class OrderModel extends Model
             ->page()
             ->select();
     }
+
+    // 获取我的下载列表
+    public function getdownloads() {
+        $field = array(
+            'a.product_id as id',
+            'b.*',
+            'c.*'
+        );
+        $join = array(
+            array(
+                'ay_content b',
+                'a.product_id=b.id',
+                'LEFT'
+            ),
+            array(
+                'ay_content_ext c',
+                'a.product_id=c.contentid',
+                'LEFT'
+            )
+        );
+        return parent::table('ay_orders a')->field($field)
+            ->join($join)
+            ->where("a.member_id='" . session('pboot_uid') . "' and a.status = 2")
+            ->page()
+            ->select();
+    }
 }

@@ -548,7 +548,7 @@ class MemberController extends BasicController
     // 消费记录
     public function orders(){
         $orderModel = new OrderModel();
-        $content = parent::parser($this->htmldir . 'member/myorders.html');
+        $content = parent::parser($this->htmldir . '/download.html');
         $pagetitle = "消费记录"; // 页面标题
         $data = $orderModel->getOrders();
         foreach ($data as $key=>$order){
@@ -592,6 +592,23 @@ class MemberController extends BasicController
         $data = $cashOutModel->getCashouts();
         $this->assign('cashouts',$data);
         $this->displayFile('html/member/mycashout.html');
+    }
+
+    // 我的下载
+    public function mydownlaod() {
+        $orderModel = new OrderModel();
+        // 未登录时跳转到用户登录
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+        $content = parent::parser('html/downloadlist.html');
+        $data = $orderModel->getdownloads();
+        
+        
+        $content = parserList($content,$data,$pagetitle);
+        // $content = parserList($content,$data,$pagetitle);
+        $this->cache($content, true);
+       // $this->displayFile('html/downloadlist.html');
     }
 
     //申请提现

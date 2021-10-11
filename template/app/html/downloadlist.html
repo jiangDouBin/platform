@@ -13,14 +13,13 @@
         我的下载</h5>
     </div>
     <div class="col-10 col-sm-2 col-md-4" style="color: #3786FF; text-align: right;">
-      <a href="/?mydownloadinfo/"><span
+      <a href="/member/orders"><span
           style="border: 1px solid #3786FF; padding: 2px 6px; color: #3786FF;">消费记录</span></a>
     </div>
 
   </div>
-  {pboot:if({pboot:islogin}==1)}
   <div class="row">
-    {pboot:list scode=5 num=8 order=sorting}
+    {pboot:list num=10 order=sorting}
     <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
       <div class="card ">
         <div class="card-body ">
@@ -28,7 +27,7 @@
             <h5 class="card-title1">[list:title lencn=12]</h5>
           </div>
           <div class="flexrow">
-            <p class="card-title2">土地性质：[list:type lencn=12]</p>
+            <p class="card-title2">土地性质：[list:ext_type lencn=12]</p>
             <p class="card-title2">商业占比：[list:ext_bl lencn=12]</p>
           </div>
           <div class="flexrow">
@@ -36,16 +35,13 @@
           </div>
           <div class="flexrow">
             <p class="card-title2">时间：[list:date]</p>
-            <a href="[list:link]" class="card-title6">查看详情</a>
+            <a href="/product/[list:id].html" class="card-title6">查看详情</a>
           </div>
         </div>
       </div>
     </div>
     {/pboot:list}
   </div>
-  {else}
-	
-	{/pboot:if}
   {include file=comm/page.html}
 </div>
 
