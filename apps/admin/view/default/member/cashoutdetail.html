@@ -1,0 +1,50 @@
+{include file='common/head.html'}
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this">提现申请详情</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <table class="layui-table table-two">
+                    <tr>
+                        <th>申请人</th>
+						<td title="{$cashout->nickname}">{$cashout->username}</td>
+                    </tr>
+
+                    <tr>
+                        <th>审核状态</th>
+                        <td>
+							{if([$cashout->status] == 1)}
+							<span>申请中</span>
+							{/if}
+							{if([$cashout->status] == 2)}
+							<span>已到账</span>
+							{/if}
+							{if([$cashout->status] == 3)}
+							<span>提现异常</span>
+							{/if}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>提现金额</th>
+                        <td>{$cashout->amount}</td>
+                    </tr>
+
+                    <tr>
+                        <th>审核时间</th>
+                        <td>{$cashout->audited_time}</td>
+                    </tr>
+
+                    <tr>
+                        <th>申请时间</th>
+                        <td>{$cashout->created_time}</td>
+                    </tr>
+                </table>
+                {fun=get_btn_back()}
+            </div>
+        </div>
+    </div>
+</div>
+{include file='common/foot.html'}

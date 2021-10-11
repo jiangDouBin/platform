@@ -1,0 +1,115 @@
+{include file='common/head.html'}
+
+<div class="layui-body">
+    <div class="layui-tab layui-tab-brief" lay-filter="tab">
+        <ul class="layui-tab-title">
+            <li class="layui-this" lay-id="t1">提现申请列表</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <form action="{url./admin/MemberCashOut/index}" method="get" class="layui-form">
+                    <div class="layui-form-item nospace">
+                        <div class="layui-input-inline">
+                            {$pathinfo}
+                            <select name="status" lay-verify="required">
+                                <option value="1" {if(get(
+                                'status')=='1')}selected="selected" {/if}>申请中</option>
+                                <option value="2" {if(get(
+                                'status')=='2')}selected="selected" {/if} >已到账</option>
+                                <option value="3" {if(get(
+                                'status')=='3')}selected="selected" {/if} >提现异常</option>
+                            </select>
+                        </div>
+                        <div class="layui-input-inline">
+                            <input type="text" name="keyword" value="{$get.keyword}" placeholder="请输入申请人"
+                                   class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn" lay-submit>搜索</button>
+                            <a class="layui-btn layui-btn-primary" href="{url./admin/MemberCashOut/index}">清除搜索</a>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{url./admin/MemberCashOut/mod}" method="post" id="contentForm" name="contentForm"
+                      class="layui-form" onkeydown="if(event.keyCode==13) return false;">
+                    <input type="hidden" name="formcheck" value="{$formcheck}">
+                    <table class="layui-table">
+                        <thead>
+                        <tr>
+                            <th>
+<!--								<input type="checkbox" class="checkbox" lay-ignore id="checkall" title="全选">-->
+								序号
+							</th>
+                            <th>申请人</th>
+                            <th>申请金额</th>
+                            <th>申请状态</th>
+                            <th>申请时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {foreach $cashouts(key,value)}
+                        <tr>
+                            <td>
+<!--                                <input type="checkbox" class="checkbox checkitem" lay-ignore name="list[]"-->
+<!--                                       value="[value->id]">-->
+<!--                                <input type="hidden" name="listall[]" value="[value->id]">-->
+                                [num]
+                            </td>
+                            <td title="[value->nickname]">[value->username]</td>
+                            <td>[value->amount]</td>
+                            <td>
+                                {if($value->status == 1)}
+                                <span>申请中</span>
+                                {/if}
+                                {if($value->status == 2)}
+                                <span>已到账</span>
+                                {/if}
+                                {if($value->status == 3)}
+                                <span>提现异常</span>
+                                {/if}
+                            </td>
+                            <td>[value->created_time]</td>
+                            <td>
+                                <a href='{fun=url("/MemberCashOut/view/id/$value->id")}'
+                                   class='layui-btn layui-btn-xs layui-btn-primary' title='详情'>详情</a>
+                                {if($value->status == 1)}
+                                <a href='{fun=url("/MemberCashOut/audit/id/$value->id/status/2")}'
+                                   class='layui-btn layui-btn-xs layui-btn-info' title='提现已到账'>到账</a>
+                                <a href='{fun=url("/MemberCashOut/audit/id/$value->id/status/3")}'
+                                   class='layui-btn layui-btn-xs layui-btn-danger' title='驳回申请'>驳回</a>
+                                {/if}
+                            </td>
+                        </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+
+                    <!--{if([$orders])}
+                    <div class="layui-btn-group">
+                        {if(check_level('del'))}
+                        <button type="submit" name="submit" onclick="return setDelAction();"
+                                class="layui-btn layui-btn-sm">删除
+                        </button>
+                        {/if}
+
+                        {if(check_level('mod'))}
+                        <button type="submit" name="submit" value="verify1" class="layui-btn layui-btn-sm">审核</button>
+                        <button type="submit" name="submit" value="verify0" class="layui-btn layui-btn-sm">禁用</button>
+                        {/if}
+                    </div>
+                    <script>
+                        function setDelAction() {
+                            document.contentForm.action = "{url./admin/MemberOrder/del}";
+                            return confirm("您确定要删除选中的评论么？");
+                        }
+                    </script>
+                    {/if}-->
+                </form>
+                <div class="page">{$pagebar}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file='common/foot.html'}
