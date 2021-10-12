@@ -14,6 +14,7 @@ use app\home\model\CashOutModel;
 use app\home\model\OrderModel;
 use app\home\model\TransactionModel;
 use app\home\model\MemberModel;
+use app\home\model\ProductModel;
 use core\basic\Model;
 use core\basic\Url;
 
@@ -33,7 +34,86 @@ class MemberController extends BasicController
         $this->htmldir = $this->config('tpl_html_dir') ? $this->config('tpl_html_dir') . '/' : '';
     }
 
-    // 会员登录页面
+    // 我的上传
+    public function addupload()
+    {
+        // 已经登录时跳转到用户中心
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+        
+        // 执行登录验证
+        if ($_POST) {
+            if (time() - session('lastreg') < 10) {
+                alert_back('您上传的太频繁了，请稍后再试！');
+            }
+            $title = post('title');
+            $ext_type = post('ext_type');
+            $ext_bl = post('ext_bl');
+            $ext_rjl = post('ext_rjl');
+            $ext_price = post('ext_price');
+            $description = post('description');
+            $istop = post('istop', 'int', '', '', 0);
+            $isrecommend = post('isrecommend', 'int', '', '', 0);
+            $isheadline = post('isheadline', 'int', '', '', 0);
+            
+            $gid = post('gid', 'int') ?: 0;
+            $gtype = post('gtype', 'int') ?: 4;
+             // 构建数据
+             $data = array(
+                'member_id' => session('pboot_uid'),
+                'acode' => 'cn',
+                'scode' => '5',
+                'titlecolor' => ' ',
+                'subscode' => ' ',
+                'status' => 0,
+                'subtitle' => ' ',
+                'filename' => ' ',
+                'author' => session('pboot_username'),
+                'source' => '上传',
+                'outlink' => ' ',
+                'ico' => ' ',
+                'pics' => ' ',
+                'content' => ' ',
+                'tags' => ' ',
+                'enclosure' => '',
+                'keywords' => '',
+                'sorting' => 255,
+                'visits' => 0,
+                'likes' => 0,
+                'oppose' => 0,
+                'create_user' => session('pboot_username'),
+                'update_user' => session('pboot_username'),
+                'date' => get_datetime(),
+                'description' => $description
+            );
+
+            $data2 = array(
+                'ext_type' => $ext_type,
+                'ext_bl' => $ext_bl,
+                'ext_rjl' => $ext_rjl,
+                'ext_price' => $ext_price
+            );
+            // print_r($data);
+            $ProductModel = new ProductModel();
+            // $Datastatus = $ProductModel->addProduct($data);
+            
+            if($id = $ProductModel->addProduct($data)){
+                $data2['contentid'] = $id;
+                if($ProductModel->addContentExt($data2)) {
+                    session('lastreg', time()); // 记录最后提交时间
+                    alert_location('上传成功，请等待管理员审核！', Url::home('myupload'), 1);
+                }else{
+                    error('上传资料失败2', '-1');
+                }
+            }else{
+                error('上传资料失败', '-1');
+            }
+            
+            
+            
+        } 
+    }
     public function login()
     {
         // 已经登录时跳转到用户中心
@@ -111,7 +191,6 @@ class MemberController extends BasicController
             exit();
         }
     }
-
     // 会员注册页面
     public function register()
     {

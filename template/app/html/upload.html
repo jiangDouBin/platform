@@ -66,31 +66,31 @@
 	</style>
   <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-bottom: none;">
     <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 上传</h5>
-    <form class="my-4 mgroup" onsubmit="return login(this);">
+    <form class="my-4 mgroup" onsubmit="return upload(this);">
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>名称:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="title" required id="title" class="form-control" >
         </div>
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>土地性质:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="ext_type" required id="ext_type" class="form-control" >
         </div>
       </div>
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>商业占比:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="ext_bl" required id="ext_bl" class="form-control" >
         </div>
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>容积率:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="ext_rjl" required id="ext_rjl" class="form-control" >
         </div>
       </div>
       <div class="form-group">
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>消费金额:</label>
-          <input type="text" name="username" required id="username" class="form-control" >
+          <input type="text" name="ext_price" required id="ext_price" class="form-control" >
           <span style="color: #D41818;">(限额1000元)</span>
         </div>
       </div>
@@ -104,8 +104,11 @@
       <div class="form-group">
         <div class="formgrouprow" style="align-items: flex-start;">
           <label >备注:</label>
-          <textarea class="form-control" style="width: 100%;height: 130px;"></textarea>
+          <textarea class="form-control" name="description"  id="description"  style="width: 100%;height: 130px;"></textarea>
         </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn">保存</button>
       </div>
     </form>
   </div>
@@ -155,25 +158,31 @@
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
-  function login(obj){
-  var url='{pboot:login}';
-  var username=$(obj).find("#username").val();
-  var password=$(obj).find("#password").val();
-  var checkcode=$(obj).find("#checkcode").val();
+  function upload(obj){
+  var url='/member/addupload';
+  var title=$(obj).find("#title").val();
+  var ext_type=$(obj).find("#ext_type").val();
+  var ext_bl=$(obj).find("#ext_bl").val();
+  var ext_price = $(obj).find("#ext_price").val();
+  var ext_rjl = $(obj).find("#ext_rjl").val();
+  var description = $(obj).find("#description").val();
   
   $.ajax({
     type: 'POST',
     url: url,
     dataType: 'json',
     data: {
-    	username: username,
-    	password: password,
-    	checkcode: checkcode
+    	title:title,
+      ext_type:ext_type,
+      ext_bl:ext_bl,
+      ext_rjl:ext_rjl,
+      ext_price:ext_price,
+      description:description
     },
     success: function (response, status) {
       if(response.code){
-    	 alert("登录成功！");
-		 location.href=response.tourl; 
+    	  alert(response.data);
+		    location.href=response.tourl; 
       }else{
     	  $('#codeimg').click();
     	 alert(response.data);
