@@ -117,6 +117,10 @@ class MemberController extends BasicController
     }
     // 我的上传列表
     public function myuploadlist() {
+        // 未登录时跳转到用户登录
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
         $orderModel = new ProductModel();
         $content = parent::parser($this->htmldir . '/uploadlist.html');
         $data = $orderModel->getList();

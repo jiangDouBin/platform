@@ -97,8 +97,8 @@
       <div class="form-group">
         <div class="formgrouprow" style="position: relative;">
           <label >附件:</label>
-          <button type="button" class="btn">上传</button>
-          <input type="file" class="overhi">
+          <button type="button" class="btn" >上传</button>
+          <input type="file" class="overhi" id="file" multiple onchange="uploadlist(this)" />
         </div>
       </div>
       <div class="form-group">
@@ -115,49 +115,52 @@
       <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-top: none;">
         <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px;  background-color: #3786FF; display: inline-block;"></span> 附件列表</h5>
         <div style="border-bottom: 1px solid #F0F0F0; width: 100%;"></div>
-				<table class="newtable" style="border: 1px solid #F0F0F0; margin-top: 20px;">
+				<table class="newtable" id="ness" style="border: 1px solid #F0F0F0; margin-top: 20px;">
 					<tr>
-						<th>名称</th>
-						<th>金额</th>
-            <th>付费方式</th>
-						<th>付费时间</th>
+						<th>名称-文件类型</th>
+						<th>操作</th>
 					</tr>
-						<tr>
-							<td>1</td>
-							<td>1</td>
-              <td>1</td>
-							<td style="color: #3786FF;">
-                <img src="{pboot:sitetplpath}/images/icon4.png" />
-                删除
-              </td>
-						</tr>
-            <tr>
-							<td>1</td>
-							<td>1</td>
-              <td>1</td>
-							<td style="color: #3786FF;">
-                <img src="{pboot:sitetplpath}/images/icon4.png" />
-                删除
-              </td>
-						</tr>
-            <tr>
-							<td>1</td>
-							<td>1</td>
-              <td>1</td>
-							<td style="color: #3786FF;">
-                <img src="{pboot:sitetplpath}/images/icon4.png" />
-                删除
-              </td>
-						</tr>
+						
 				</table>
 			</div>
-      
 </div>
 
     
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
+  var filesarray = []
+  function uploadlist() {
+    // console.log(document.getElementById("file").files.length)
+    var html = "";
+    html += `<tr><th>名称-文件类型</th>
+						<th>操作</th></tr>`;
+    for(var i = 0;i<document.getElementById("file").files.length;i++){
+      filesarray.push(document.getElementById('file').files[i]);
+    }
+    for(var i = 0;i<filesarray.length;i++){
+      file = filesarray[i];
+      html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
+                <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
+                删除
+              </td></tr>`;
+    }
+    document.getElementById('ness').innerHTML = html;
+  }
+  function deletes(i) {
+    var html = "";
+    html += `<tr><th>名称-文件类型</th>
+						<th>操作</th></tr>`;
+      filesarray.splice(i,1)
+      for(var i = 0;i<filesarray.length;i++){
+      file = filesarray[i];
+      html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
+                <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
+                删除
+              </td></tr>`;
+    }
+    document.getElementById('ness').innerHTML = html;
+  }
   function upload(obj){
   var url='/member/addupload';
   var title=$(obj).find("#title").val();
@@ -177,7 +180,8 @@
       ext_bl:ext_bl,
       ext_rjl:ext_rjl,
       ext_price:ext_price,
-      description:description
+      description:description,
+      fileArray: filesarray
     },
     success: function (response, status) {
       if(response.code){
