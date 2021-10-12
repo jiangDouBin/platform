@@ -12,6 +12,28 @@ use core\basic\Config;
 
 class ProductModel extends Model
 {
+    public function getList()
+    {
+        $field = array(
+            'a.*',
+            'b.*'
+        );
+        $join = array(
+            array(
+                'ay_content_ext b',
+                'a.id=b.contentid',
+                'LEFT'
+            )
+        );
+        return parent::table('ay_content a')->field($field)
+            ->where("a.acode='cn'")
+            ->where("a.scode='5'")
+            ->where("a.member_id='" . 1 . "'")
+            ->join($join)
+            ->order('a.sorting ASC,a.id DESC')
+            ->page()
+            ->select();
+    }
     public function addProduct($data) {
         return parent::table('ay_content')->autoTime()->insertGetId($data);
     }

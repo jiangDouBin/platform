@@ -34,7 +34,7 @@ class MemberController extends BasicController
         $this->htmldir = $this->config('tpl_html_dir') ? $this->config('tpl_html_dir') . '/' : '';
     }
 
-    // 我的上传
+    // 我的上传-上传
     public function addupload()
     {
         // 已经登录时跳转到用户中心
@@ -64,6 +64,7 @@ class MemberController extends BasicController
                 'member_id' => session('pboot_uid'),
                 'acode' => 'cn',
                 'scode' => '5',
+                'title' => $title,
                 'titlecolor' => ' ',
                 'subscode' => ' ',
                 'status' => 0,
@@ -113,6 +114,15 @@ class MemberController extends BasicController
             
             
         } 
+    }
+    // 我的上传列表
+    public function myuploadlist() {
+        $orderModel = new ProductModel();
+        $content = parent::parser($this->htmldir . '/uploadlist.html');
+        $data = $orderModel->getList();
+        // print_r($data);
+        $content = parserList($content,$data,$pagetitle);
+        $this->cache($content, true);
     }
     public function login()
     {

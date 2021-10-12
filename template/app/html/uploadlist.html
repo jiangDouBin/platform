@@ -65,7 +65,7 @@
           </div>
 	<!-- 图文列表 -->
     <div class="row">
-        {pboot:list scode=5 num=8 order=sorting}
+        {pboot:list num=9 order=sorting}
         <div class="col-12 col-sm-6 col-lg-4 wow zoomIn userhover" data-wow-delay="[list:i]00ms" data-wow-duration="1s">
           <div class="card ">
 <!--                  <div class="card-img-10"><a href="[list:link]"><img class="card-img-top" src="[list:ico]" alt="[list:title]"></a></div>-->
@@ -74,7 +74,7 @@
                   <h5 class="card-title1">[list:title lencn=12]</h5>
                 </div>
                 <div class="flexrow">
-                  <p class="card-title2">土地性质：[list:type lencn=12]</p>
+                  <p class="card-title2">土地性质：[list:ext_type lencn=12]</p>
                   <p class="card-title2">商业占比：[list:ext_bl lencn=12]</p>
                 </div>
                 <div class="flexrow">
@@ -84,9 +84,15 @@
                   <p class="card-title2">时间：[list:date]</p>
                   <a href="[list:link]" class="card-title6">查看详情</a>
                 </div>
-                <div class="status successstatus">
+                {pboot:if([list:status]==0)}
+                <div class="status errorstatus">
                     审核中
                 </div>
+                {else}
+                <div class="status successstatus">
+                    审核通过
+                </div>
+                {/pboot:if}
               </div>
            </div>
      </div>
