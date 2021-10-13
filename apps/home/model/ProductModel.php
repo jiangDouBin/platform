@@ -42,4 +42,25 @@ class ProductModel extends Model
     {
         return parent::table('ay_content_ext')->insert($data);
     }
+
+     // 获取文章详情
+     public function getContent($id)
+     {
+         $field = array(
+             'a.*',
+             'b.*',
+         );
+         $join = array(
+             array(
+                 'ay_content_ext b',
+                 'a.id=b.contentid',
+                 'LEFT'
+             )
+         );
+         return parent::table('ay_content a')->field($field)
+             ->where("a.id=$id")
+             ->where("a.acode='" . session('acode') . "'")
+             ->join($join)
+             ->find();
+     }
 }

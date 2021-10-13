@@ -1,8 +1,14 @@
 {include file=comm/head.html}
 
 <div class="container pages">
-	{include file=comm/position.html}
+	<div class="text-left position mb-3 d-none d-md-block mmposition">当前位置：
+		<a href="/">首页</a>/<a href="/member/mydownlaod">产品中心</a> / <a >支付</a> 
+	</div>
 	<style>
+		.mmposition a:last-child{
+	  font-weight: bold;
+	  color: #3786FF;
+	}
 	body{
 		background-color: #F0F2F5;
 		color: #6F6F6F;
@@ -106,8 +112,8 @@
 	<div class="container pages">
     <div class="row infoDiv" style="padding: 26px 38px;">
 				<div class="infoflexrow">
-					<h3 class="txtbiaoti">标题名称：xxxxxx-admin</h3>
-					<span style="color: #777777;">支付金额：<span style="color: #3786FF;">2000.00</span>元</span>
+					<h3 class="txtbiaoti">标题名称：{$order->title}</h3>
+					<span style="color: #777777;">支付金额：<span style="color: #3786FF;">{$order->amount}</span>元</span>
 				</div>
 		</div>
     <div class="row infoDiv" style="margin-top: 18px; padding: 26px 30px;">
