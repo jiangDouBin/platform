@@ -1,202 +1,219 @@
 {include file=comm/head.html}
 
-
-
 <div class="container pages">
-	{include file=comm/position.html}
-	<style>
-	body{
-		background-color: #F0F2F5;
-		color: #6F6F6F;
-	}
-	.newtable{
-		background-color: #ffffff;
-		width: 100%;
-		/* border: 1px solid #DEDEDE; */
-	}
-	.newtable tr th,.newtable tr td{
-		text-align: center;
-		height: 57px;
-	}
-  .newtable tr:nth-child(2n){
-		background-color: #F5F5F5;
-	}
-  .mgroup{
-    width: 90%;
-  }
-  .form-group{
-    display: flex;
-    margin-top: 20px;
-    /* margin-top: 10px; */
-    margin-bottom: 20px;
-  }
-  .formgrouprow label{
-    width: 82px;
-    height: 20px;
-    text-align: right;
-    margin-right: 20px;
-  }
-  .formgrouprow{
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin: 0px 20px;
-    
-  }
-  .form-control{
-    background: #FBFBFB;
-    border: 1px solid #E6E6E6;
-    width: 320px;
-  }
-  .btn{
-    width: 73px;
-    height: 33px;
-    background: #3786FF;
-    border-radius: 4px;
-    color: #FFFFFF;
-  }
-  .overhi{
-    width: 73px;
-    height: 33px;
-    position: absolute;
-    left: 102px;
-    opacity: 0;
-  }
-	</style>
-  <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-bottom: none;">
-    <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span> 上传</h5>
-    <form class="my-4 mgroup" onsubmit="return upload(this);">
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>名称:</label>
-          <input type="text" name="title" required id="title" class="form-control" >
-        </div>
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>土地性质:</label>
-          <input type="text" name="ext_type" required id="ext_type" class="form-control" >
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>商业占比:</label>
-          <input type="text" name="ext_bl" required id="ext_bl" class="form-control" >
-        </div>
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>容积率:</label>
-          <input type="text" name="ext_rjl" required id="ext_rjl" class="form-control" >
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow">
-          <label ><span style="color: #D41818;">*</span>消费金额:</label>
-          <input type="text" name="ext_price" required id="ext_price" class="form-control" >
-          <span style="color: #D41818;">(限额1000元)</span>
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow" style="position: relative;">
-          <label >附件:</label>
-          <button type="button" class="btn" >上传</button>
-          <input type="file" class="overhi" id="file" multiple onchange="uploadlist(this)" />
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="formgrouprow" style="align-items: flex-start;">
-          <label >备注:</label>
-          <textarea class="form-control" name="description"  id="description"  style="width: 100%;height: 130px;"></textarea>
-        </div>
-      </div>
-      <div class="form-group">
-        <button type="submit" class="btn">保存</button>
-      </div>
-    </form>
-  </div>
-      <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-top: none;">
-        <h5 class="newborder_bottom border-info pb-2 mb-2" ><span style="width: 3px; height: 20px;vertical-align: -4px;  background-color: #3786FF; display: inline-block;"></span> 附件列表</h5>
-        <div style="border-bottom: 1px solid #F0F0F0; width: 100%;"></div>
-				<table class="newtable" id="ness" style="border: 1px solid #F0F0F0; margin-top: 20px;">
-					<tr>
-						<th>名称-文件类型</th>
-						<th>操作</th>
-					</tr>
-						
-				</table>
-			</div>
-</div>
+    {include file=comm/position.html}
+    <style>
+        body {
+            background-color: #F0F2F5;
+            color: #6F6F6F;
+        }
 
-    
+        .newtable {
+            background-color: #ffffff;
+            width: 100%;
+            /* border: 1px solid #DEDEDE; */
+        }
+
+        .newtable tr th, .newtable tr td {
+            text-align: center;
+            height: 57px;
+        }
+
+        .newtable tr:nth-child(2n) {
+            background-color: #F5F5F5;
+        }
+
+        .mgroup {
+            width: 90%;
+        }
+
+        .form-group {
+            display: flex;
+            margin-top: 20px;
+            /* margin-top: 10px; */
+            margin-bottom: 20px;
+        }
+
+        .formgrouprow label {
+            width: 82px;
+            height: 20px;
+            text-align: right;
+            margin-right: 20px;
+        }
+
+        .formgrouprow {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin: 0px 20px;
+
+        }
+
+        .form-control {
+            background: #FBFBFB;
+            border: 1px solid #E6E6E6;
+            width: 320px;
+        }
+
+        .btn {
+            width: 73px;
+            height: 33px;
+            background: #3786FF;
+            border-radius: 4px;
+            color: #FFFFFF;
+        }
+
+        .overhi {
+            width: 73px;
+            height: 33px;
+            position: absolute;
+            left: 102px;
+            opacity: 0;
+        }
+    </style>
+    <div class="row"
+         style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-bottom: none;">
+        <h5 class="newborder_bottom border-info pb-2 mb-2"><span
+                style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span>
+            上传</h5>
+        <form class="my-4 mgroup" onsubmit="return upload(this);">
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>名称:</label>
+                    <input type="text" name="title" required id="title" class="form-control">
+                </div>
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>土地性质:</label>
+                    <input type="text" name="ext_type" required id="ext_type" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>商业占比:</label>
+                    <input type="text" name="ext_bl" required id="ext_bl" class="form-control">
+                </div>
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>容积率:</label>
+                    <input type="text" name="ext_rjl" required id="ext_rjl" class="form-control">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow">
+                    <label><span style="color: #D41818;">*</span>消费金额:</label>
+                    <input type="text" name="ext_price" required id="ext_price" class="form-control">
+                    <span style="color: #D41818;">(限额1000元)</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow" style="position: relative;">
+                    <label>附件:</label>
+                    <button type="button" class="btn">上传</button>
+                    <input type="file" class="overhi" id="file" multiple onchange="uploadlist(this)"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="formgrouprow" style="align-items: flex-start;">
+                    <label>备注:</label>
+                    <textarea class="form-control" name="description" id="description"
+                              style="width: 100%;height: 130px;"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn uploads">UPLOADS</button>
+                <button type="submit" class="btn">保存</button>
+            </div>
+        </form>
+    </div>
+    <div class="row" style="background-color: #ffffff; padding: 10px 10px;border: 1px solid #DBDBDB;border-top: none;">
+        <h5 class="newborder_bottom border-info pb-2 mb-2"><span
+                style="width: 3px; height: 20px;vertical-align: -4px;  background-color: #3786FF; display: inline-block;"></span>
+            附件列表</h5>
+        <div style="border-bottom: 1px solid #F0F0F0; width: 100%;"></div>
+        <table class="newtable" id="ness" style="border: 1px solid #F0F0F0; margin-top: 20px;">
+            <tr>
+                <th>名称-文件类型</th>
+                <th>操作</th>
+            </tr>
+
+        </table>
+    </div>
+</div>
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
-  var filesarray = []
-  function uploadlist() {
-    // console.log(document.getElementById("file").files.length)
-    var html = "";
-    html += `<tr><th>名称-文件类型</th>
+    var filesarray = []
+
+    function uploadlist() {
+        // console.log(document.getElementById("file").files.length)
+        var html = "";
+        html += `<tr><th>名称-文件类型</th>
 						<th>操作</th></tr>`;
-    for(var i = 0;i<document.getElementById("file").files.length;i++){
-      filesarray.push(document.getElementById('file').files[i]);
-    }
-    for(var i = 0;i<filesarray.length;i++){
-      file = filesarray[i];
-      html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
+        for (var i = 0; i < document.getElementById("file").files.length; i++) {
+            filesarray.push(document.getElementById('file').files[i]);
+        }
+        for (var i = 0; i < filesarray.length; i++) {
+            file = filesarray[i];
+            html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
                 <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
                 删除
               </td></tr>`;
+        }
+        document.getElementById('ness').innerHTML = html;
     }
-    document.getElementById('ness').innerHTML = html;
-  }
-  function deletes(i) {
-    var html = "";
-    html += `<tr><th>名称-文件类型</th>
+
+    function deletes(i) {
+        var html = "";
+        html += `<tr><th>名称-文件类型</th>
 						<th>操作</th></tr>`;
-      filesarray.splice(i,1)
-      for(var i = 0;i<filesarray.length;i++){
-      file = filesarray[i];
-      html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
+        filesarray.splice(i, 1)
+        for (var i = 0; i < filesarray.length; i++) {
+            file = filesarray[i];
+            html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
                 <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
                 删除
               </td></tr>`;
+        }
+        document.getElementById('ness').innerHTML = html;
     }
-    document.getElementById('ness').innerHTML = html;
-  }
-  function upload(obj){
-  var url='/member/addupload';
-  var title=$(obj).find("#title").val();
-  var ext_type=$(obj).find("#ext_type").val();
-  var ext_bl=$(obj).find("#ext_bl").val();
-  var ext_price = $(obj).find("#ext_price").val();
-  var ext_rjl = $(obj).find("#ext_rjl").val();
-  var description = $(obj).find("#description").val();
-  
-  $.ajax({
-    type: 'POST',
-    url: url,
-    dataType: 'json',
-    data: {
-    	title:title,
-      ext_type:ext_type,
-      ext_bl:ext_bl,
-      ext_rjl:ext_rjl,
-      ext_price:ext_price,
-      description:description,
-      fileArray: filesarray
-    },
-    success: function (response, status) {
-      if(response.code){
-    	  alert(response.data);
-		    location.href=response.tourl; 
-      }else{
-    	  $('#codeimg').click();
-    	 alert(response.data);
-      }
-    },
-    error:function(xhr,status,error){
-      alert('返回数据异常！');
+
+    function upload(obj) {
+        var url = '/member/addupload';
+        var title = $(obj).find("#title").val();
+        var ext_type = $(obj).find("#ext_type").val();
+        var ext_bl = $(obj).find("#ext_bl").val();
+        var ext_price = $(obj).find("#ext_price").val();
+        var ext_rjl = $(obj).find("#ext_rjl").val();
+        var description = $(obj).find("#description").val();
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            dataType: 'json',
+            data: {
+                title: title,
+                ext_type: ext_type,
+                ext_bl: ext_bl,
+                ext_rjl: ext_rjl,
+                ext_price: ext_price,
+                description: description,
+                fileArray: filesarray
+            },
+            success: function (response, status) {
+                if (response.code) {
+                    alert(response.data);
+                    location.href = response.tourl;
+                } else {
+                    $('#codeimg').click();
+                    alert(response.data);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('返回数据异常！');
+            }
+        });
+        return false;
     }
-  });
-  return false;
-}
 </script>
+{include file=comm/upload.html}
 {include file=comm/foot.html}
