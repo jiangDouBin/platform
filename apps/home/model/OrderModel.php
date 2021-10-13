@@ -21,6 +21,30 @@ class OrderModel extends Model
             ->page()
             ->select();
     }
+    // 生成订单
+    public function addOrders(array $data) {
+        return parent::table('ay_orders')->insertGetId($data);
+    }
+    // 订单详情
+    public function myOrders($id) {
+        $field = array(
+            'a.*',
+            'b.*',
+        );
+        $join = array(
+            array(
+                'ay_content b',
+                'a.product_id=b.id',
+                'LEFT'
+            )
+        );
+        // 筛选条件支持模糊匹配
+        return parent::table('ay_orders a')->field($field)
+            ->join($join)
+            ->where("a.member_id='" . session('pboot_uid') . "'")
+            ->where("a.id='" . $id . "'")
+            ->find();
+    }
 
     // 获取我的下载列表
     public function getdownloads() {

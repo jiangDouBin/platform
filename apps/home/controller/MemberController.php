@@ -564,7 +564,63 @@ class MemberController extends BasicController
             json(0, '发送失败，' . $rs);
         }
     }
-
+    // 下单
+    public function addorder() {
+        // 未登录时跳转到用户登录
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+        $productid = $_GET['product_id'];
+        if(empty($productid)) {
+            error('产品IDerror');
+        }else{
+            $ProductModel = new ProductModel;
+            $result = $ProductModel->getContent($productid);
+            if($result) {
+                // 获取产品信息正常
+                $data = array(
+                    'member_id' => session('pboot_uid'),
+                    'product_id' =>$result->id,
+                    'status' => 0,
+                    'amount' =>  $result->ext_price,
+                    'payment_type' => 0,
+                    'payment_time' => '',
+                    'created_time' => get_datetime(),
+                    'remark' =>' '
+                );
+                $orderModel = new orderModel();
+                if($id=$orderModel->addOrders($data)) {
+                    $url = '/member/orderinfo?id='.$id;
+                    location(Url::home($url));
+                }else {
+                    error('生成订单失败error');
+                }
+            }else{
+                error('产品信息error');
+            }
+        }
+        
+       
+    }
+    // 订单详情
+    public function orderinfo() {
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+        $orderid = $_GET['id'];
+        $orderModel = new orderModel();
+        if($result=$orderModel->myOrders($orderid)) {
+            // $pagetitle = '下单支付';
+            // $content = parent::parser($this->htmldir . '/pay.html');
+            // print_r($result);
+            $this->assign('order',$result);
+            $this->displayFile('html/pay.html');
+            // $content = parserList($content,$result,$pagetitle);
+            // $this->cache($content, true);
+        }else {
+            error('订单失败error');
+        }
+    }
     // 检查用户是否注册
     public function isRegister()
     {
