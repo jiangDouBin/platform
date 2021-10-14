@@ -47,6 +47,7 @@ class MemberController extends BasicController
             if (time() - session('lastreg') < 10) {
                 alert_back('您上传的太频繁了，请稍后再试！');
             }
+            $fileArr = post('fileArray');
             $title = post('title');
             $ext_type = post('ext_type');
             $ext_bl = post('ext_bl');
@@ -95,20 +96,22 @@ class MemberController extends BasicController
                 'ext_rjl' => $ext_rjl,
                 'ext_price' => $ext_price
             );
-            // print_r($data);
             $ProductModel = new ProductModel();
-            // $Datastatus = $ProductModel->addProduct($data);
             if ($id = $ProductModel->addProduct($data)) {
                 $data2['contentid'] = $id;
                 if ($ProductModel->addContentExt($data2)) {
-                    session('lastreg', time()); // 记录最后提交时间
-                    alert_location('上传成功，请等待管理员审核！', Url::home('myupload'), 1);
-                } else {
-                    error('上传资料失败2', '-1');
+                    foreach ($fileArr as $key=>$file){
+                        $fileArr[$key]['content_id'] = $id;
+                        $fileArr[$key]['created_time'] = get_datetime();
+                    }
+                    if($ProductModel->insertUploadFiles($fileArr)){
+                        session('lastreg', time()); // 记录最后提交时间
+                        alert_location('上传成功，请等待管理员审核！', Url::home('member/myuploadlist'), 1);
+                    }
                 }
-            } else {
-                error('上传资料失败', '-1');
             }
+
+            error('上传资料失败', '-1');
         }
     }
 

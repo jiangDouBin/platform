@@ -72,7 +72,27 @@
 		</div>
 	</div>
 </div>
- 
+
+ <!-- 多文件上传 files-->
+ <div class="modal fade" id="fileBoxs" tabindex="-1" role="dialog" aria-labelledby="fileBoxLabel" aria-hidden="true">
+	 <div class="modal-dialog modal-lg" role="document">
+		 <div class="modal-content">
+			 <div class="modal-header">
+				 <h4 class="modal-title" id="fileBoxLabel">文件上传</h4>
+			 </div>
+			 <div class="modal-body">
+				 <div class="file-loading">
+					 <input id="fileInputs" name="upload[]" multiple type="file" data-msg-placeholder="请选择要上传的文件">
+				 </div>
+				 <div id="kartik-file-errors"></div>
+			 </div>
+			 <div class="modal-footer">
+				 <button type="button" class="btn btn-primary uploadSubmit">上传</button>
+				 <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+			 </div>
+		 </div>
+	 </div>
+ </div>
  
 <script>
 
@@ -97,6 +117,12 @@ $(document).on('ready', function() {
     	upload('fileInput',false,false,true,1);
     	$("#fileBox").modal("show");
     });
+
+	$(".files").on("click",function(){
+		target=$(this).data("target");
+		upload('fileInputs',true,true,true,0);
+		$("#fileBoxs").modal("show");
+	});
 	
 	
 	function upload(inputName,showPreview,dropZoneEnabled,autoReplace,maxFileCount){
@@ -109,7 +135,7 @@ $(document).on('ready', function() {
 	        elErrorContainer: '#kartik-file-errors',
 	        uploadAsync: false,
 	        maxFileCount: maxFileCount,
-	        uploadUrl: '{pboot:upload}'//文件上传接口
+	        uploadUrl: '/member/upload'//文件上传接口
 	     }).on("filebatchuploadsuccess", function (event, data, previewId, index) {
 	    	if(data.response.code){
 			    $(target).val(data.response.data);
@@ -118,6 +144,7 @@ $(document).on('ready', function() {
 			    $("#uploadBox").modal("hide");
 			    $("#fileBox").modal("hide");
 			    $("#uploadBoxs").modal("hide");
+				$("#fileBoxs").modal("hide");
 	    	}else{
 	    		alert(data.response.data);
 	    	}

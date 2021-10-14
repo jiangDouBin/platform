@@ -77,7 +77,7 @@
         <h5 class="newborder_bottom border-info pb-2 mb-2"><span
                 style="width: 3px; height: 20px;vertical-align: -4px; background-color: #3786FF; display: inline-block;"></span>
             上传</h5>
-        <form class="my-4 mgroup" onsubmit="return upload(this);">
+        <form class="my-4 mgroup" onsubmit="return save(this);">
             <div class="form-group">
                 <div class="formgrouprow">
                     <label><span style="color: #D41818;">*</span>名称:</label>
@@ -108,8 +108,7 @@
             <div class="form-group">
                 <div class="formgrouprow" style="position: relative;">
                     <label>附件:</label>
-                    <button type="button" class="btn">上传</button>
-                    <input type="file" class="overhi" id="file" multiple onchange="uploadlist(this)"/>
+                    <button type="button" class="btn files">上传</button>
                 </div>
             </div>
             <div class="form-group">
@@ -120,8 +119,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="button" class="btn uploads">UPLOADS</button>
-                <button type="submit" class="btn">保存</button>
+                <div class="formgrouprow" style="align-items: flex-start;">
+                    <label></label>
+                    <button type="submit" class="btn">保存</button>
+                </div>
             </div>
         </form>
     </div>
@@ -135,7 +136,6 @@
                 <th>名称-文件类型</th>
                 <th>操作</th>
             </tr>
-
         </table>
     </div>
 </div>
@@ -144,17 +144,24 @@
 <script>
     var filesarray = []
 
-    function uploadlist() {
-        // console.log(document.getElementById("file").files.length)
+    function uploadlist(filesObj) {
+        var files = filesObj.files, fileurls = filesObj.response.data;
+
         var html = "";
         html += `<tr><th>名称-文件类型</th>
 						<th>操作</th></tr>`;
-        for (var i = 0; i < document.getElementById("file").files.length; i++) {
-            filesarray.push(document.getElementById('file').files[i]);
+        for (var i = 0; i < filesObj.filescount; i++) {
+            var file = {};
+            var fileInfo = files[i];
+            file.file_name = fileInfo.name;
+            file.file_ext = fileInfo.type;
+            file.file_size = fileInfo.size;
+            file.url = fileurls[i];
+            filesarray.push(file);
         }
         for (var i = 0; i < filesarray.length; i++) {
             file = filesarray[i];
-            html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
+            html += '<tr><td>' + file.file_name + `</td><td style="color: #3786FF;">
                 <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
                 删除
               </td></tr>`;
@@ -169,7 +176,7 @@
         filesarray.splice(i, 1)
         for (var i = 0; i < filesarray.length; i++) {
             file = filesarray[i];
-            html += '<tr><td>' + file.name + `</td><td style="color: #3786FF;">
+            html += '<tr><td>' + file.file_name + `</td><td style="color: #3786FF;">
                 <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
                 删除
               </td></tr>`;
@@ -177,7 +184,7 @@
         document.getElementById('ness').innerHTML = html;
     }
 
-    function upload(obj) {
+    function save(obj) {
         var url = '/member/addupload';
         var title = $(obj).find("#title").val();
         var ext_type = $(obj).find("#ext_type").val();
@@ -214,6 +221,15 @@
         });
         return false;
     }
+
+    $(document).on('ready', function() {
+        $('#fileInputs').on('filebatchuploadsuccess', function(event, data, previewId, index) {
+            if(data.response.code){
+                uploadlist(data);
+            }else
+                alert('上传文件失败！');
+        });
+    });
 </script>
 {include file=comm/upload.html}
 {include file=comm/foot.html}
