@@ -226,6 +226,7 @@ class MemberController extends BasicController
                 alert_back('您注册太频繁了，请稍后再试！');
             }
 
+
             // 验证码验证
             $checkcode = strtolower(post('checkcode', 'var'));
             if ($this->config('register_check_code') !== '0') {
@@ -282,9 +283,9 @@ class MemberController extends BasicController
                 }
             }
 
-            if ($password != $rpassword) {
-                alert_back('确认密码不正确！');
-            }
+            // if ($password != $rpassword) {
+            //     alert_back('确认密码不正确！');
+            // }
 
             if (!$password) {
                 alert_back('密码不能为空！');

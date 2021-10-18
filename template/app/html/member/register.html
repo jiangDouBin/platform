@@ -94,7 +94,7 @@
 </style>
 <div class=" logined">
     <div class="row juzhong">
-        	<form class="my-4 slogin" onsubmit="return login(this);">
+        	<form class="my-4 slogin" onsubmit="return register(this);">
                 <div class="form-group">
                     <!-- <label for="username">账　号</label> -->
                     <span class="logintxt "><a href="{pboot:login}">登录</a></span>
@@ -103,7 +103,7 @@
                 <div class="form-group">
                     <!-- <label for="username">账　号</label> -->
                     <div>
-                        <input type="text" name="username" required id="username" class="form-control" placeholder="请输入账号">
+                        <input type="text" name="username" onblur="isRegister()" required id="username" class="form-control" placeholder="请输入账号">
                     </div>
                 </div>
                 
@@ -131,54 +131,60 @@
 </div>
 
 <script>
-
-//ajax登录
-// function login(obj){
-//     var url='{pboot:isregister}';
-//   var username=$("#username").val();
-//   if(!username){
-// 	 $("#username").addClass("is-invalid");
-//  	//  $("#usernote").addClass("invalid-feedback");
-//  	 $("#username").removeClass("is-valid");
-//  	//  $("#usernote").removeClass("valid-feedback");
-//  	 $("#usernote").text("请输入需要注册的账号！");
-// 	 return false;
-//   }
-//   $.ajax({
-//     type: 'POST',
-//     url: url,
-//     dataType: 'json',
-//     data: {
-//     	username: username
-//     },
-//     success: function (response, status) {
-//       if(response.code){//已经被注册
-//     	 $("#username").addClass("is-invalid");
-//     	 $("#usernote").addClass("invalid-feedback");
-    	 
-//     	 $("#username").removeClass("is-valid");
-//     	 $("#usernote").removeClass("valid-feedback");
-    	
-//       }else{//未被注册
-//     	 $("#username").addClass("is-valid");
-//     	 $("#usernote").addClass("valid-feedback");
-    	 
-//     	 $("#username").removeClass("is-invalid");
-//     	 $("#usernote").removeClass("invalid-feedback");
-//       }
-//       $("#usernote").text(response.data);
-//     },
-//     error:function(xhr,status,error){
-//       alert('返回数据异常！');
-//     }
-//   });
-//   return false;
-// }
 //检查注册账号
-function login(){
-    var url='{pboot:register}';
+function isRegister(){
+  var url='{pboot:isregister}';
+  var username=$("#username").val();
+  if(!username){
+	 $("#username").addClass("is-invalid");
+ 	 $("#usernote").addClass("invalid-feedback");
+ 	 $("#username").removeClass("is-valid");
+ 	 $("#usernote").removeClass("valid-feedback");
+ 	 $("#usernote").text("请输入需要注册的账号！");
+	 return false;
+  }
+  $.ajax({
+    type: 'POST',
+    url: url,
+    dataType: 'json',
+    data: {
+    	username: username
+    },
+    success: function (response, status) {
+      if(response.code){//已经被注册
+    	 $("#username").addClass("is-invalid");
+    	 $("#usernote").addClass("invalid-feedback");
+    	 
+    	 $("#username").removeClass("is-valid");
+    	 $("#usernote").removeClass("valid-feedback");
+         alert(response.data)
+    	
+      }else{//未被注册
+    	 $("#username").addClass("is-valid");
+    	 $("#usernote").addClass("valid-feedback");
+    	 
+    	 $("#username").removeClass("is-invalid");
+    	 $("#usernote").removeClass("invalid-feedback");
+      }
+      alert(response.data)
+    //   $("#usernote").text(response.data);
+    },
+    error:function(xhr,status,error){
+      alert('返回数据异常！');
+    }
+  });
+  return false;
+}
+
+//ajax注册
+function register(obj){
+  var url='{pboot:register}';
   var username=$(obj).find("#username").val();
+//   var nickname=$(obj).find("#nickname").val();
   var password=$(obj).find("#password").val();
+//   var rpassword=$(obj).find("#rpassword").val();
+//   var sex=$(':radio[name="sex"]:checked').val();
+//   var checkcode=$(obj).find("#checkcode").val();
 
   $.ajax({
     type: 'POST',
@@ -186,7 +192,7 @@ function login(){
     dataType: 'json',
     data: {
     	username: username,
-    	password: password,
+    	password: password
     },
     success: function (response, status) {
       if(response.code){
