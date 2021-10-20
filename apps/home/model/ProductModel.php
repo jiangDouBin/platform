@@ -29,7 +29,7 @@ class ProductModel extends Model
         return parent::table('ay_content a')->field($field)
             ->where("a.acode='cn'")
             ->where("a.scode='5'")
-            ->where("a.member_id='" . 1 . "'")
+            ->where("a.member_id='" . session('pboot_uid') . "'")
             ->join($join)
             ->order('a.sorting ASC,a.id DESC')
             ->page()

@@ -146,13 +146,14 @@
 
     function uploadlist(filesObj) {
         var files = filesObj.files, fileurls = filesObj.response.data;
-
+        // console.log(files)
         var html = "";
         html += `<tr><th>名称-文件类型</th>
 						<th>操作</th></tr>`;
         for (var i = 0; i < filesObj.filescount; i++) {
             var file = {};
             var fileInfo = files[i];
+            if(!fileInfo)continue;
             file.file_name = fileInfo.name;
             file.file_ext = fileInfo.type;
             file.file_size = fileInfo.size;
@@ -225,6 +226,7 @@
     $(document).on('ready', function() {
         $('#fileInputs').on('filebatchuploadsuccess', function(event, data, previewId, index) {
             if(data.response.code){
+                console.log('-----',data)
                 uploadlist(data);
             }else
                 alert('上传文件失败！');

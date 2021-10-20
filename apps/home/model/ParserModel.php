@@ -541,7 +541,7 @@ class ParserModel extends Model
         );
         $result = parent::table('ay_content a')->field($field)
             ->where("a.id='$id' OR a.filename='$id'")
-            ->where('a.status=1')
+            // ->where('a.status=1')
             ->join($join)
             ->decode()
             ->find();
@@ -565,7 +565,7 @@ class ParserModel extends Model
         // 添加下载列表
         $fielded = array(
             'id',
-            'name',
+            'file_name as name',
             'created_time as time'
         );
             
