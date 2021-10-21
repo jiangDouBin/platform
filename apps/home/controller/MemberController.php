@@ -129,7 +129,45 @@ class MemberController extends BasicController
         $content = parserList($content, $data, $pagetitle);
         $this->cache($content, true);
     }
+    // 下载资源
+    public function xiazai() {
+       // 未登录时跳转到用户登录
+        if (!session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+        
+        if($_POST) {
+            $productid =  post('productid');
+            $id = post('id');
+            $ProductModel = new ProductModel();
+            $OrderModel = new OrderModel();
+            if($productinfo = $ProductModel->getContent($productid)){
+                if($productinfo->status == 1) {
+                    // 说明此产品已经审核通过
+                    if($productinfo->member_id == session('pboot_uid')) {
+                        // 直接返回地址即可
+                        return;
+                    }
+                    if($orderinfo = $OrderModel->getOrderStatus($productid)){
 
+                    }else {
+                        error('请先对该产品进行购买');
+                    }
+                }else {
+                   // 判定当前产品是否是自己创建的
+                   if($productinfo->member_id == session('pboot_uid')) {
+
+                   }else{
+                       error('产品未审核通过或已下架');
+                   }
+                }
+            }else {
+                error('产品不存在');
+            }
+        }else {
+            error('提交方式出错');
+        }
+    }
     public function login()
     {
         // 已经登录时跳转到用户中心

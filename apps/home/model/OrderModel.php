@@ -21,6 +21,14 @@ class OrderModel extends Model
             ->page()
             ->select();
     }
+    // 查询有没有购买记录
+    public function getOrderStatus($id) {
+        return parent::table('ay_orders')
+            ->where("member_id='" . session('pboot_uid') . "'")
+            ->where("product_id='" . $id . "'")
+            ->where("status='" . 1 . "'")
+            ->find();
+    }
     // 生成订单
     public function addOrders(array $data) {
         return parent::table('ay_orders')->insertGetId($data);

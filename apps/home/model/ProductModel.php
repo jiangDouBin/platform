@@ -67,6 +67,8 @@ class ProductModel extends Model
             ->find();
     }
 
+    //根据资源id
+
     //添加产品资料
     public function insertUploadFiles($data){
         return parent::table('ay_content_upload')->insert($data);

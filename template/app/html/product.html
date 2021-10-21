@@ -195,7 +195,7 @@
                 <td>[uploadlist:name]</td>
                 <td>[uploadlist:time]</td>
                 <td style="color: #3786FF;">
-                    <img src="{pboot:sitetplpath}/images/icon10.png"/>
+                    <img src="{pboot:sitetplpath}/images/icon10.png" onclick="ziyuan('[uploadlist:id]')"/>
                     下载资源
                 </td>
             </tr>
@@ -207,7 +207,28 @@
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
-    
+   function ziyuan(id) {
+       if(!id) alert('项目资源存在问题')
+       $.ajax({
+        type: 'POST',
+        url: '/member/xiazai/',
+        dataType: 'json',
+        data: {
+            productid: {content:id},
+            id: id
+        },
+        success: function (response, status) {
+        if(response.code){
+           
+        }else{
+            alert(response.data);
+        }
+        },
+        error:function(xhr,status,error){
+        alert('返回数据异常！');
+        }
+    });
+   }
 </script>
 
 {include file=comm/foot.html}
