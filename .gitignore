@@ -11,6 +11,8 @@ config/database.php
 runtime
 static/backup
 static/upload
+vendor
+.idea
 
 # Executables
 *.swf

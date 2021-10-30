@@ -621,6 +621,7 @@ class MemberController extends BasicController
             if($result) {
                 // 获取产品信息正常
                 $data = array(
+                    'order_no' => 'ddd'.date('YmdHis').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))),0,12),
                     'member_id' => session('pboot_uid'),
                     'product_id' =>$result->id,
                     'status' => 0,
