@@ -1,0 +1,18 @@
+<script src="https://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+<div>
+    <div id="login_container"></div>
+</div>
+
+<script>
+    // 登录完跳转回当前页面
+const redirectUrl = encodeURI('www.diduoduotouzi.com/wxlogin')
+const obj = new WxLogin({
+    self_redirect: true,
+    id: "login_container",
+    appid: "wxd8babb87ac1dec1d",
+    scope: "snsapi_login",
+    redirect_uri: redirectUrl,
+    state: "aw",
+    style: "black",
+})
+</script>
