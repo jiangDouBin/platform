@@ -219,7 +219,7 @@
         },
         success: function (response, status) {
         if(response.code){
-           
+           window.open = {pboot:sitepath} + response.data.url
         }else{
             alert(response.data);
         }

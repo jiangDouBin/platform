@@ -145,18 +145,25 @@ class MemberController extends BasicController
                 if($productinfo->status == 1) {
                     // 说明此产品已经审核通过
                     if($productinfo->member_id == session('pboot_uid')) {
-                        // 直接返回地址即可
-                        return;
+                        // 直接返回地址即可  自己创建的产品可以直接下载
+                        $url = $ProductModel->getxiazailist($id);
+                        json(1,$url);
+                    }else{
+                        if($orderinfo = $OrderModel->getOrderStatus($productid)){
+                            // 不是自己创建的，但是已经付款可以返回地址
+                            $url = $ProductModel->getxiazailist($id);
+                            json(1,$url);
+                        }else {
+                            error('请先对该产品进行购买');
+                        }
                     }
-                    if($orderinfo = $OrderModel->getOrderStatus($productid)){
-
-                    }else {
-                        error('请先对该产品进行购买');
-                    }
+                    
                 }else {
                    // 判定当前产品是否是自己创建的
                    if($productinfo->member_id == session('pboot_uid')) {
-
+                        // 是自己创建的可以返回地址
+                        $url = $ProductModel->getxiazailist($id);
+                        json(1,$url);
                    }else{
                        error('产品未审核通过或已下架');
                    }
