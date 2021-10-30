@@ -161,7 +161,16 @@ class IndexController extends Controller
             $this->getIndex();
         }
     }
-
+    // 微信登录
+    public function snsapi_login(){
+        $content = parent::parser($this->htmldir . 'snsapi_login.html'); // 框架标签解析
+        echo $content;
+        exit();
+    }
+    // 微信登录回调地址
+    public function wxlogin(){
+        print_r($_REQUEST);
+    }
     // 首页
     private function getIndex()
     {
