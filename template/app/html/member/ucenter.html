@@ -106,7 +106,7 @@
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>微信账号:</label>
 		      <img src="{pboot:sitetplpath}/images/icon9.png" style="margin-right: 20px;" />
-          <button type="button" class="btn">绑定</button>
+          <button type="button" class="btn" id="login_container" >绑定</button>
         </div>
 		<div class="formgrouprow">
 			<label ><span style="color: #D41818;">*</span>支付宝账号:</label>
@@ -122,7 +122,22 @@
       
       
 </div>
-
+<!-- <script>
+  // 登录完跳转回当前页面
+const redirectUrl = encodeURI(location.href)
+const obj = new WxLogin({
+    // 如果只是在页面一小块显示二维码，前方不要填true！！官方的我复制过来的时候是true，很坑
+    self_redirect: false,
+    // 第三方页面显示二维码的容器id
+    id: "login_container",
+    // 只有appid正确，且配置的站点与后台链接站点相同才能正常显示二维码
+    appid: "wxd8babb87ac1dec1d",
+    scope: "snsapi_login",
+    redirect_uri: redirectUrl,
+    state: "aw",
+    style: "white",
+})
+</script> -->
     
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
