@@ -10,6 +10,7 @@
 namespace app\home\controller;
 
 use app\common\BasicController;
+use app\common\HWCSms;
 use app\common\ResponseCode;
 use app\home\model\CashOutModel;
 use app\home\model\OrderModel;
@@ -839,5 +840,9 @@ class MemberController extends BasicController
                 alert_location('提现申请提交成功！', Url::home('member/cashout'), 1);
         }
         error('提现申请提交失败！', -1);
+    }
+
+    public function sendSms(){
+        HWCSms::SendSms(['18562798530','15092159656']);
     }
 }

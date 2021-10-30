@@ -566,6 +566,8 @@ class ParserModel extends Model
         $fielded = array(
             'id',
             'file_name as name',
+            'file_size',
+            'url',
             'created_time as time'
         );
             

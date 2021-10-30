@@ -195,8 +195,12 @@
                 <td>[uploadlist:name]</td>
                 <td>[uploadlist:time]</td>
                 <td style="color: #3786FF;">
+                    {pboot:if('{content:is_buy}'!=='1')}
                     <img src="{pboot:sitetplpath}/images/icon10.png" onclick="ziyuan('[uploadlist:id]')"/>
-                    <span onclick="ziyuan('[uploadlist:id]')">下载资源</span>
+                        <a href=[uploadlist:url] download=[uploadlist:name]>下载资源</a>
+                    {else}
+                        <span>购买后可下载</span>
+                    {/pboot:if}
                 </td>
             </tr>
             {/pboot:uploadlist}
@@ -219,6 +223,7 @@
         },
         success: function (response, status) {
         if(response.code){
+            $.download();
             var a = document.createElement('a');
             a.href = response.data.url;
             a.target = '_blank';
