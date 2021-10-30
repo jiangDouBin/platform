@@ -509,9 +509,11 @@ class ContentController extends Controller
             if (! $result = $this->model->getContent($id)) {
                 error('编辑的内容已经不存在！', - 1);
             }
+            $resulturl = $this->model->getuploadlist($id);
             
             $this->assign('content', $result);
-            // $this->assign('upload',$uploadlist);
+            // print_r($resulturl);
+            $this->assign('upload',$resulturl);
             if (! $mcode = get('mcode', 'var')) {
                 error('传递的模型编码参数有误，请核对后重试！');
             }

@@ -67,7 +67,15 @@ class ProductModel extends Model
             ->find();
     }
 
-    //根据资源id
+    //根据资源ID查询下载地址
+    public function getxiazailist($id){
+        $field = array(
+            'url'
+        );
+        return parent::table('ay_content_upload')->field($field)
+        ->where("id=$id")
+        ->find();
+    }
 
     //添加产品资料
     public function insertUploadFiles($data){
