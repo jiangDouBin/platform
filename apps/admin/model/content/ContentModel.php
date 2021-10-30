@@ -67,6 +67,17 @@ class ContentModel extends Model
             ->select();
     }
 
+    // 产品列表下载链接
+    public function getuploadlist($id) {
+        $field = array(
+            'a.*'
+        );
+        return parent::table('ay_content_upload a')->field($field)
+            ->where("a.content_id='$id'")
+            ->order('a.id DESC')
+            ->select();
+    }
+
     // 查找指定分类及子类文章
     public function findContent($mcode, $scode, $keyword)
     {

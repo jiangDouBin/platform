@@ -196,7 +196,7 @@
                 <td>[uploadlist:time]</td>
                 <td style="color: #3786FF;">
                     <img src="{pboot:sitetplpath}/images/icon10.png" onclick="ziyuan('[uploadlist:id]')"/>
-                    下载资源
+                    <span onclick="ziyuan('[uploadlist:id]')">下载资源</span>
                 </td>
             </tr>
             {/pboot:uploadlist}
@@ -219,7 +219,15 @@
         },
         success: function (response, status) {
         if(response.code){
-           window.open = {pboot:sitepath} + response.data.url
+            var a = document.createElement('a');
+            a.href = response.data.url;
+            a.target = '_blank';
+            a.id='exppub';
+            document.body.appendChild(a);
+            var alink = document.getElementById('exppub');
+            alink.click();
+            alink.parentNode.removeChild(a);
+        //    window.location.href = response.data.url;
         }else{
             alert(response.data);
         }
