@@ -1,6 +1,7 @@
 {
     "require": {
         "alipaysdk/easysdk": "2.0",
-        "guzzlehttp/guzzle": "~6.0@dev"
+        "guzzlehttp/guzzle": "~6.0@dev",
+        "overtrue/wechat": "~4.0"
     }
 }

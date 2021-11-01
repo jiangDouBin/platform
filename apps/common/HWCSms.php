@@ -4,6 +4,7 @@ namespace app\common;
 
 require 'vendor/autoload.php';
 
+use core\basic\Config;
 use GuzzleHttp\Psr7;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -13,11 +14,11 @@ class HWCSms
     public static function SendSms(array $mobiles)
     {
         //必填,请参考"开发准备"获取如下数据,替换为实际值
-        $url = 'https://rtcsms.cn-north-1.myhuaweicloud.com:10743/sms/batchSendSms/v1'; //APP接入地址+接口访问URI
-        $APP_KEY = '0P4emY9AoWKn1SNt3jC825wc0aTg'; //APP_Key
-        $APP_SECRET = '02bA9X1wOA19TM38J2bfh0e3451D'; //APP_Secret
-        $sender = '99200620888880005607'; //国内短信签名通道号或国际/港澳台短信通道号
-        $TEMPLATE_ID = '84c118acf5fb431984a65f2c7210cff6'; //模板ID
+        $url = Config::get('hwc.url'); //APP接入地址+接口访问URI
+        $APP_KEY = Config::get('hwc.app_key'); //APP_Key
+        $APP_SECRET = Config::get('hwc.app_secret'); //APP_Secret
+        $sender = Config::get('hwc.sender'); //国内短信签名通道号或国际/港澳台短信通道号
+        $TEMPLATE_ID = Config::get('hwc.template_id'); //模板ID
 
         //条件必填,国内短信关注,当templateId指定的模板类型为通用模板时生效且必填,必须是已审核通过的,与模板类型一致的签名名称
         //国际/港澳台短信不用关注该参数
