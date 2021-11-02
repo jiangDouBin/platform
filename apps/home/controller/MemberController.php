@@ -9,9 +9,12 @@
 
 namespace app\home\controller;
 
+use app\common\Alipay;
 use app\common\BasicController;
 use app\common\HWCSms;
+use app\common\QrCode;
 use app\common\ResponseCode;
+use app\common\WeChat;
 use app\home\model\CashOutModel;
 use app\home\model\OrderModel;
 use app\home\model\TransactionModel;
@@ -845,4 +848,20 @@ class MemberController extends BasicController
     public function sendSms(){
         HWCSms::SendSms(['18562798530','15092159656']);
     }
+
+    public function alipay(){
+        $pagePay = Alipay::getAlipayPagePay();
+        echo $pagePay->body;
+    }
+
+    public function wechat(){
+        var_dump(WeChat::getOpenPlatFormUrl());
+    }
+
+    public function qrcode(){
+        $result = QrCode::createQrCode();
+        header('Content-Type: '.$result->getMimeType());
+        echo $result->getString();
+    }
+
 }

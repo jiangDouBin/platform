@@ -1,53 +1,30 @@
 <?php
-/**
- * @copyright (C)2016-2099 Hnaoyun Inc.
- * @author XingMeng
- * @email hnxsh@foxmail.com
- * @date 2020年06月26日
- *  会员前台控制器
- */
 
-namespace app\home\controller;
+namespace app\common;
 
 require 'vendor/autoload.php';
 
-use app\common\BasicController;
-use app\home\model\MemberModel;
 use core\basic\Config;
-use core\basic\Url;
+use core\basic\Log;
 use Alipay\EasySDK\Kernel\Factory;
 use Alipay\EasySDK\Kernel\Config as AlipayConfig;
-use Alipay\EasySDK\Kernel\Util\ResponseChecker;
 
-class AlipayController extends BasicController
+class Alipay
 {
-    public function __construct()
-    {
-        Factory::setOptions($this->getOptions());
-    }
-
-    // 支付页面
-    public function alipay()
-    {
-        // 未登录时跳转到登陆页面
-        if (!session('pboot_uid')) {
-            location(Url::home('member/login'));
-        }
-
+    // 获取网页支付对象
+    public static function getAlipayPagePay(){
         try {
-            $result = Factory::payment()->page()->pay("iPhone6 16G", "20200326235526001", "88.88", "");
-            echo $result->body;
-        } catch (Exception $e) {
-            echo "调用失败，". $e->getMessage(). PHP_EOL;;
+            Factory::setOptions(self::getOptions());
+            $response = Factory::payment()->page()->pay("iPhone6 16G", "20200326235526001", "88.88", "");
+            return $response;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
         }
     }
 
-    public function _empty()
-    {
-        _404('您访问的地址不存在，请核对再试！');
-    }
-
-    private function getOptions()
+    // 初始化支付宝配置
+    private static function getOptions()
     {
         $options = new AlipayConfig();
         $options->protocol = 'https';
