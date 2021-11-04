@@ -34,10 +34,10 @@ class OrderModel extends Model
         return parent::table('ay_orders')->insertGetId($data);
     }
     // 订单详情
-    public function myOrders($id) {
+    public function getOrder($id) {
         $field = array(
             'a.*',
-            'b.*',
+            'b.title',
         );
         $join = array(
             array(

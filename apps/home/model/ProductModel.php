@@ -62,7 +62,7 @@ class ProductModel extends Model
         );
         return parent::table('ay_content a')->field($field)
             ->where("a.id=$id")
-            ->where("a.acode='" . session('acode') . "'")
+            ->where("a.acode='" . session('acode','cn') . "'")
             ->join($join)
             ->find();
     }

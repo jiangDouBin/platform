@@ -63,7 +63,7 @@ return array(
 
     //微信配置
     'wechat' => array(
-    'app_id'   => 'wxd8babb87ac1dec1d', //开放平台第三方平台 APPID
+    'app_id'   => 'wxb9c22f6b40017548', //微信公众平台（服务号类型） APPID
     'mch_id' => '1615793028', //微信商户号
     'secret'   => 'd8c06291bdee92d91691839d32641364', //开放平台第三方平台 Secret
     'key' => '0952bb4700dbd79647c639920d26956d', //API 秘钥 (用于支付签名)

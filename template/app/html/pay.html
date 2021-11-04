@@ -107,6 +107,7 @@
 	border-radius: 4px;
 	border: 1px solid #DEDEDE;
 	margin-right: 16px;
+	cursor: pointer;
 }
 	</style>
 	<div class="container pages">
@@ -124,7 +125,7 @@
 						<img src="{pboot:sitetplpath}/images/icon12.png" />
 						<span>支付宝</span>
 					</div>
-					<div class="paytype">
+					<div id="wechat" class="paytype">
 						<img src="{pboot:sitetplpath}/images/icon9.png" />
 						<span>微信</span>
 					</div>
@@ -132,9 +133,29 @@
 			</div>
 		</div>
 	</div>
+</div>
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
+	$orderId = '{$order->id}';
+	$(document).on('ready', function() {
+		$('#wechat').click(function (){
+			$.get('/order/wechatQrCode?id='+$orderId,function (response,status){
+				if(response.code == 200){
+					layer.open({
+						type:1,
+						title:'微信支付',
+						scrollbar: false,
+						closeBtn: 1,
+						area: ['300px', '300px'],
+						content:"<div style='text-align: center'><img src="+response.data.imgUri+"></div>"
+					});
+				}else{
+					layer.msg(response.message);
+				}
+			});
+		});
 
+	});
 </script>
 
 {include file=comm/foot.html}

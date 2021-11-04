@@ -663,7 +663,7 @@ class MemberController extends BasicController
         }
         $orderid = $_GET['id'];
         $orderModel = new orderModel();
-        if($result=$orderModel->myOrders($orderid)) {
+        if($result=$orderModel->getOrder($orderid)) {
             // $pagetitle = '下单支付';
             // $content = parent::parser($this->htmldir . '/pay.html');
             // print_r($result);
@@ -855,7 +855,7 @@ class MemberController extends BasicController
     }
 
     public function wechat(){
-        var_dump(WeChat::getOpenPlatFormUrl());
+        var_dump(WeChat::getWeChatQRCode());
     }
 
     public function qrcode(){

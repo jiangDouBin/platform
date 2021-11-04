@@ -9,6 +9,7 @@
 use core\basic\Config;
 use core\basic\Model;
 use app\home\controller\ParserController;
+use \app\common\ResponseCode;
 
 // 获取字符串型自动编码
 function get_auto_code($string, $start = '1')
@@ -350,6 +351,15 @@ function self_nav_active($scode, $link)
     if( $scode == 17 && strstr('mycashout',$link))
         return 'active';
     return '';
+}
+
+function responseJson($code=ResponseCode::HTTP_OK,$message='',$data=[]){
+    header('Content-type: application/json');
+    return json_encode([
+        'code' => $code,
+        'message' => $message,
+        'data' => $data
+    ]);
 }
 
 
