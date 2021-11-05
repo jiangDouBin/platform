@@ -79,4 +79,28 @@ class OrderModel extends Model
             ->page()
             ->select();
     }
+
+    public function getOrderByNo($orderNo){
+        $field = array(
+            'a.*',
+            'b.title',
+        );
+        $join = array(
+            array(
+                'ay_content b',
+                'a.product_id=b.id',
+                'LEFT'
+            )
+        );
+
+        return parent::table('ay_orders a')->field($field)
+            ->join($join)
+            ->where("a.order_no='" . $orderNo . "'")
+            ->find();
+    }
+
+    //修改订单
+    public function modifyOrder($orderNo,$data){
+        return parent::table('ay_orders')->where("order_no='" . $orderNo . "'")->update($data);
+    }
 }

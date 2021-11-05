@@ -24,6 +24,7 @@ class OrderController extends BasicController
 
     }
 
+    //生成微信二维码供用户支付
     public function wechatQrCode(){
         $orderId = get('id','int',0,'',0);
         $orderModel = new OrderModel();
