@@ -9,6 +9,15 @@ use EasyWeChat\Factory;
 
 class WeChat
 {
+    //获取登录二维码
+    public static function getWeChatLoginQRCodeUrl(){
+        $config = Config::get('wechat',true);
+        $app = Factory::officialAccount($config);
+        $url = $app->oauth->scopes(['snsapi_userinfo'])->redirect('https://www.diduoduotouzi.com/callback/wechat_oauth_callback')->getTargetUrl();
+        return $url;
+    }
+
+    //获取支付二维码
     public static function getWeChatQRCodeUrl($order){
         $config = Config::get('wechat',true);
         $app = Factory::payment($config);

@@ -17,6 +17,7 @@ class CallbackController extends Controller
 
     }
 
+    //支付回调
     public function wechat(){
         $config = Config::get('wechat',true);
         $app = WeChatFactory::payment($config);
@@ -46,5 +47,10 @@ class CallbackController extends Controller
             return true; // 返回处理完成
         });
         $response->send(); // return $response;
+    }
+
+    //登录回调
+    public function wechat_oauth_callback(){
+        echo WeChat::getWeChatLoginQRCodeUrl();
     }
 }

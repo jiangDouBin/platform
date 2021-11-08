@@ -864,4 +864,9 @@ class MemberController extends BasicController
         echo $result->getString();
     }
 
+    public function wechatLogin(){
+        $url = WeChat::getWeChatLoginQRCodeUrl();
+        $qrCode = QrCode::createQrCode($url,'使用微信扫描二维码进行支付');
+        echo '<img src='.$qrCode->getDataUri().' />';
+    }
 }
