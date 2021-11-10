@@ -1,6 +1,7 @@
 <?php
 namespace app\home\controller;
 
+use app\common\Alipay;
 use app\common\BasicController;
 use app\common\QrCode;
 use app\common\ResponseCode;
@@ -21,7 +22,15 @@ class OrderController extends BasicController
     }
 
     public function alipayQrCode(){
-
+        $orderId = get('id','int',0,'',0);
+        $orderModel = new OrderModel();
+        if($order=$orderModel->getOrder($orderId)){
+            if ($order->status != 0)
+                return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不可支付');
+            $result = Alipay::getAlipayPagePay($order);;
+            return responseJson(ResponseCode::HTTP_OK,'成功',['pay_page' => $result->body]);
+        }else
+            return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不存在');
     }
 
     //生成微信二维码供用户支付

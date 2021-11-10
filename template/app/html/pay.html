@@ -121,7 +121,7 @@
 			<div class="infoflexrow" style="border: none; flex-direction: column;align-items: flex-start;">
 				<h3 class="titleh2">选择以下支付方式付款</h3>
 				<div style="border-top: 1px solid #DEDEDE; width: 100%; margin-top: 22px; display: flex; padding: 30px 10px;">
-					<div class="paytype">
+					<div id="alipay" class="paytype">
 						<img src="{pboot:sitetplpath}/images/icon12.png" />
 						<span>支付宝</span>
 					</div>
@@ -149,6 +149,17 @@
 						area: ['300px', '300px'],
 						content:"<div style='text-align: center'><img src="+response.data.imgUri+"></div>"
 					});
+				}else{
+					layer.msg(response.message);
+				}
+			});
+		});
+
+		$('#alipay').click(function (){
+			$.get('/order/alipayQrCode?id='+$orderId,function (response,status){
+				if(response.code == 200){
+					var newWin = window.open('','_blank');
+					newWin.document.write(response.data.pay_page);
 				}else{
 					layer.msg(response.message);
 				}

@@ -102,18 +102,16 @@
                     <span class="line"></span>
                 </div>
                 <div class="form-group">
-                    <img src="{pboot:sitetplpath}/images/icon8.png" />
-                    
+                    <img id="wechat" style="cursor: pointer;" src="{pboot:sitetplpath}/images/icon8.png" />
                 </div>
                 <div class="form-group">
                     <span class="wtxt">微信</span>
                 </div>
+                <div id="login_container"></div>
             </form>
     </div> 
 </div>
-
 <script>
-
 //ajax登录
 function login(obj){
   var url='{pboot:login}';
@@ -145,6 +143,26 @@ function login(obj){
   });
   return false;
 }
-</script>
 
-{include file=comm/foot2.html}
+$(document).on('ready', function() {
+    $('#wechat').click(function (){
+        $.get('/member/wechatLogin',function (response,status){
+            if(response.code == 200){
+                layer.open({
+                    type:1,
+                    title:'微信登录',
+                    scrollbar: false,
+                    closeBtn: 1,
+                    area: ['400px', '400px'],
+                    content:"<div style='text-align: center'><img src="+response.data.imgUri+"></div>"
+                });
+            }else{
+                layer.msg(response.message);
+            }
+        });
+    });
+
+});
+</script>
+<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+{include file=comm/foot.html}

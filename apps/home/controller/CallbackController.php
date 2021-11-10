@@ -3,21 +3,58 @@ namespace app\home\controller;
 
 require 'vendor/autoload.php';
 
+use app\common\Alipay;
 use app\common\ResponseCode;
 use app\common\WeChat;
 use app\home\model\OrderModel;
 use core\basic\Controller;
 use core\basic\Config;
 use core\basic\Log;
+use core\basic\Model;
 use EasyWeChat\Factory as WeChatFactory;
+use Alipay\EasySDK\Kernel\Factory as AlipayFactory;
 
 class CallbackController extends Controller
 {
+    //支付宝支付回调
     public function alipay(){
+        AlipayFactory::setOptions(Alipay::getOptions());
+        // 异步通知验签
+        $result = AlipayFactory::payment()->common()->verifyNotify($_POST);
+        if($result){
+            //商户订单号
+            $orderNo = $_POST['out_trade_no'];
+            $orderModel = new OrderModel();
+            $order = $orderModel->getOrderByNo($orderNo);
+            Log::info('订单号: '.$orderNo.'--支付宝支付回调');
+            if (!$order || $order->status==1) { // 如果订单不存在 或者 订单已经支付过了
+                echo "success"; // 通知支付宝，已经处理完了，订单没找到，不需要再调用该接口通知我了
+            }
 
+            //支付宝交易号
+            $trade_no = $_POST['trade_no'];
+
+            //交易状态
+            $trade_status = $_POST['trade_status'];
+            if($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+                $data['payment_type'] = 1;
+                if ($_POST['total_amount'] === $order['amount']) {
+                    $data['payment_time'] = get_datetime(); // 更新支付时间为当前时间
+                    $data['status'] = 1;
+                } else {
+                    echo "fail";
+                }
+                $orderModel->modifyOrder($orderNo,$data); // 保存订单
+                //注意：
+                //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
+            }
+            echo "success";	//请不要修改或删除
+        }else
+            //验证失败
+            echo "fail";
     }
 
-    //支付回调
+    //微信支付回调
     public function wechat(){
         $config = Config::get('wechat',true);
         $app = WeChatFactory::payment($config);
@@ -49,8 +86,22 @@ class CallbackController extends Controller
         $response->send(); // return $response;
     }
 
-    //登录回调
+    //微信登录回调
     public function wechat_oauth_callback(){
-        echo WeChat::getWeChatLoginQRCodeUrl();
+        $config = Config::get('wechat',true);
+        $app = WeChatFactory::officialAccount($config);
+        $oauth = $app->oauth;
+        // 获取 OAuth 授权结果用户信息
+        $user = $oauth->user();
+        // $user 可以用的方法:
+        $wxid = $user->getId();  // 对应微信的 OPENID
+        // $user->getNickname(); // 对应微信的 nickname
+        // $user->getName(); // 对应微信的 nickname
+        // $user->getAvatar(); // 头像网址
+        // $user->getOriginal(); // 原始API返回的结果
+        // $user->getToken(); // access_token， 比如用于地址共享时使用
+        $_SESSION['wechat_user'] = $user->toArray();
+        $targetUrl = empty($_SESSION['target_url']) ? '/' : $_SESSION['target_url'];
+        header('location:'. $targetUrl); // 跳转到 user/profile
     }
 }

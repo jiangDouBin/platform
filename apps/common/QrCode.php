@@ -15,14 +15,14 @@ use Endroid\QrCode\Writer\PngWriter;
 
 class QrCode
 {
-    public static function createQrCode($url,$label=''){
+    public static function createQrCode($url,$label='',$size=200){
         $result = Builder::create()
             ->writer(new PngWriter())
             ->writerOptions([])
             ->data($url)
             ->encoding(new Encoding('UTF-8'))
             ->errorCorrectionLevel(new ErrorCorrectionLevelHigh())
-            ->size(200)
+            ->size($size)
             ->margin(10)
             ->roundBlockSizeMode(new RoundBlockSizeModeMargin())
             //->logoPath(__DIR__.'/assets/symfony.png')

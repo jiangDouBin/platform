@@ -236,6 +236,7 @@ class MemberController extends BasicController
                 session('pboot_gid', $login->gid);
                 session('pboot_gcode', $login->gcode);
                 session('pboot_gname', $login->gname);
+                session('pboot_wxid', $login->wxid);
 
                 if (!!$backurl = get('backurl')) {
                     alert_location('登录成功！', $backurl, 1);
@@ -849,24 +850,10 @@ class MemberController extends BasicController
         HWCSms::SendSms(['18562798530','15092159656']);
     }
 
-    public function alipay(){
-        $pagePay = Alipay::getAlipayPagePay();
-        echo $pagePay->body;
-    }
-
-    public function wechat(){
-        var_dump(WeChat::getWeChatQRCode());
-    }
-
-    public function qrcode(){
-        $result = QrCode::createQrCode();
-        header('Content-Type: '.$result->getMimeType());
-        echo $result->getString();
-    }
-
+    //微信网页授权登录
     public function wechatLogin(){
         $url = WeChat::getWeChatLoginQRCodeUrl();
-        $qrCode = QrCode::createQrCode($url,'使用微信扫描二维码进行支付');
-        echo '<img src='.$qrCode->getDataUri().' />';
+        $qrCode = QrCode::createQrCode($url,'请使用微信扫描二维码登录',300);
+        return responseJson(ResponseCode::HTTP_OK,'成功',['imgUri' => $qrCode->getDataUri()]);
     }
 }

@@ -12,10 +12,10 @@ use Alipay\EasySDK\Kernel\Config as AlipayConfig;
 class Alipay
 {
     // 获取网页支付对象
-    public static function getAlipayPagePay(){
+    public static function getAlipayPagePay($order=null){
         try {
             Factory::setOptions(self::getOptions());
-            $response = Factory::payment()->page()->pay("iPhone6 16G", "20200326235526001", "88.88", "");
+            $response = Factory::payment()->page()->pay("地多多订单-".$order->order_no, $order->order_no, $order->amount, "");
             return $response;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -24,7 +24,7 @@ class Alipay
     }
 
     // 初始化支付宝配置
-    private static function getOptions()
+    public static function getOptions()
     {
         $options = new AlipayConfig();
         $options->protocol = 'https';
