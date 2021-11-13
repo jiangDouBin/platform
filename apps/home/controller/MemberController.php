@@ -618,45 +618,7 @@ class MemberController extends BasicController
             json(0, '发送失败，' . $rs);
         }
     }
-    // 下单
-    public function addorder() {
-        // 未登录时跳转到用户登录
-        if (! session('pboot_uid')) {
-            location(Url::home('member/login'));
-        }
-        $productid = $_GET['product_id'];
-        if(empty($productid)) {
-            error('产品IDerror');
-        }else{
-            $ProductModel = new ProductModel;
-            $result = $ProductModel->getContent($productid);
-            if($result) {
-                // 获取产品信息正常
-                $data = array(
-                    'order_no' => 'ddd'.date('YmdHis').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))),0,12),
-                    'member_id' => session('pboot_uid'),
-                    'product_id' =>$result->id,
-                    'status' => 0,
-                    'amount' =>  $result->ext_price,
-                    'payment_type' => 0,
-                    'payment_time' => '',
-                    'created_time' => get_datetime(),
-                    'remark' =>' '
-                );
-                $orderModel = new orderModel();
-                if($id=$orderModel->addOrders($data)) {
-                    $url = '/member/orderinfo?id='.$id;
-                    location(Url::home($url));
-                }else {
-                    error('生成订单失败error');
-                }
-            }else{
-                error('产品信息error');
-            }
-        }
-        
-       
-    }
+
     // 订单详情
     public function orderinfo() {
         if (! session('pboot_uid')) {
@@ -853,7 +815,6 @@ class MemberController extends BasicController
     //微信网页授权登录
     public function wechatLogin(){
         $url = WeChat::getWeChatLoginQRCodeUrl();
-        $qrCode = QrCode::createQrCode($url,'请使用微信扫描二维码登录',300);
-        return responseJson(ResponseCode::HTTP_OK,'成功',['imgUri' => $qrCode->getDataUri()]);
+        return responseJson(true,'成功',['url' => $url]);
     }
 }

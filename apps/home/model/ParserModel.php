@@ -552,6 +552,7 @@ class ParserModel extends Model
             $orderStatus = parent::table('ay_orders')
                 ->where('member_id = '.session('pboot_uid'))
                 ->where('product_id = '.$id)
+                ->where('status != 2')
                 ->value('status');
 
             //是否需要购买

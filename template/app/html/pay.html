@@ -136,11 +136,12 @@
 </div>
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
-	$orderId = '{$order->id}';
+	var orderId = '{$order->id}';
+
 	$(document).on('ready', function() {
 		$('#wechat').click(function (){
-			$.get('/order/wechatQrCode?id='+$orderId,function (response,status){
-				if(response.code == 200){
+			$.get('/order/wechatQrCode?id='+orderId,function (response){
+				if(response.result){
 					layer.open({
 						type:1,
 						title:'微信支付',
@@ -149,6 +150,7 @@
 						area: ['300px', '300px'],
 						content:"<div style='text-align: center'><img src="+response.data.imgUri+"></div>"
 					});
+					checkPay();
 				}else{
 					layer.msg(response.message);
 				}
@@ -156,8 +158,9 @@
 		});
 
 		$('#alipay').click(function (){
-			$.get('/order/alipayQrCode?id='+$orderId,function (response,status){
-				if(response.code == 200){
+			$.get('/order/alipayQrCode?id='+orderId,function (response,status){
+				if(response.result){
+					checkPay();
 					var newWin = window.open('','_blank');
 					newWin.document.write(response.data.pay_page);
 				}else{
@@ -166,6 +169,17 @@
 			});
 		});
 
+		function checkPay(){
+			var intervalId = setInterval(function(){
+				$.get("/order/payResult?id="+orderId, function(response){
+					if (response.result) {
+						layer.msg(response.message, {icon: 1});
+						clearInterval(intervalId);
+						window.location.href = '/member/mydownlaod';
+					}
+				})
+			}, 5000);
+		}
 	});
 </script>
 

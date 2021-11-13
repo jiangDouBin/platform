@@ -56,7 +56,7 @@ class CallbackController extends Controller
 
     //微信支付回调
     public function wechat(){
-        $config = Config::get('wechat',true);
+        $config = Config::get('wechat_offiaccount',true);
         $app = WeChatFactory::payment($config);
         $response = $app->handlePaidNotify(function($message, $fail) use ($app){
             // 使用通知里的 "微信支付订单号" 或者 "商户订单号" 去自己的数据库找到订单
@@ -88,7 +88,7 @@ class CallbackController extends Controller
 
     //微信登录回调
     public function wechat_oauth_callback(){
-        $config = Config::get('wechat',true);
+        $config = Config::get('wechat_oplatform',true);
         $app = WeChatFactory::officialAccount($config);
         $oauth = $app->oauth;
         // 获取 OAuth 授权结果用户信息

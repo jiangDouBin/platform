@@ -21,16 +21,62 @@ class OrderController extends BasicController
         }
     }
 
+    // 下单
+    public function addorder() {
+        // 未登录时跳转到用户登录
+        if (! session('pboot_uid')) {
+            location(Url::home('member/login'));
+        }
+        $productid = $_GET['product_id'];
+        if(empty($productid)) {
+            error('产品ID: error');
+        }else{
+            $ProductModel = new ProductModel;
+            $result = $ProductModel->getContent($productid);
+            if($result) {
+                $orderModel = new orderModel();
+                $order = $orderModel->getOrderByProductId($productid);
+                if($order){
+                    error('当前商品已经下单，请勿重复下单', -1);
+                }
+                // 获取产品信息正常
+                $data = array(
+                    'order_no' => 'ddd'.date('YmdHis').substr(implode(NULL, array_map('ord', str_split(substr(uniqid(), 7, 13), 1))),0,12),
+                    'member_id' => session('pboot_uid'),
+                    'product_id' =>$result->id,
+                    'status' => 0,
+                    'amount' =>  $result->ext_price,
+                    'payment_type' => 0,
+                    'payment_time' => '',
+                    'created_time' => get_datetime(),
+                    'remark' =>' '
+                );
+
+                if($id=$orderModel->addOrders($data)) {
+                    $url = '/member/orderinfo?id='.$id;
+                    location(Url::home($url));
+                }else {
+                    error('生成订单失败error');
+                }
+            }else{
+                error('产品信息error');
+            }
+        }
+
+
+    }
+
+    //生成支付宝二维码供用户支付
     public function alipayQrCode(){
         $orderId = get('id','int',0,'',0);
         $orderModel = new OrderModel();
         if($order=$orderModel->getOrder($orderId)){
             if ($order->status != 0)
-                return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不可支付');
+                return responseJson(false,'订单不可支付');
             $result = Alipay::getAlipayPagePay($order);;
-            return responseJson(ResponseCode::HTTP_OK,'成功',['pay_page' => $result->body]);
+            return responseJson(true,'成功',['pay_page' => $result->body]);
         }else
-            return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不存在');
+            return responseJson(false,'订单不存在');
     }
 
     //生成微信二维码供用户支付
@@ -39,22 +85,26 @@ class OrderController extends BasicController
         $orderModel = new OrderModel();
         if($order=$orderModel->getOrder($orderId)){
             if ($order->status != 0)
-                return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不可支付');
+                return responseJson(false,'订单不可支付');
             $result = WeChat::getWeChatQRCodeUrl($order);
             if($result['return_code'] != 'SUCCESS')
-                return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不可支付');
-            $url = urlencode($result['code_url']);
+                return responseJson(false,'订单不可支付');
+            $url = $result['code_url'];
             $qrCode = QrCode::createQrCode($url,'使用微信扫描二维码进行支付');
-            return responseJson(ResponseCode::HTTP_OK,'成功',['imgUri' => $qrCode->getDataUri()]);
+            return responseJson(true,'成功',['imgUri' => $qrCode->getDataUri()]);
         }else
-            return responseJson(ResponseCode::HTTP_BAD_REQUEST,'订单不存在');
+            return responseJson(false,'订单不存在');
     }
 
-    private function checkProduct($contentId){
-        $productModel = new ProductModel();
-        $product = $productModel->getContent($contentId);
-        if(!$product)
-            return false;
-        return true;
+    //查询订单支付状态
+    public function payResult(){
+        $orderId = get('id','int',0,'',0);
+        $orderModel = new OrderModel();
+        if($order=$orderModel->getOrder($orderId)){
+            if ($order->status == 1)
+                return responseJson(true,'订单已支付');
+        }
+
+        return responseJson(false,'订单未支付');
     }
 }

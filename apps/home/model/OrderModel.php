@@ -21,6 +21,7 @@ class OrderModel extends Model
             ->page()
             ->select();
     }
+
     // 查询有没有购买记录
     public function getOrderStatus($id) {
         return parent::table('ay_orders')
@@ -102,5 +103,14 @@ class OrderModel extends Model
     //修改订单
     public function modifyOrder($orderNo,$data){
         return parent::table('ay_orders')->where("order_no='" . $orderNo . "'")->update($data);
+    }
+
+    //根据商品id获取订单，判断当前商品是否已经下单
+    public function getOrderByProductId($id){
+        return parent::table('ay_orders')
+            ->where("member_id='" . session('pboot_uid') . "'")
+            ->where("product_id='" . $id . "'")
+            ->where("status!=2")
+            ->find();
     }
 }
