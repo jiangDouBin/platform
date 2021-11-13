@@ -231,7 +231,7 @@ class MemberController extends BasicController
                 session('pboot_uid', $login->id);
                 session('pboot_ucode', $login->ucode);
                 session('pboot_username', $login->username);
-                session('pboot_useremail', $login->seremail);
+                session('pboot_useremail', $login->useremail);
                 session('pboot_usermobile', $login->usermobile);
                 session('pboot_gid', $login->gid);
                 session('pboot_gcode', $login->gcode);
@@ -642,10 +642,8 @@ class MemberController extends BasicController
     public function isRegister()
     {
         // 接受用户名、邮箱、手机三种方式
-        $info = '';
-        if (!$username = post('username')) {
-            $err = '账号不能为空！';
-        }
+        $username = post('username');
+        $usermobile = post('usermobile');
 
         // 注册类型判断
         if ($this->config('register_type') == 2) { // 邮箱注册
@@ -658,10 +656,10 @@ class MemberController extends BasicController
                 $suc = '您输入的邮箱可以使用！';
             }
         } elseif ($this->config('register_type') == 3) { // 手机注册
-            if (!preg_match('/^1[0-9]{10}$/', $username)) {
+            if (!preg_match('/^1[0-9]{10}$/', $usermobile)) {
                 $err = '账号格式不正确，请输入正确的手机号码！';
             }
-            if ($this->model->checkUsername("usermobile='$username' OR username='$username'")) {
+            if ($this->model->checkUsername("usermobile='$usermobile'")) {
                 $err = '您输入的手机号码已被注册！';
             } else {
                 $suc = '您输入的手机号码可以使用！';
@@ -809,12 +807,84 @@ class MemberController extends BasicController
     }
 
     public function sendSms(){
-        HWCSms::SendSms(['18562798530','15092159656']);
+        HWCSms::SendSms(['10000000000','10000000001']);
     }
 
     //微信网页授权登录
     public function wechatLogin(){
         $url = WeChat::getWeChatLoginQRCodeUrl();
         return responseJson(true,'成功',['url' => $url]);
+    }
+
+    // 绑定支付宝或者微信页面
+    public function bind(){
+        $this->pageTitle = "账号绑定"; // 页面标题
+        $this->pageKeywords = "账号绑定"; // 页面关键字
+        $this->pageDescription = "账号绑定"; // 页面说明
+        $this->pageUrl = 'member/bind';
+        $this->pageBread = '账号绑定';
+        $this->displayFile('html/member/bind.html');
+    }
+
+    //执行绑定操作
+    public function doBind(){
+        $wxid = session('pboot_wxid');
+        $zfbid = session('pboot_zfbid');
+        $nickname = session('pboot_nick_name');
+        $headpic = session('pboot_avatar');
+        $usermobile = $_POST['usermobile'];
+
+        $ucode = get_auto_code($this->model->getLastUcode(), 1);
+        $status = $this->config('register_verify') ? 0 : 1; // 默认不需要审核
+        $score = $this->config('register_score') ?: 0;
+        $group = $this->model->getFirstGroup();
+        $gid = $this->model->getGroupID($this->config('register_gcode')) ?: $group->id;
+
+        $model = $this->model->login("wxid='$wxid' or usermobile='$usermobile'");
+        if($model)
+            error('账号已绑定，请勿重复！', -1);
+
+        // 构建数据
+        $data = array(
+            'ucode' => $ucode,
+            'username' => '',
+            'useremail' => '',
+            'usermobile' => $usermobile,
+            'nickname' => $nickname,
+            'password' => '',
+            'headpic' => $headpic,
+            'status' => $status,
+            'gid' => $gid,
+            'wxid' => $wxid,
+            'zfbid' => $zfbid,
+            'qqid' => '',
+            'wbid' => '',
+            'activation' => 1,
+            'score' => $score,
+            'register_time' => get_datetime(),
+            'login_count' => 0,
+            'last_login_ip' => 0,
+            'last_login_time' => 0
+        );
+
+        // 执行注册
+        if ($this->model->register($data)) {
+            session('lastreg', time()); // 记录最后提交时间
+            // 登录验证
+            if ($login = $this->model->login("usermobile='$usermobile'")) {
+                session('pboot_uid', $login->id);
+                session('pboot_ucode', $login->ucode);
+                session('pboot_username', $login->username);
+                session('pboot_useremail', $login->useremail);
+                session('pboot_usermobile', $login->usermobile);
+                session('pboot_gid', $login->gid);
+                session('pboot_gcode', $login->gcode);
+                session('pboot_gname', $login->gname);
+
+                return responseJson(true,'成功',['url' => '/member/ucenter']);
+            }
+        }
+
+        error('绑定失败！', -1);
     }
 }

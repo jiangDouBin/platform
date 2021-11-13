@@ -1,0 +1,192 @@
+{include file=comm/head.html}
+<style>
+    .logined{
+        left: 0px;
+        right: 0px;
+        position: absolute;
+        top: 57px;
+        background: linear-gradient(90deg, #98C5FF 0%, #135CFF 100%);
+        bottom: 40px;
+    }
+    .juzhong{
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 80%;
+        margin: 0 auto;
+        background: url('{pboot:sitetplpath}/images/icon1.png') no-repeat center center;
+    }
+    .slogin{
+        width: 50%;
+        margin-left: 50%;
+    }
+    .slogin .form-group{
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .slogin .form-group div{
+        width: 60%;
+    }
+    .slogin .form-group input{
+      height: 40px;
+    }
+    .slogin .form-group button{
+        width: 60%;
+        background: #EEEEEE;
+        border-radius: 4px;
+        color: #6F6F6F;
+    }
+    .logintxt{
+        font-size: 18px;
+        font-weight: bold;
+        color: #6F6F6F;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+    .activeed{
+        color: #3786FF;
+        font-size: 24px;
+        border-bottom: 2px solid #3786FF;
+    }
+    .ktxt{
+        font-size: 14px;
+        font-weight: 400;
+        color: #6F6F6F;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .line{
+        display: inline-block;
+        height: 2px;
+        background: #DCDCDC;
+        width: 20%;
+    }
+    .wtxt{
+        color: #303030;
+        font-size: 14px;
+    }
+    .yz{
+        display: flex;
+    }
+    .yz input{
+        flex: 1;
+    }
+    .yanzhengma{
+        width: 120px;
+        background: #FFFFFF;
+        border-radius: 4px;
+        border: 1px solid #3786FF;
+        color: #3786FF;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    .gary{
+        color: gray;
+        border-color: gray;
+    }
+</style>
+<div class=" logined">
+    <div class="row juzhong">
+        	<form class="my-4 slogin" onsubmit="return bind(this);">
+                <div class="form-group">
+                    <span class="logintxt activeed">绑定</span>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="hidden" name="wxid" value="{$wxid}">
+                        <input type="hidden" name="zfbid" value="{$zfbid}">
+                        <input type="text" name="usermobile" onblur="isRegister()" required id="usermobile" class="form-control" placeholder="请输入手机号">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                   <button type="submit" class="btn  mb-2">提交</button>
+                </div>
+            </form>
+    </div> 
+</div>
+
+<script>
+//检查注册账号
+function isRegister(){
+  var url='{pboot:isregister}';
+  var usermobile=$("#usermobile").val();
+  if(!usermobile){
+	 $("#usermobile").addClass("is-invalid");
+ 	 $("#usernote").addClass("invalid-feedback");
+ 	 $("#usermobile").removeClass("is-valid");
+ 	 $("#usernote").removeClass("valid-feedback");
+ 	 $("#usernote").text("请输入需要注册的手机号！");
+	 return false;
+  }
+  $.ajax({
+    type: 'POST',
+    url: url,
+    dataType: 'json',
+    data: {
+        usermobile: usermobile
+    },
+    success: function (response, status) {
+      if(response.code){//已经被注册
+    	 $("#usermobile").addClass("is-invalid");
+    	 $("#usernote").addClass("invalid-feedback");
+    	 
+    	 $("#usermobile").removeClass("is-valid");
+    	 $("#usernote").removeClass("valid-feedback");
+          layer.msg(response.data)
+    	
+      }else{//未被注册
+    	 $("#usermobile").addClass("is-valid");
+    	 $("#usernote").addClass("valid-feedback");
+    	 
+    	 $("#usermobile").removeClass("is-invalid");
+    	 $("#usernote").removeClass("invalid-feedback");
+      }
+        layer.msg(response.data)
+    },
+    error:function(xhr,status,error){
+        layer.msg('返回数据异常！');
+    }
+  });
+  return false;
+}
+
+//ajax注册
+function bind(obj){
+  var url='/platform/member/doBind';
+  var usermobile=$(obj).find("#usermobile").val();
+  var wxid=$(obj).find("#wxid").val();
+  var zfbid=$(obj).find("#zfbid").val();
+
+  $.ajax({
+    type: 'POST',
+    url: url,
+    dataType: 'json',
+    data: {
+        usermobile: usermobile,
+        wxid: wxid,
+        zfbid: zfbid
+    },
+    success: function (response, status) {
+      if(response.code){
+		 location.href= response.data.url;
+      }else{
+    	 layer.msg(response.message);
+      }
+    },
+    error:function(xhr,status,error){
+        layer.msg('返回数据异常！');
+    }
+  });
+  return false;
+}
+</script>
+
+{include file=comm/foot.html}

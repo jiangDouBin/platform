@@ -141,7 +141,7 @@
 	$(document).on('ready', function() {
 		$('#wechat').click(function (){
 			$.get('/order/wechatQrCode?id='+orderId,function (response){
-				if(response.result){
+				if(response.code){
 					layer.open({
 						type:1,
 						title:'微信支付',
@@ -159,7 +159,7 @@
 
 		$('#alipay').click(function (){
 			$.get('/order/alipayQrCode?id='+orderId,function (response,status){
-				if(response.result){
+				if(response.code){
 					checkPay();
 					var newWin = window.open('','_blank');
 					newWin.document.write(response.data.pay_page);
@@ -172,7 +172,7 @@
 		function checkPay(){
 			var intervalId = setInterval(function(){
 				$.get("/order/payResult?id="+orderId, function(response){
-					if (response.result) {
+					if (response.code) {
 						layer.msg(response.message, {icon: 1});
 						clearInterval(intervalId);
 						window.location.href = '/member/mydownlaod';

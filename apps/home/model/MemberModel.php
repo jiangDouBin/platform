@@ -116,4 +116,9 @@ class MemberModel extends Model
     {
         return parent::table('ay_member_group')->where("gcode='$gcode'")->value('id');
     }
+
+    // 根据微信的openid获取用户
+    public function getMemberByOpenId($wxId){
+        return parent::table('ay_member')->where("wxid='" . $wxId . "'")->find();
+    }
 }

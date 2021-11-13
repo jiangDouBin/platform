@@ -353,10 +353,10 @@ function self_nav_active($scode, $link)
     return '';
 }
 
-function responseJson($result = true,$message='',$data=[]){
+function responseJson($code = true,$message='',$data=[]){
     header('Content-type: application/json');
     return json_encode([
-        'result' => $result,
+        'code' => $code,
         'message' => $message,
         'data' => $data
     ]);

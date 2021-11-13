@@ -157,7 +157,7 @@
     $(document).on('ready', function () {
         $('#wechat').click(function () {
             $.get('/member/wechatLogin', function (response, status) {
-                if (response.result) {
+                if (response.code) {
                     window.location.href = response.data.url;
                 } else {
                     layer.msg(response.message);
