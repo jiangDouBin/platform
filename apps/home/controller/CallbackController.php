@@ -40,6 +40,7 @@ class CallbackController extends Controller
 
             //交易状态
             $trade_status = $_POST['trade_status'];
+            Log::info('订单号: ' . $orderNo . '--支付宝支付回调--响应数据'.json_encode($_POST));
             if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
                 $data['payment_type'] = 1;
                 if ($_POST['total_amount'] === $order['amount']) {
