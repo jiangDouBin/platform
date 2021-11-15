@@ -40,15 +40,10 @@ class CallbackController extends Controller
 
             //交易状态
             $trade_status = $_POST['trade_status'];
-            Log::info('订单号: ' . $orderNo . '--支付宝支付回调--交易状态:'.$trade_status.'--交易金额:'.$_POST['total_amount']);
-            if ($trade_status == 'TRADE_FINISHED' || $trade_status == 'TRADE_SUCCESS') {
+            if ($$trade_status == 'TRADE_SUCCESS') {
                 $data['payment_type'] = 1;
-                if ($_POST['total_amount'] === $order['amount']) {
-                    $data['payment_time'] = get_datetime(); // 更新支付时间为当前时间
-                    $data['status'] = 1;
-                } else {
-                    echo "fail";
-                }
+                $data['payment_time'] = get_datetime();
+                $data['status'] = 1;
                 $orderModel->modifyOrder($orderNo, $data); // 保存订单
                 //注意：
                 //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
