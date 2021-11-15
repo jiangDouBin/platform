@@ -61,6 +61,7 @@ class CallbackController extends Controller
     //微信支付回调
     public function wechat()
     {
+        Log::info('订单号1111: ' . '--微信支付回调');
         $config = Config::get('wechat_offiaccount', true);
         $app = WeChatFactory::payment($config);
         $response = $app->handlePaidNotify(function ($message, $fail) use ($app) {

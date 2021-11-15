@@ -76,7 +76,7 @@ class OrderModel extends Model
         );
         return parent::table('ay_orders a')->field($field)
             ->join($join)
-            ->where("a.member_id='" . session('pboot_uid') . "' and a.status = 2")
+            ->where("a.member_id='" . session('pboot_uid') . "' and a.status = 1")
             ->page()
             ->select();
     }

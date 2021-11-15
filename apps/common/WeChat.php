@@ -12,7 +12,7 @@ class WeChat
     //获取登录二维码
     public static function getWeChatLoginQRCodeUrl(){
         $config = Config::get('wechat_oplatform',true);
-        // 开放平台代公众号实现登录业务
+        // 开放平台代公众号实现登录业务getWeChatQRCodeUrl
         $app = Factory::officialAccount($config);
         $url = $app->oauth->scopes(['snsapi_login'])->redirect('https://www.diduoduotouzi.com/callback/wechat_oauth_callback')->getTargetUrl();
         return $url;
@@ -27,6 +27,7 @@ class WeChat
             'out_trade_no' => $order->order_no,
             'body' => '地多多订单: '.$order->order_no,
             'total_fee' => $order->amount * 100, // 微信支付的单位是分
+            'notify_url'=> 'https://www.diduoduotouzi.com/callback/wechat',
             'time_start' => time(),
             'time_expire' => date("YmdHis", time() + 600),
             'goods_tag' => $order->title,
