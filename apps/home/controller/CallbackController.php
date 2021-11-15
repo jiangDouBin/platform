@@ -9,6 +9,7 @@ use app\common\ResponseCode;
 use app\common\WeChat;
 use app\home\model\MemberModel;
 use app\home\model\OrderModel;
+use app\home\model\TransactionModel;
 use core\basic\Controller;
 use core\basic\Config;
 use core\basic\Log;
@@ -40,15 +41,18 @@ class CallbackController extends Controller
 
             //交易状态
             $trade_status = $_POST['trade_status'];
-            Log::info('订单号: ' . $orderNo . '--支付宝支付状态--'.$trade_status);
             if ($trade_status == 'TRADE_SUCCESS') {
                 $data['payment_type'] = 1;
                 $data['payment_time'] = get_datetime();
                 $data['status'] = 1;
                 $orderModel->modifyOrder($orderNo, $data); // 保存订单
+
+                //向产品的所有者添加交易流水
+                $this->createTransaction($order);
                 //注意：
                 //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
             }
+            Log::info('订单号: ' . $orderNo . '--支付宝支付成功');
             echo "success";    //请不要修改或删除
         } else
             //验证失败
@@ -58,7 +62,6 @@ class CallbackController extends Controller
     //微信支付回调
     public function wechat()
     {
-        Log::info('订单号1111: ' . '--微信支付回调');
         $config = Config::get('wechat_offiaccount', true);
         $app = WeChatFactory::payment($config);
         $response = $app->handlePaidNotify(function ($message, $fail) use ($app) {
@@ -78,12 +81,16 @@ class CallbackController extends Controller
                     $data['payment_time'] = get_datetime(); // 更新支付时间为当前时间
                     $data['status'] = 1;
                 } elseif (array_get($message, 'result_code') === 'FAIL') { // 用户支付失败
-
+                    Log::info('订单号: ' . $orderNo . '--微信支付失败');
                 }
             } else {
+                Log::info('订单号: ' . $orderNo . '--微信支付回调通信失败');
                 return $fail('通信失败，请稍后再通知我');
             }
             $orderModel->modifyOrder($orderNo, $data); // 保存订单
+            //向产品的所有者添加交易流水
+            $this->createTransaction($order);
+            Log::info('订单号: ' . $orderNo . '--微信支付回调处理成功');
             return true; // 返回处理完成
         });
         $response->send(); // return $response;
@@ -123,5 +130,25 @@ class CallbackController extends Controller
         }else{ //未绑定微信的，跳转到注册页面
             location(Url::home('/member/bind'));
         }
+    }
+
+    //交易流水
+    private function createTransaction($order){
+        // 修改个人钱包
+        $memberModel = new MemberModel();
+        $currentBalance = round($order->seller_balance + $order->amount, 2);
+        $memberModel->updateBalance($order->seller_id, $currentBalance);
+
+        //增加交易流水
+        $transactionModel = new TransactionModel();
+        $buyerData['member_id'] = $order->seller_id; // 交易涉及账号
+        $buyerData['type'] = 1; // 收入
+        $buyerData['action'] = 2; // 订单盈利
+        $buyerData['action_amount'] = $order->amount; //订单交易金额
+        $buyerData['current_balance'] = $currentBalance;
+        $buyerData['operator_id'] = $order->member_id; //交易操作人id
+        $buyerData['created_time'] = get_datetime();
+        $buyerData['remark'] = '订单号: ' . $order->order_no . '--支付宝支付金额:'.$order->amount;
+        $transactionModel->insert($buyerData);
     }
 }

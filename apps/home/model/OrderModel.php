@@ -85,11 +85,18 @@ class OrderModel extends Model
         $field = array(
             'a.*',
             'b.title',
+            'b.member_id as seller_id',
+            'c.balance as seller_balance'
         );
         $join = array(
             array(
                 'ay_content b',
                 'a.product_id=b.id',
+                'LEFT'
+            ),
+            array(
+                'ay_member c',
+                'b.member_id=c.id',
                 'LEFT'
             )
         );
