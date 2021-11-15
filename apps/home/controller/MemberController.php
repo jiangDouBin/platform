@@ -241,7 +241,7 @@ class MemberController extends BasicController
                 if (!!$backurl = get('backurl')) {
                     alert_location('登录成功！', $backurl, 1);
                 } else {
-                    alert_location('登录成功！', Url::home('member/ucenter'), 1);
+                    alert_location('登录成功！', Url::home('member/umodify'), 1);
                 }
             } else {
                 alert_back('账号密码错误，请核对后重试！', 0);
@@ -772,7 +772,6 @@ class MemberController extends BasicController
         $content = parent::parser('html/downloadlist.html');
         $data = $orderModel->getdownloads();
 
-
         $content = parserList($content, $data, $pagetitle);
         // $content = parserList($content,$data,$pagetitle);
         $this->cache($content, true);
@@ -855,6 +854,8 @@ class MemberController extends BasicController
         $nickname = session('pboot_nick_name');
         $headpic = session('pboot_avatar');
         $usermobile = $_POST['usermobile'];
+        $password = $_POST['passord'];
+
 
         $ucode = get_auto_code($this->model->getLastUcode(), 1);
         $status = $this->config('register_verify') ? 0 : 1; // 默认不需要审核
@@ -863,10 +864,35 @@ class MemberController extends BasicController
         $gid = $this->model->getGroupID($this->config('register_gcode')) ?: $group->id;
 
         $model = $this->model->login("wxid='$wxid' or usermobile='$usermobile'");
-        if($model)
-            error('账号已绑定，请勿重复！', -1);
-
-        // 构建数据
+        if($model){
+            if(!empty($model->wxid)){
+                error('账号已绑定，请勿重复！', -1);
+            }else{
+                $mima = md5(md5($password));
+             $modelss = $this->model->login("passord='$mima' and usermobile='$usermobile'");
+                if(!$modelss){
+                    error('密码输入错误', -1);
+                    return;
+                }
+                $data=array(
+                    'wxid' => $wxid
+                );
+                if ($this->model->modWechat($data, $model->id)) {
+                    session('pboot_uid', $model->id);
+                    session('pboot_ucode', $model->ucode);
+                    session('pboot_username', $model->username);
+                    session('pboot_useremail', $model->useremail);
+                    session('pboot_usermobile', $model->usermobile);
+                    session('pboot_gid', $model->gid);
+                    session('pboot_gcode', $model->gcode);
+                    session('pboot_gname', $model->gname);
+                   return responseJson(true,'成功',['url' => '/member/umodify']);
+                } else {
+                    error('绑定修改失败！', -1);
+                }
+            }
+        }else{
+            // 构建数据
         $data = array(
             'ucode' => $ucode,
             'username' => '',
@@ -903,10 +929,12 @@ class MemberController extends BasicController
                 session('pboot_gcode', $login->gcode);
                 session('pboot_gname', $login->gname);
 
-                return responseJson(true,'成功',['url' => '/member/ucenter']);
+                return responseJson(true,'成功',['url' => '/member/umodify']);
             }
         }
 
         error('绑定失败！', -1);
+        }
+        
     }
 }

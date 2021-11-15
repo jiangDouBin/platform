@@ -112,6 +112,11 @@ class MemberModel extends Model
     {
         return parent::table('ay_member')->where("id='" . session('pboot_uid') . "'")->update($data);
     }
+    
+    // 绑定微信
+    public function modWechat($data,$id) {
+       return parent::table('ay_member')->where("id='" . $id . "'")->update($data); 
+    }
 
     // 获取第一个等级
     public function getFirstGroup()

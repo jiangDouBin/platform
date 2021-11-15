@@ -102,7 +102,9 @@
                     <div>
                         <input type="hidden" name="wxid" value="{$wxid}">
                         <input type="hidden" name="zfbid" value="{$zfbid}">
-                        <input type="text" name="usermobile" onblur="isRegister()" required id="usermobile" class="form-control" placeholder="请输入手机号">
+                        <input type="text" name="usermobile" required id="usermobile" style="margin-bottom:20px;" class="form-control" placeholder="请输入手机号">
+                        <input type="password" name="password" required id="password" class="form-control"
+                           placeholder="请输入密码">
                     </div>
                 </div>
                 
@@ -114,56 +116,39 @@
 </div>
 
 <script>
-//检查注册账号
-function isRegister(){
-  var url='{pboot:isregister}';
-  var usermobile=$("#usermobile").val();
-  if(!usermobile){
-	 $("#usermobile").addClass("is-invalid");
- 	 $("#usernote").addClass("invalid-feedback");
- 	 $("#usermobile").removeClass("is-valid");
- 	 $("#usernote").removeClass("valid-feedback");
- 	 $("#usernote").text("请输入需要注册的手机号！");
-	 return false;
-  }
-  $.ajax({
-    type: 'POST',
-    url: url,
-    dataType: 'json',
-    data: {
-        usermobile: usermobile
-    },
-    success: function (response, status) {
-      if(response.code){//已经被注册
-    	 $("#usermobile").addClass("is-invalid");
-    	 $("#usernote").addClass("invalid-feedback");
-    	 
-    	 $("#usermobile").removeClass("is-valid");
-    	 $("#usernote").removeClass("valid-feedback");
-          layer.msg(response.data)
-    	
-      }else{//未被注册
-    	 $("#usermobile").addClass("is-valid");
-    	 $("#usernote").addClass("valid-feedback");
-    	 
-    	 $("#usermobile").removeClass("is-invalid");
-    	 $("#usernote").removeClass("invalid-feedback");
-      }
-        layer.msg(response.data)
-    },
-    error:function(xhr,status,error){
-        layer.msg('返回数据异常！');
+
+function isMobileNumber(phone) {
+    var flag = false;
+    var message = "";
+    var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+    if (phone == '') {
+        // console.log("手机号码不能为空");
+        message = "手机号码不能为空！";
+    } else if (phone.length != 11) {
+        //console.log("请输入11位手机号码！");
+        message = "请输入11位手机号码！";
+    } else if (!myreg.test(phone)) {
+        //console.log("请输入有效的手机号码！");
+        message = "请输入有效的手机号码！";
+    } else {
+        flag = true;
     }
-  });
-  return false;
+    if (message != "") {
+        layer.msg(message);
+    }
+    return flag;
 }
 
-//ajax注册
+
 function bind(obj){
-  var url='/platform/member/doBind';
+  var url='/member/doBind';
   var usermobile=$(obj).find("#usermobile").val();
+  if(!this.isMobileNumber(usermobile)){
+      return false
+  }
   var wxid=$(obj).find("#wxid").val();
   var zfbid=$(obj).find("#zfbid").val();
+  var password = $(obj).find("#password").val();
 
   $.ajax({
     type: 'POST',
@@ -171,6 +156,7 @@ function bind(obj){
     dataType: 'json',
     data: {
         usermobile: usermobile,
+        password:password,
         wxid: wxid,
         zfbid: zfbid
     },
