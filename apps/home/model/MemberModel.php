@@ -64,6 +64,14 @@ class MemberModel extends Model
     {
         return parent::table('ay_member')->where($where)->find();
     }
+    // 存入短信
+    public function sendSms($data){
+        return parent::table('ay_sms')->insert($data);
+    }
+    // 查询短信
+    public function getSms($where){
+        return parent::table('ay_sms')->where($where)->find();
+    }
 
     // 读取会员字段
     public function getField()

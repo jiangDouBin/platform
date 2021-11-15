@@ -11,7 +11,7 @@ use GuzzleHttp\Exception\RequestException;
 
 class HWCSms
 {
-    public static function SendSms(array $mobiles)
+    public static function SendSms(array $mobiles, string $yzm)
     {
         //必填,请参考"开发准备"获取如下数据,替换为实际值
         $url = Config::get('hwc.url'); //APP接入地址+接口访问URI
@@ -39,8 +39,11 @@ class HWCSms
          * 查看更多模板格式规范:产品介绍>模板和变量规范
          * @var string $TEMPLATE_PARAS
          */
-        $TEMPLATE_PARAS = '["369751"]'; //模板变量，此处以单变量验证码短信为例，请客户自行生成6位验证码，并定义为字符串类型，以杜绝首位0丢失的问题（例如：002569变成了2569）。
-
+        
+        $TEMPLATE_PARAS = "[".$yzm."]"; //模板变量，此处以单变量验证码短信为例，请客户自行生成6位验证码，并定义为字符串类型，以杜绝首位0丢失的问题（例如：002569变成了2569）。
+        // print_r($TEMPLATE_PARAS);
+        // print_r('["369751"]');
+        // $TEMPLATE_PARAS = '["369751"]'; 
         $client = new Client();
         try {
             $response = $client->request('POST', $url, [
@@ -67,7 +70,24 @@ class HWCSms
             }
         }
     }
-
+    function randStr($len=6,$format='NUMBER') { 
+        switch($format) { 
+        case 'ALL':
+        $chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-@#~'; break;
+        case 'CHAR':
+        $chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-@#~'; break;
+        case 'NUMBER':
+        $chars='0123456789'; break;
+        default :
+        $chars='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-@#~'; 
+        break;
+        }
+        mt_srand((double)microtime()*1000000*getmypid()); 
+        $password="";
+        while(strlen($password)<$len)
+           $password.=substr($chars,(mt_rand()%strlen($chars)),1);
+        return $password;
+        } 
     /**
      * 构造X-WSSE参数值
      * @param string $appKey

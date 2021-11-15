@@ -117,8 +117,8 @@
                 <div class="form-group">
                     <!-- <label for="password">密　码</label> -->
                     <div class="yz">
-                        <input type="password" name="password" required id="password" class="form-control" placeholder="请输入验证码">
-                        <span class="yanzhengma gary">请输入验证码</span>
+                        <input type="number" name="code" required id="code" class="form-control" placeholder="请输入验证码">
+                        <span class="yanzhengma gary" onclick="sendSms()">请输入验证码</span>
                     </div>
                 </div>
                 
@@ -175,11 +175,58 @@ function isRegister(){
   });
   return false;
 }
-
+function isMobileNumber(phone) {
+    var flag = false;
+    var message = "";
+    var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+    if (phone == '') {
+        // console.log("手机号码不能为空");
+        message = "手机号码不能为空！";
+    } else if (phone.length != 11) {
+        //console.log("请输入11位手机号码！");
+        message = "请输入11位手机号码！";
+    } else if (!myreg.test(phone)) {
+        //console.log("请输入有效的手机号码！");
+        message = "请输入有效的手机号码！";
+    } else {
+        flag = true;
+    }
+    if (message != "") {
+        layer.msg(message);
+    }
+    return flag;
+}
+function sendSms(){
+    var username=$("#username").val();
+    if(!this.isMobileNumber(username)){
+      return false
+    }
+    $.ajax({
+    type: 'POST',
+    url: '/member/sendSms',
+    dataType: 'json',
+    data: {
+        username: username
+    },
+    success: function (response, status) {
+      if(response.code){
+        alert('发送成功');
+      }else{
+        alert(response.data);
+      }
+    },
+    error:function(xhr,status,error){
+        alert('返回数据异常！');
+    }
+  });
+}
 //ajax注册
 function register(obj){
   var url='{pboot:register}';
   var username=$(obj).find("#username").val();
+  if(!this.isMobileNumber(username)){
+      return false
+    }
 //   var nickname=$(obj).find("#nickname").val();
   var password=$(obj).find("#password").val();
 //   var rpassword=$(obj).find("#rpassword").val();

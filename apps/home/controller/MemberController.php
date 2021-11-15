@@ -642,8 +642,8 @@ class MemberController extends BasicController
     public function isRegister()
     {
         // 接受用户名、邮箱、手机三种方式
-        $username = post('username');
-        $usermobile = post('usermobile');
+        // $username = post('username');
+        $usermobile = post('username');
 
         // 注册类型判断
         if ($this->config('register_type') == 2) { // 邮箱注册
@@ -806,7 +806,29 @@ class MemberController extends BasicController
     }
 
     public function sendSms(){
-        HWCSms::SendSms(['10000000000','10000000001']);
+        $mobile = post('username');
+        if(empty($mobile)){
+            error('请输入手机号',-1);
+            return;
+        }
+        $chars='0123456789';
+        $yzm='';
+        while(strlen($yzm)<6)
+           $yzm.=substr($chars,(mt_rand()%strlen($chars)),1);
+        $mmm = $yzm;
+        $yzm = '"'.$yzm.'"';
+        // 构建数据
+        $data = array(
+            'mobile' => $mobile,
+            'code' => $mmm,
+            'time' => date('Y-m-d h:i:s', time())
+        );
+        if($this->model->sendSms($data)){
+            HWCSms::SendSms([$mobile], $yzm);
+            return responseJson(true,'成功',['url' => '成功']);
+        }else{
+            error('短信存储失败',-1);
+        }   
     }
 
     //微信网页授权登录
