@@ -832,6 +832,8 @@ class MemberController extends BasicController
         $nickname = session('pboot_nick_name');
         $headpic = session('pboot_avatar');
         $usermobile = $_POST['usermobile'];
+        $password = $_POST['passord'];
+
 
         $ucode = get_auto_code($this->model->getLastUcode(), 1);
         $status = $this->config('register_verify') ? 0 : 1; // 默认不需要审核
@@ -844,6 +846,12 @@ class MemberController extends BasicController
             if(!empty($model->wxid)){
                 error('账号已绑定，请勿重复！', -1);
             }else{
+                $mima = md5(md5($password));
+             $modelss = $this->model->login("passord='$mima' and usermobile='$usermobile'");
+                if(!$modelss){
+                    error('密码输入错误', -1);
+                    return;
+                }
                 $data=array(
                     'wxid' => $wxid
                 );
