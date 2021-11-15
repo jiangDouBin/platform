@@ -61,7 +61,7 @@ class HWCSms
                 ],
                 'verify' => false //为防止因HTTPS证书认证失败造成API调用失败，需要先忽略证书信任问题
             ]);
-            echo Psr7\str($response); //打印响应信息
+            // echo Psr7\str($response); //打印响应信息
         } catch (RequestException $e) {
             echo $e;
             echo Psr7\str($e->getRequest()), "\n";
