@@ -37,7 +37,10 @@ class OrderController extends BasicController
                 $orderModel = new orderModel();
                 $order = $orderModel->getOrderByProductId($productid);
                 if($order){
-                    error('当前商品已经下单，请勿重复下单', -1);
+                    $url = '/member/orderinfo?id='.$order->id;
+                    location(Url::home($url));
+                    return;
+                    // error('当前商品已经下单，请勿重复下单', -1);
                 }
                 // 获取产品信息正常
                 $data = array(
