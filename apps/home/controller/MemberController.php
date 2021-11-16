@@ -829,6 +829,7 @@ class MemberController extends BasicController
                     return;
                 }
                 $data=array(
+                    'headpic' => $headpic,
                     'wxid' => $wxid
                 );
                 if ($this->model->modWechat($data, $model->id)) {
