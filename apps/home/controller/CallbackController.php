@@ -42,7 +42,7 @@ class CallbackController extends Controller
             //交易状态
             $trade_status = $_POST['trade_status'];
             if ($trade_status == 'TRADE_SUCCESS') {
-                $data['payment_type'] = 1;
+                $data['payment_type'] = 3;
                 $data['payment_time'] = get_datetime();
                 $data['status'] = 1;
                 $orderModel->modifyOrder($orderNo, $data); // 保存订单
