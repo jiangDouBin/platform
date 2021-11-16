@@ -103,7 +103,7 @@
                 <div class="form-group">
                     <!-- <label for="username">账　号</label> -->
                     <div>
-                        <input type="text" name="username" onblur="isRegister()" required id="username" class="form-control" placeholder="请输入账号">
+                        <input type="text" name="username" onblur="isRegister()" required id="username" maxlength="11" class="form-control" placeholder="请输入账号">
                     </div>
                 </div>
                 
@@ -118,7 +118,8 @@
                     <!-- <label for="password">密　码</label> -->
                     <div class="yz">
                         <input type="number" name="code" required id="code" class="form-control" placeholder="请输入验证码">
-                        <span class="yanzhengma gary" onclick="sendSms()">请输入验证码</span>
+                        <span class="yanzhengma gary" id="sms" onclick="sendSms()">请输入验证码</span>
+                        <span class="yanzhengma gary" id="smsd" style="display: none;">60s 之后重试</span>
                     </div>
                 </div>
                 
@@ -131,6 +132,54 @@
 </div>
 
 <script>
+    var timeoutclear = null
+    // 检查手机号
+    function isMobileNumber(phone) {
+        var flag = false;
+        var message = "";
+        var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
+        if (phone == '') {
+            // console.log("手机号码不能为空");
+            message = "手机号码不能为空！";
+        } else if (phone.length != 11) {
+            //console.log("请输入11位手机号码！");
+            message = "请输入11位手机号码！";
+        } else if (!myreg.test(phone)) {
+            //console.log("请输入有效的手机号码！");
+            message = "请输入有效的手机号码！";
+        } else {
+            flag = true;
+        }
+        if (message != "") {
+            alert(message);
+        }
+        return flag;
+    }
+    $('#username').keyup(function(){
+        var c=$(this);
+        if(/[^\d]/.test(c.val())){//替换非数字字符
+            var temp_amount=c.val().replace(/[^\d]/g,'');
+            $(this).val(temp_amount);
+        }
+   }) 
+   // 处理验证码定时器
+   function timeYear(){
+       $('#sms').css('display','none')
+       $('#smsd').css('display','block')
+
+       var timer_num = 10;
+       timeoutclear=setInterval(function(){
+        timer_num--;
+        $('#smsd').html(timer_num + 's 之后重试');
+       
+        if (timer_num == 0) {
+            clearInterval(timeoutclear);
+            $('#sms').css('display','block')
+            $('#smsd').css('display','none')
+            $('#smsd').html('60s 之后重试');
+        } 
+    },1000)
+   }
 //检查注册账号
 function isRegister(){
   var url='{pboot:isregister}';
@@ -142,6 +191,9 @@ function isRegister(){
  	 $("#usernote").removeClass("valid-feedback");
  	 $("#usernote").text("请输入需要注册的账号！");
 	 return false;
+  }
+  if(!this.isMobileNumber(username)){
+      return
   }
   $.ajax({
     type: 'POST',
@@ -165,8 +217,9 @@ function isRegister(){
     	 
     	 $("#username").removeClass("is-invalid");
     	 $("#usernote").removeClass("invalid-feedback");
+         alert(response.data)
       }
-      alert(response.data)
+      
     //   $("#usernote").text(response.data);
     },
     error:function(xhr,status,error){
@@ -175,27 +228,7 @@ function isRegister(){
   });
   return false;
 }
-function isMobileNumber(phone) {
-    var flag = false;
-    var message = "";
-    var myreg = /^(((13[0-9]{1})|(14[0-9]{1})|(17[0-9]{1})|(15[0-3]{1})|(15[4-9]{1})|(18[0-9]{1})|(199))+\d{8})$/;
-    if (phone == '') {
-        // console.log("手机号码不能为空");
-        message = "手机号码不能为空！";
-    } else if (phone.length != 11) {
-        //console.log("请输入11位手机号码！");
-        message = "请输入11位手机号码！";
-    } else if (!myreg.test(phone)) {
-        //console.log("请输入有效的手机号码！");
-        message = "请输入有效的手机号码！";
-    } else {
-        flag = true;
-    }
-    if (message != "") {
-        layer.msg(message);
-    }
-    return flag;
-}
+
 function sendSms(){
     var username=$("#username").val();
     if(!this.isMobileNumber(username)){
@@ -210,6 +243,7 @@ function sendSms(){
     },
     success: function (response, status) {
       if(response.code){
+        timeYear()
         alert('发送成功');
       }else{
         alert(response.data);
@@ -229,9 +263,7 @@ function register(obj){
     }
 //   var nickname=$(obj).find("#nickname").val();
   var password=$(obj).find("#password").val();
-//   var rpassword=$(obj).find("#rpassword").val();
-//   var sex=$(':radio[name="sex"]:checked').val();
-//   var checkcode=$(obj).find("#checkcode").val();
+  var code=$(obj).find("#code").val();
 
   $.ajax({
     type: 'POST',
@@ -239,7 +271,8 @@ function register(obj){
     dataType: 'json',
     data: {
     	username: username,
-    	password: password
+    	password: password,
+        code:code
     },
     success: function (response, status) {
       if(response.code){

@@ -72,7 +72,11 @@ class MemberModel extends Model
     public function getSms($where){
         return parent::table('ay_sms')->where($where)->find();
     }
-
+    // 修改短信
+    public function modSms($data,$mobile)
+    {
+        return parent::table('ay_sms')->where("mobile='" . $mobile . "'")->update($data);
+    }
     // 读取会员字段
     public function getField()
     {

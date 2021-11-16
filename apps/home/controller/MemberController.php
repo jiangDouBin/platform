@@ -263,7 +263,7 @@ class MemberController extends BasicController
     {
         // 已经登录时跳转到用户中心
         if (session('pboot_uid')) {
-            location(Url::home('member/ucenter'));
+            location(Url::home('member/umodify'));
         }
 
         // 执行注册
@@ -275,72 +275,41 @@ class MemberController extends BasicController
             if (time() - session('lastreg') < 10) {
                 alert_back('您注册太频繁了，请稍后再试！');
             }
-
-
-            // 验证码验证
-            $checkcode = strtolower(post('checkcode', 'var'));
-            if ($this->config('register_check_code') !== '0') {
-                if (!$checkcode) {
-                    alert_back('验证码不能为空！');
-                }
-
-                if ($checkcode != session('checkcode')) {
-                    alert_back('验证码错误！');
-                }
-            }
-
             $ucode = get_auto_code($this->model->getLastUcode(), 1);
             $username = post('username'); // 接受用户名、邮箱、手机三种方式
-            $nickname = post('nickname');
+            // $nickname = post('nickname');
             $password = post('password');
-            $rpassword = post('rpassword');
+            $code = post('code');
+            // $rpassword = post('rpassword');
 
-            $useremail = '';
-            $usermobile = '';
-            // 注册类型判断
-            if ($this->config('register_type') == 2) { // 邮箱注册
-                $useremail = $username;
-                if (!$useremail) {
-                    alert_back('账号不能为空，请输入注册的邮箱账号！');
-                }
-                if (!preg_match('/^[\w]+@[\w\.]+\.[a-zA-Z]+$/', $useremail)) {
-                    alert_back('账号格式不正确，请输入正确的邮箱账号！');
-                }
-                if ($this->model->checkUsername("useremail='$useremail' OR username='$useremail'")) {
-                    alert_back('您输入的邮箱已被注册！');
-                }
-            } elseif ($this->config('register_type') == 3) { // 手机注册
-                $usermobile = $username;
-                if (!$usermobile) {
-                    alert_back('账号不能为空，请输入注册的手机号码！');
-                }
-                if (!preg_match('/^1[0-9]{10}$/', $usermobile)) {
-                    alert_back('账号格式不正确，请输入正确的手机号码！');
-                }
-                if ($this->model->checkUsername("usermobile='$usermobile' OR username='$usermobile'")) {
-                    alert_back('您输入的手机号码已被注册！');
-                }
-            } else { // 账号注册
-                if (!$username) {
-                    alert_back('用户名不能为空！');
-                }
-                if (!preg_match('/^[\w\@\.]+$/', $username)) {
-                    alert_back('用户账号含有不允许的特殊字符！');
-                }
-                // 检查用户名
-                if ($this->model->checkUsername("username='$username' OR useremail='$username' OR usermobile='$username'")) {
-                    alert_back('您输入的账号已被注册！');
-                }
+            $usermobile = $username;
+            if (!$usermobile) {
+                alert_back('账号不能为空，请输入注册的手机号码！');
             }
-
-            // if ($password != $rpassword) {
-            //     alert_back('确认密码不正确！');
-            // }
+            if (!preg_match('/^1[0-9]{10}$/', $usermobile)) {
+                alert_back('账号格式不正确，请输入正确的手机号码！');
+            }
+            if ($this->model->checkUsername("usermobile='$usermobile' OR username='$usermobile'")) {
+                alert_back('您输入的手机号码已被注册！');
+            }
 
             if (!$password) {
                 alert_back('密码不能为空！');
             } else {
                 $password = md5(md5($password));
+            }
+
+            if(!$code){
+                alert_back('验证码不能为空');
+            }else{
+                if($this->model->getSms("mobile='$usermobile' and code='$code' and status = 1")) {
+                    $data = array(
+                        'status' => 2
+                    );
+                    $this->model->modsms($data, $usermobile);
+                }else{
+                    alert_back('验证码错误'); 
+                }
             }
 
             // 默认值设置
@@ -646,16 +615,7 @@ class MemberController extends BasicController
         $usermobile = post('username');
 
         // 注册类型判断
-        if ($this->config('register_type') == 2) { // 邮箱注册
-            if (!preg_match('/^[\w]+@[\w\.]+\.[a-zA-Z]+$/', $username)) {
-                $err = '账号格式不正确，请输入正确的邮箱账号！';
-            }
-            if ($this->model->checkUsername("useremail='$username' OR username='$username'")) {
-                $err = '您输入的邮箱已被注册！';
-            } else {
-                $suc = '您输入的邮箱可以使用！';
-            }
-        } elseif ($this->config('register_type') == 3) { // 手机注册
+        if ($this->config('register_type') == 3) { // 手机注册
             if (!preg_match('/^1[0-9]{10}$/', $usermobile)) {
                 $err = '账号格式不正确，请输入正确的手机号码！';
             }
@@ -663,16 +623,6 @@ class MemberController extends BasicController
                 $err = '您输入的手机号码已被注册！';
             } else {
                 $suc = '您输入的手机号码可以使用！';
-            }
-        } else { // 账号注册
-            if (!preg_match('/^[\w\@\.]+$/', $username)) {
-                $err = '用户账号含有不允许的特殊字符！';
-            }
-            // 检查用户名
-            if ($this->model->checkUsername("username='$username' OR useremail='$username' OR usermobile='$username'")) {
-                $err = '您输入的账号已被注册！';
-            } else {
-                $suc = '您输入的账号可以使用！';
             }
         }
 
@@ -727,6 +677,10 @@ class MemberController extends BasicController
                     break;
                 case 3:
                     $order->payment_type = '支付宝';
+                    break;
+                default:
+                    $order->payment_type = '未支付';
+                    $order->payment_time = '未支付';
                     break;
             }
             $data[$key] = $order;
@@ -869,7 +823,7 @@ class MemberController extends BasicController
                 error('账号已绑定，请勿重复！', -1);
             }else{
                 $mima = md5(md5($password));
-             $modelss = $this->model->login("passord='$mima' and usermobile='$usermobile'");
+                $modelss = $this->model->login("passord='$mima' and usermobile='$usermobile'");
                 if(!$modelss){
                     error('密码输入错误', -1);
                     return;
