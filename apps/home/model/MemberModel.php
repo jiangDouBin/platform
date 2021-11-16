@@ -134,4 +134,11 @@ class MemberModel extends Model
     public function getMemberByOpenId($wxId){
         return parent::table('ay_member')->where("wxid='" . $wxId . "'")->find();
     }
+
+    //修改用户钱包
+    public function updateBalance($memberId,$balance){
+        return parent::table('ay_member')
+            ->where("id='" . $memberId . "'")
+            ->update(['balance'=>$balance]);
+    }
 }

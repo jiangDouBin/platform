@@ -41,9 +41,10 @@ class TransactionModel extends Model
             ->sum(action_amount);
     }
 
-    public function getLastOne(){
+    //根据member_id获取最后一笔交易流水
+    public function getLastOne($memberId = 0){
         return parent::table('ay_transactions a')
-            ->where('member_id='.session('pboot_uid'))
+            ->where('member_id='.$memberId)
             ->order('id DESC')
             ->limit(1)
             ->find();

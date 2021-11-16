@@ -693,7 +693,7 @@ class MemberController extends BasicController
     {
         $transactionModel = new TransactionModel();
         $incomeAmount = round($transactionModel->getIncomeAmount(TransactionModel::TYPE_INCOME), 2);
-        $lastOne = $transactionModel->getLastOne();
+        $lastOne = $transactionModel->getLastOne(session('pboot_uid'));
         $member = $this->model->getUser();
 
         if ($lastOne)

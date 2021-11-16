@@ -15,7 +15,10 @@ class Alipay
     public static function getAlipayPagePay($order=null){
         try {
             Factory::setOptions(self::getOptions());
-            $response = Factory::payment()->page()->pay("地多多订单: ".$order->order_no, $order->order_no, $order->amount, "");
+            $response = Factory::payment()
+                ->page()
+                ->asyncNotify('https://www.diduoduotouzi.com/callback/alipay')
+                ->pay("地多多订单: ".$order->order_no, $order->order_no, $order->amount, "https://www.diduoduotouzi.com/member/mydownlaod");
             return $response;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
