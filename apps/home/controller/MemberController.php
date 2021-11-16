@@ -823,7 +823,7 @@ class MemberController extends BasicController
                 error('账号已绑定，请勿重复！', -1);
             }else{
                 $mima = md5(md5($password));
-                $modelss = $this->model->login("passord='$mima' and usermobile='$usermobile'");
+                $modelss = $this->model->login("password='$mima' and usermobile='$usermobile'");
                 if(!$modelss){
                     error('密码输入错误', -1);
                     return;
