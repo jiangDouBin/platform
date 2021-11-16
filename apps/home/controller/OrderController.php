@@ -37,10 +37,13 @@ class OrderController extends BasicController
                 $orderModel = new orderModel();
                 $order = $orderModel->getOrderByProductId($productid);
                 if($order){
-                    $url = '/member/orderinfo?id='.$order->id;
-                    location(Url::home($url));
-                    return;
-                    // error('当前商品已经下单，请勿重复下单', -1);
+                    if($order->status == 1){
+                        error('当前商品已经下单成功，请勿重复下单', -1);
+                    }else{
+                        $url = '/member/orderinfo?id='.$order->id;
+                        location(Url::home($url));
+                    }                 
+                    return; 
                 }
                 // 获取产品信息正常
                 $data = array(
