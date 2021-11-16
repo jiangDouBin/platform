@@ -808,7 +808,7 @@ class MemberController extends BasicController
         $nickname = session('pboot_nick_name');
         $headpic = session('pboot_avatar');
         $usermobile = $_POST['usermobile'];
-        $password = $_POST['passord'];
+        $password = $_POST['password'];
 
 
         $ucode = get_auto_code($this->model->getLastUcode(), 1);
