@@ -196,8 +196,8 @@
                 <td>[uploadlist:time]</td>
                 <td style="color: #3786FF;">
                     {pboot:if('{content:is_buy}'!=='1')}
-                    <img src="{pboot:sitetplpath}/images/icon10.png" onclick="ziyuan('[uploadlist:id]')"/>
-                        <a href=[uploadlist:url] download=[uploadlist:name]>下载资源</a>
+                    <img style="cursor: pointer;"src="{pboot:sitetplpath}/images/icon10.png" onclick="ziyuan('[uploadlist:id]','[uploadlist:name]')"/>
+                        <span style="cursor: pointer;" onclick="ziyuan('[uploadlist:id]','[uploadlist:name]')">下载资源</span>
                     {else}
                         <span>购买后可下载</span>
                     {/pboot:if}
@@ -211,7 +211,7 @@
 
 <script src="{pboot:sitetplpath}/swiper-4.3.5/js/swiper.min.js"></script>
 <script>
-   function ziyuan(id) {
+   function ziyuan(id,name) {
        if(!id) alert('项目资源存在问题')
        $.ajax({
         type: 'POST',
@@ -223,15 +223,15 @@
         },
         success: function (response, status) {
         if(response.code){
-            $.download();
             var a = document.createElement('a');
             a.href = response.data.url;
             a.target = '_blank';
+            a.download= name;
             a.id='exppub';
             document.body.appendChild(a);
             var alink = document.getElementById('exppub');
             alink.click();
-            alink.parentNode.removeChild(a);
+           alink.parentNode.removeChild(a);
         //    window.location.href = response.data.url;
         }else{
             alert(response.data);
