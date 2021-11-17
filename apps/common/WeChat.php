@@ -29,7 +29,6 @@ class WeChat
             'total_fee' => $order->amount * 100, // 微信支付的单位是分
             'notify_url'=> 'https://www.diduoduotouzi.com/callback/wechat',
             'time_start' => time(),
-            'notify_url'=> 'https://www.diduoduotouzi.com',
             'time_expire' => date("YmdHis", time() + 600),
             'goods_tag' => $order->title,
             'product_id' => $order->product_id,
