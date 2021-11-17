@@ -102,16 +102,14 @@
             </div>
             <div class="form-group">
                 <div class="formgrouprow">
-                    <label><span style="color: #D41818;">*</span>开卡行:</label>
-                    <input type="text" name="bank" required id="bank" class="form-control" value="{user:bank}">
-                    <!-- <span style="color: #D41818;">(限额1000元)</span> -->
+                  <label ><span style="color: #D41818;">*</span>开卡行:</label>
+                  <input type="text" name="cardhome" required id="cardhome" class="form-control" value="{user:cardhome}">
                 </div>
                 <div class="formgrouprow">
-                    <label><span style="color: #D41818;">*</span>银行卡号:</label>
-                    <input type="text" name="bank_card" required id="bank_card" class="form-control"
-                           value="{user:bank_card}">
+                  <label ><span style="color: #D41818;">*</span>银行卡号:</label>
+                  <input type="text" name="cardnumber" required id="cardnumber" class="form-control"  value="{user:cardnumber}">
                 </div>
-            </div>
+              </div>
             <div class="form-group">
                 <div class="formgrouprow">
                     <label><span style="color: #D41818;">*</span>微信账号:</label>
@@ -123,14 +121,11 @@
                     {/pboot:if}
                 </div>
                 <div class="formgrouprow">
-                    <label><span style="color: #D41818;">*</span>支付宝账号:</label>
-                    <img src="{pboot:sitetplpath}/images/icon12.png" style="margin-right: 20px;"/>
-                    {pboot:if('{user:zfbid}')}
-                        <button type="button" class="btn">已绑定</button>
-                    {else}
-                        <button type="button" class="btn">绑定</button>
-                    {/pboot:if}
-                </div>
+                    <label ><span style="color: #D41818;">*</span>支付宝账号:</label>
+                    <img src="{pboot:sitetplpath}/images/icon12.png" style="margin-right: 20px;" />
+                    <input type="text" name="zfb" required id="zfb" class="form-control" value="{user:zfb}" >
+                  </div>
+              </div>
             </div>
             <div class="form-group" style="align-items: center;justify-content: center; margin-top: 140px;">
                 <button type="submit" class="btn" style=" width: 260px;">保存</button>

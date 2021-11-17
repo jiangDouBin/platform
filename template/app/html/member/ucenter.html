@@ -106,7 +106,11 @@
         <div class="formgrouprow">
           <label ><span style="color: #D41818;">*</span>微信账号:</label>
 		      <img src="{pboot:sitetplpath}/images/icon9.png" style="margin-right: 20px;" />
-          <button type="button" class="btn" id="login_container" >绑定</button>
+          {pboot:if('{user:wxid}')}
+                        <button type="button" class="btn">已绑定</button>
+                    {else}
+                        <button type="button" class="btn">绑定</button>
+                    {/pboot:if}
         </div>
 		<div class="formgrouprow">
 			<label ><span style="color: #D41818;">*</span>支付宝账号:</label>
