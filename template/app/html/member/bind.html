@@ -96,7 +96,7 @@
     <div class="row juzhong">
         	<form class="my-4 slogin" onsubmit="return bind(this);">
                 <div class="form-group">
-                    <span class="logintxt activeed">绑定</span>
+                    <span class="logintxt activeed">注册</span>
                 </div>
                 <div class="form-group">
                     <div>
@@ -105,8 +105,18 @@
                         <input type="text" name="usermobile" required id="usermobile" style="margin-bottom:20px;" class="form-control" placeholder="请输入手机号">
                         <input type="password" name="password" required id="password" class="form-control"
                            placeholder="请输入密码">
+                        
                     </div>
+                    
                 </div>
+                <div class="form-group">
+                    <!-- <label for="password">密　码</label> -->
+                    <div class="yz">
+                        <input type="number" name="code" required id="code" class="form-control" placeholder="请输入验证码">
+                        <span class="yanzhengma gary" id="sms" onclick="sendSms()">请输入验证码</span>
+                        <span class="yanzhengma gary" id="smsd" style="display: none;">60s 之后重试</span>
+                    </div>
+                    </div>
                 
                 <div class="form-group">
                    <button type="submit" class="btn  mb-2">提交</button>
@@ -116,7 +126,7 @@
 </div>
 
 <script>
-
+var timeoutclear = null
 function isMobileNumber(phone) {
     var flag = false;
     var message = "";
@@ -134,12 +144,59 @@ function isMobileNumber(phone) {
         flag = true;
     }
     if (message != "") {
-        layer.msg(message);
+        alert(message);
     }
     return flag;
 }
+function timeYear(){
+       $('#sms').css('display','none')
+       $('#smsd').css('display','block')
 
-
+       var timer_num = 10;
+       timeoutclear=setInterval(function(){
+        timer_num--;
+        $('#smsd').html(timer_num + 's 之后重试');
+       
+        if (timer_num == 0) {
+            clearInterval(timeoutclear);
+            $('#sms').css('display','block')
+            $('#smsd').css('display','none')
+            $('#smsd').html('60s 之后重试');
+        } 
+    },1000)
+   }
+   $('#usermobile').keyup(function(){
+        var c=$(this);
+        if(/[^\d]/.test(c.val())){//替换非数字字符
+            var temp_amount=c.val().replace(/[^\d]/g,'');
+            $(this).val(temp_amount);
+        }
+   }) 
+   function sendSms(){
+    var username=$("#usermobile").val();
+    if(!this.isMobileNumber(username)){
+      return false
+    }
+    $.ajax({
+    type: 'POST',
+    url: '/member/sendSms',
+    dataType: 'json',
+    data: {
+        username: username
+    },
+    success: function (response, status) {
+      if(response.code){
+        timeYear()
+        alert('发送成功');
+      }else{
+        alert(response.data);
+      }
+    },
+    error:function(xhr,status,error){
+        alert('返回数据异常！');
+    }
+  });
+}
 function bind(obj){
   var url='/member/doBind';
   var usermobile=$(obj).find("#usermobile").val();
@@ -149,7 +206,7 @@ function bind(obj){
   var wxid=$(obj).find("#wxid").val();
   var zfbid=$(obj).find("#zfbid").val();
   var password = $(obj).find("#password").val();
-
+  var code = $(obj).find("#code").val();
   $.ajax({
     type: 'POST',
     url: url,
@@ -158,13 +215,14 @@ function bind(obj){
         usermobile: usermobile,
         password:password,
         wxid: wxid,
-        zfbid: zfbid
+        zfbid: zfbid,
+        code:code
     },
     success: function (response, status) {
       if(response.code){
 		 location.href= response.data.url;
       }else{
-    	 layer.msg(response.message);
+    	 layer.msg(response.data);
       }
     },
     error:function(xhr,status,error){

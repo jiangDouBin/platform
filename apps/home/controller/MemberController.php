@@ -809,6 +809,14 @@ class MemberController extends BasicController
         $headpic = session('pboot_avatar');
         $usermobile = $_POST['usermobile'];
         $password = $_POST['password'];
+        $code = $_POST['code'];
+        if(empty($usermobile)) {
+            alert_back('请输入手机号');
+        }else if(empty($password)) {
+            alert_back('请输入密码');
+        }else if(empty($code)){
+            alert_back('请输入验证码');
+        }
 
 
         $ucode = get_auto_code($this->model->getLastUcode(), 1);
@@ -816,6 +824,11 @@ class MemberController extends BasicController
         $score = $this->config('register_score') ?: 0;
         $group = $this->model->getFirstGroup();
         $gid = $this->model->getGroupID($this->config('register_gcode')) ?: $group->id;
+        
+        if(!$this->model->getSms("mobile='$usermobile' and code='$code' and status = 1")) {
+            alert_back('验证码错误'); 
+        }
+        
 
         $model = $this->model->login("wxid='$wxid' or usermobile='$usermobile'");
         if($model){
@@ -828,6 +841,10 @@ class MemberController extends BasicController
                     error('密码输入错误', -1);
                     return;
                 }
+                $data = array(
+                    'status' => 2
+                );
+                $this->model->modsms($data, $usermobile);
                 $data=array(
                     'headpic' => $headpic,
                     'wxid' => $wxid
@@ -875,6 +892,10 @@ class MemberController extends BasicController
             session('lastreg', time()); // 记录最后提交时间
             // 登录验证
             if ($login = $this->model->login("usermobile='$usermobile'")) {
+                $data = array(
+                    'status' => 2
+                );
+                $this->model->modsms($data, $usermobile);
                 session('pboot_uid', $login->id);
                 session('pboot_ucode', $login->ucode);
                 session('pboot_username', $login->username);
