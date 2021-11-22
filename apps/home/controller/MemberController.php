@@ -117,6 +117,16 @@ class MemberController extends BasicController
 
             error('上传资料失败', '-1');
         }
+        else{
+           $orderModel = new ProductModel();
+            $content = parent::parser($this->htmldir . '/upload.html');
+            $data = $orderModel->getList();
+            // print_r($data);
+            $pagetitle = '上传';
+            $content = parserList($content, $data, $pagetitle);
+            // $content = str_replace('{pboot:pagetitle}','个人中心-{pboot:sitetitle}-{pboot:sitesubtitle}', $content);
+            $this->cache($content, true);
+        }
     }
 
     // 我的上传列表
