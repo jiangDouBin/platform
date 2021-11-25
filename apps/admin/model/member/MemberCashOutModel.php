@@ -17,6 +17,10 @@ class MemberCashOutModel extends Model
             'a.*',
             'c.username',
             'c.nickname',
+            'c.usermobile',
+            'c.cardhome',
+            'c.cardnumber',
+            'c.zfb',
             'c.headpic'
         );
         $join =
@@ -39,6 +43,10 @@ class MemberCashOutModel extends Model
             'a.*',
             'c.username',
             'c.nickname',
+            'c.usermobile',
+            'c.cardhome',
+            'c.cardnumber',
+            'c.zfb',
             'c.headpic'
         );
         $join =
@@ -62,7 +70,11 @@ class MemberCashOutModel extends Model
             'a.*',
             'c.username',
             'c.nickname',
-            'c.headpic'
+            'c.headpic',
+            'c.usermobile',
+            'c.cardhome',
+            'c.cardnumber',
+            'c.zfb'
         );
         $join =
             array(

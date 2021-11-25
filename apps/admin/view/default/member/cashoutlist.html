@@ -42,6 +42,9 @@
 								序号
 							</th>
                             <th>申请人</th>
+                            <th>手机号</th>
+                            <th>银行卡信息</th>
+                            <th>支付宝</th>
                             <th>申请金额</th>
                             <th>申请状态</th>
                             <th>申请时间</th>
@@ -58,6 +61,9 @@
                                 [num]
                             </td>
                             <td title="[value->nickname]">[value->username]</td>
+                            <td title="[value->usermobile]">[value->usermobile]</td>
+                            <td title="[value->card]">[value->cardhome]-[value->cardnumber]</td>
+                            <td title="[value->zfb]">[value->zfb]</td>
                             <td>[value->amount]</td>
                             <td>
                                 {if($value->status == 1)}

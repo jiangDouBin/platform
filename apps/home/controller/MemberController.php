@@ -543,7 +543,7 @@ class MemberController extends BasicController
             json(0, '请先登录！');
         }
 
-        $ext = $this->config('home_upload_ext') ?: "jpg,jpeg,png,gif,xls,xlsx,doc,docx,ppt,pptx,rar,zip,pdf,txt";
+        $ext = $this->config('home_upload_ext') ?: "jpg,jpeg,png,gif,xls,xlsx,doc,docx,ppt,pptx,rar,zip,pdf,txt,dwg";
         $upload = upload('upload', $ext);
         if (is_array($upload)) {
             json(1, $upload);
