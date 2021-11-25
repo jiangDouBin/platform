@@ -146,14 +146,14 @@
 
     function uploadlist(filesObj) {
         var files = filesObj.files, fileurls = filesObj.response.data;
-        // console.log(files)
-        var html = "";
-        html += `<tr><th>名称-文件类型</th>
-						<th>操作</th></tr>`;
+
+        var html = "<tr><th>名称-文件类型</th><th>操作</th></tr>";
+					
         for (var i = 0; i < filesObj.filescount; i++) {
             var file = {};
             var fileInfo = files[i];
             if(!fileInfo)continue;
+             
             file.file_name = fileInfo.name;
             file.file_ext = fileInfo.type;
             file.file_size = fileInfo.size;
@@ -162,25 +162,18 @@
         }
         for (var i = 0; i < filesarray.length; i++) {
             file = filesarray[i];
-            html += '<tr><td>' + file.file_name + `</td><td style="color: #3786FF;">
-                <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
-                删除
-              </td></tr>`;
+            html += '<tr><td>' + file.file_name + '</td><td style="color: #3786FF;"><img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />删除 </td></tr>';
         }
         document.getElementById('ness').innerHTML = html;
     }
-
+    
     function deletes(i) {
         var html = "";
-        html += `<tr><th>名称-文件类型</th>
-						<th>操作</th></tr>`;
+        html += "<tr><th>名称-文件类型</th><th>操作</th></tr>";
         filesarray.splice(i, 1)
         for (var i = 0; i < filesarray.length; i++) {
             file = filesarray[i];
-            html += '<tr><td>' + file.file_name + `</td><td style="color: #3786FF;">
-                <img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />
-                删除
-              </td></tr>`;
+            html += '<tr><td>' + file.file_name + '</td><td style="color: #3786FF;"><img src="{pboot:sitetplpath}/images/icon4.png" onclick="deletes(` + i + `)" />删除</td></tr>';
         }
         document.getElementById('ness').innerHTML = html;
     }
@@ -222,8 +215,12 @@
         });
         return false;
     }
-
-    $(document).on('ready', function() {
+    //  alert('1')
+     console.log('xxxxxxxxx')
+     $(window).ready(function(){
+    // $(window).on('ready', function() {
+       
+        console.log('执行离开吗')
         $('#fileInputs').on('filebatchuploadsuccess', function(event, data, previewId, index) {
             if(data.response.code){
                 console.log('-----',data)
