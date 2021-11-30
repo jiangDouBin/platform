@@ -827,9 +827,9 @@ class MemberController extends BasicController
         }else if(empty($code)){
             alert_back('请输入验证码');
         }
-
-
+        
         $ucode = get_auto_code($this->model->getLastUcode(), 1);
+        
         $status = $this->config('register_verify') ? 0 : 1; // 默认不需要审核
         $score = $this->config('register_score') ?: 0;
         $group = $this->model->getFirstGroup();
@@ -841,6 +841,7 @@ class MemberController extends BasicController
         
 
         $model = $this->model->login("wxid='$wxid' or usermobile='$usermobile'");
+
         if($model){
             if(!empty($model->wxid)){
                 error('账号已绑定，请勿重复！', -1);
@@ -877,7 +878,7 @@ class MemberController extends BasicController
             // 构建数据
         $data = array(
             'ucode' => $ucode,
-            'username' => '',
+            'username' =>  $usermobile,
             'useremail' => '',
             'usermobile' => $usermobile,
             'nickname' => $nickname,
