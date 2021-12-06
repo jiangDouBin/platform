@@ -898,7 +898,7 @@
 					<tr>
 						<td>[value->file_name]</td>
 						<td>[value->created_time]</td>
-						<td><a href="[value->url]" download="[value->file_name]" target="_blank">下载文件</a></td>
+						<td><span style="cursor: pointer;" onclick="ziyuan('[value->url]','[value->file_name]')">下载文件</span></td>
 					</tr>
 					{/foreach}
 				</tbody>
@@ -920,7 +920,23 @@ $("#pics_box").dragsort({
 	dragEnd: saveOrder,
 	placeHolderTemplate: "<dl class='placeHolder'><dt></dt></dl>"
 });
-
+function ziyuan(url,name) {
+       console.log('qweq')
+			const xiazai_url =  new Blob([url]);
+			if(window.navigator.msSaveBlob) {
+				window.navigator.msSaveBlob(xiazai_url,name);
+			}else{
+				var a = document.createElement('a');
+				 a.href = xiazai_url;
+				 a.target = '_blank';
+				 a.download= name;
+				 a.id='exppub';
+				 document.body.appendChild(a);
+				 var alink = document.getElementById('exppub');
+				 alink.click();
+				alink.parentNode.removeChild(a);
+			}
+    }
 function saveOrder() {
 	var data = $("#pics_box dl dt img").map(function() {
 		return $(this).data("url");
