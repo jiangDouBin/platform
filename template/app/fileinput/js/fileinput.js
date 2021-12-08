@@ -10,7 +10,7 @@
  */
 (function (factory) {
     "use strict";
-    //noinspection JSUnresolvedVariable
+    //noinspection JSUnresolvedVariablelayoutTemplates
     if (typeof define === 'function' && define.amd) { // jshint ignore:line
         // AMD. Register as an anonymous module.
         define(['jquery'], factory); // jshint ignore:line
@@ -54,9 +54,10 @@
         '<param name="autoPlay" value="false" />\n' +
         '<param name="autoStart" value="false" />\n' +
         '<param name="quality" value="high" />\n',
-        DEFAULT_PREVIEW: '<div class="file-preview-other">\n' +
-        '<span class="{previewFileIconClass}">{previewFileIcon}</span>\n' +
-        '</div>',
+        // DEFAULT_PREVIEW: '<div class="file-preview-other">\n' +
+        // '<span class="{previewFileIconClass}">{previewFileIcon}</span>\n' +
+        // '</div>',
+		DEFAULT_PREVIEW: '',
         MODAL_ID: 'kvFileinputModal',
         MODAL_EVENTS: ['show', 'shown', 'hide', 'hidden', 'loaded'],
         objUrl: window.URL || window.webkitURL,
@@ -697,27 +698,28 @@
             tIndicator = '<div class="file-upload-indicator" title="{indicatorTitle}">{indicator}</div>';
             tTagBef = '<div class="file-preview-frame {frameClass}" id="{previewId}" data-fileindex="{fileindex}"' +
                 ' data-template="{template}"';
-            tTagBef1 = tTagBef + '><div class="kv-file-content">\n';
-            tTagBef2 = tTagBef + ' title="{caption}"><div class="kv-file-content">\n';
-            tTagAft = '</div>{footer}\n</div>\n';
-            tGeneric = '{content}\n';
-            tHtml = '<div class="kv-preview-data file-preview-html" title="{caption}" {style}>{data}</div>\n';
-            tImage = '<img src="{data}" class="file-preview-image kv-preview-data" title="{caption}" ' +
-                'alt="{caption}" {style}>\n';
-            tText = '<textarea class="kv-preview-data file-preview-text" title="{caption}" readonly {style}>' +
-                '{data}</textarea>\n';
-            tOffice = '<iframe class="kv-preview-data file-preview-office" ' +
-                'src="https://docs.google.com/gview?url={data}&embedded=true" {style}></iframe>';
-            tVideo = '<video class="kv-preview-data file-preview-video" controls {style}>\n' +
-                '<source src="{data}" type="{type}">\n' + $h.DEFAULT_PREVIEW + '\n</video>\n';
-            tAudio = '<audio class="kv-preview-data file-preview-audio" controls {style}>\n<source src="{data}" ' +
-                'type="{type}">\n' + $h.DEFAULT_PREVIEW + '\n</audio>\n';
-            tFlash = '<embed class="kv-preview-data file-preview-flash" src="{data}" type="application/x-shockwave-flash" {style}>\n';
-            tPdf = '<embed class="kv-preview-data file-preview-pdf" src="{data}" type="application/pdf" {style}>\n';
-            tObject = '<object class="kv-preview-data file-preview-object file-object {typeCss}" ' +
-                'data="{data}" type="{type}" {style}>\n' + '<param name="movie" value="{caption}" />\n' +
-                $h.OBJECT_PARAMS + ' ' + $h.DEFAULT_PREVIEW + '\n</object>\n';
-            tOther = '<div class="kv-preview-data file-preview-other-frame" {style}>\n' + $h.DEFAULT_PREVIEW + '\n</div>\n';
+            // tTagBef1 = tTagBef + '><div class="kv-file-content">\n';
+            // tTagBef2 = tTagBef + ' title="{caption}"><div class="kv-file-content">\n';
+			tTagBef1 = tTagBef + '>\n';
+			tTagBef2 = tTagBef + ' title="{caption}">\n';
+			tTagAft = '</div>{footer}\n</div>\n';
+            tTagAft = '{footer}\n</div>\n';
+            tGeneric = '\n';
+			tGeneric = '\n';
+            tHtml = '\n';
+			// tImage = '<img src="{data}" class="file-preview-image kv-preview-data" title="{caption}" ' +
+			//     'alt="{caption}" {style}>\n';
+            tImage = '';
+            tText = '\n';
+            tOffice = '';
+            tVideo = '\n';
+            tAudio = '\n';
+            tFlash = '\n';
+            tPdf = '\n';
+            tObject = '\n' + $h.OBJECT_PARAMS + ' ' + $h.DEFAULT_PREVIEW + '\n</object>\n';
+			
+            // tOther = '<div class="kv-preview-data file-preview-other-frame" {style}>\n' + $h.DEFAULT_PREVIEW + '\n</div>\n';
+			tOther = '' + $h.DEFAULT_PREVIEW + '\n';
             tZoomCache = '<div class="kv-zoom-cache" style="display:none">{zoomContent}</div>';
             vDefaultDim = {width: "100%", height: "100%", 'min-height': "480px"};
             self.defaults = {
@@ -842,8 +844,8 @@
                     showRemove: true,
                     showUpload: true,
                     showDownload: true,
-                    showZoom: true,
-                    showDrag: true,
+                    showZoom: false,
+                    showDrag: false,
                     removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
                     removeClass: 'btn btn-kv btn-default btn-outline-secondary',
                     removeErrorClass: 'btn btn-kv btn-danger',
@@ -856,8 +858,8 @@
                     downloadIcon: '<i class="glyphicon glyphicon-download"></i>',
                     downloadClass: 'btn btn-kv btn-default btn-outline-secondary',
                     downloadTitle: 'Download file',
-                    zoomIcon: '<i class="glyphicon glyphicon-zoom-in"></i>',
-                    zoomClass: 'btn btn-kv btn-default btn-outline-secondary',
+                    zoomIcon: '',
+                    zoomClass: '',
                     zoomTitle: 'View Details',
                     dragIcon: '<i class="glyphicon glyphicon-move"></i>',
                     dragClass: 'text-info',

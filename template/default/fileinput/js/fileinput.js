@@ -702,8 +702,9 @@
             tTagAft = '</div>{footer}\n</div>\n';
             tGeneric = '{content}\n';
             tHtml = '<div class="kv-preview-data file-preview-html" title="{caption}" {style}>{data}</div>\n';
-            tImage = '<img src="{data}" class="file-preview-image kv-preview-data" title="{caption}" ' +
-                'alt="{caption}" {style}>\n';
+            // tImage = '<img src="{data}" class="file-preview-image kv-preview-data" title="{caption}" ' +
+            //     'alt="{caption}" {style}>\n';
+				tImage = '';
             tText = '<textarea class="kv-preview-data file-preview-text" title="{caption}" readonly {style}>' +
                 '{data}</textarea>\n';
             tOffice = '<iframe class="kv-preview-data file-preview-office" ' +
