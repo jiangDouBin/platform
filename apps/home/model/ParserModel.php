@@ -358,6 +358,20 @@ class ParserModel extends Model
             $where['a.acode'] = $lg;
         }
         
+        if(!empty($_GET['ext_ext_sort']) && $scode == 5) {
+            // echo $_GET['ext_ext_sort'];
+            if($_GET['ext_ext_sort'] == '最热') {
+                $order = 'a.visits DESC';
+            }else{
+                $order = 'a.date DESC';
+            }
+            
+            $select = array(
+                'a.status=1'
+            );
+            
+        }
+        
         // 筛选条件支持模糊匹配
         return parent::table('ay_content a')->field($fields)
             ->where($scode_arr, 'OR')

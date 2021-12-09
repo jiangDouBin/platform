@@ -118,7 +118,7 @@
                     <!-- <label for="password">密　码</label> -->
                     <div class="yz">
                         <input type="number" name="code" required id="code" class="form-control" placeholder="请输入验证码">
-                        <span class="yanzhengma gary" id="sms" onclick="sendSms()">请输入验证码</span>
+                        <span class="yanzhengma gary" id="sms" onclick="sendSms()">获取验证码</span>
                         <span class="yanzhengma gary" id="smsd" style="display: none;">60s 之后重试</span>
                     </div>
                 </div>
@@ -167,7 +167,7 @@
        $('#sms').css('display','none')
        $('#smsd').css('display','block')
 
-       var timer_num = 10;
+       var timer_num = 60;
        timeoutclear=setInterval(function(){
         timer_num--;
         $('#smsd').html(timer_num + 's 之后重试');
@@ -217,7 +217,7 @@ function isRegister(){
     	 
     	 $("#username").removeClass("is-invalid");
     	 $("#usernote").removeClass("invalid-feedback");
-         alert(response.data)
+        //  alert(response.data)
       }
       
     //   $("#usernote").text(response.data);
