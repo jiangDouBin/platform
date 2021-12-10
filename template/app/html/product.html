@@ -223,20 +223,42 @@
         },
         success: function (response, status) {
         if(response.code){
-			const xiazai_url =  new Blob([response.data.url]);
-			if(window.navigator.msSaveBlob) {
-				window.navigator.msSaveBlob(xiazai_url,name);
-			}else{
-				var a = document.createElement('a');
-				 a.href = xiazai_url;
-				 a.target = '_blank';
-				 a.download= name;
-				 a.id='exppub';
-				 document.body.appendChild(a);
-				 var alink = document.getElementById('exppub');
-				 alink.click();
-				alink.parentNode.removeChild(a);
-			}
+            if(isIE()) {
+		 
+            var a = document.createElement('a');
+			a.href = 'https://www.diduoduotouzi.com' + response.data.url;
+			a.target = '_blank';
+			a.download= name;
+			a.id='exppub';
+			document.body.appendChild(a);
+			var alink = document.getElementById('exppub');
+			alink.click();
+			alink.parentNode.removeChild(a);
+	   }else{
+		   var a = document.createElement('a');
+			a.href = 'https://www.diduoduotouzi.com' + response.data.url;
+			a.target = '_blank';
+			a.download= name;
+			a.id='exppub';
+			document.body.appendChild(a);
+			var alink = document.getElementById('exppub');
+			alink.click();
+			alink.parentNode.removeChild(a);
+	   }
+// 			const xiazai_url =  new Blob([response.data.url]);
+// 			if(window.navigator.msSaveBlob) {
+// 				window.navigator.msSaveBlob(xiazai_url,name);
+// 			}else{
+// 				var a = document.createElement('a');
+// 				 a.href = xiazai_url;
+// 				 a.target = '_blank';
+// 				 a.download= name;
+// 				 a.id='exppub';
+// 				 document.body.appendChild(a);
+// 				 var alink = document.getElementById('exppub');
+// 				 alink.click();
+// 				alink.parentNode.removeChild(a);
+// 			}
             
         //    window.location.href = response.data.url;
         }else{
@@ -248,6 +270,13 @@
         }
     });
    }
+   function isIE() {
+	    if(!!window.ActiveXObject || "ActiveXObject" in window){
+	      return true;
+	    }else{
+	      return false;
+	　　 }
+	}
 </script>
 
 {include file=comm/foot.html}
